@@ -8,7 +8,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		plugin = {"pretty", "html:target/html/"},
+		plugin = {"pretty", "json:target/json/"},
 		features = "src/test/resource"
 		
 		)
