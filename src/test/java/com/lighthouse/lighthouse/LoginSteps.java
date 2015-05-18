@@ -1,19 +1,17 @@
 package com.lighthouse.lighthouse;
 
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -24,12 +22,12 @@ import cucumber.api.java.en.When;
 		
 		
 		
-		/*@Before
+		@Before
 		public void initiateBrowser(){
 			dr = new FirefoxDriver();
-		}*/
+		}
 		
-		public void setUpLocal()  throws Throwable
+		/*public void setUpLocal()  throws Throwable
 	    {
 	        //Setup for running Appium test in local environment
 			DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -39,7 +37,7 @@ import cucumber.api.java.en.When;
 			WebDriver driver = new RemoteWebDriver(
 			            new URL("http://perion1:9cf7a20a-3fb3-4775-bc76-ea671a02aa8a@ondemand.saucelabs.com:80/wd/hub"),
 			                desiredCapabilities);
-	    }
+	    }*/
 		
 		@After
 		public void testShutDown(){
