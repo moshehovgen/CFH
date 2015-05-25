@@ -16,22 +16,13 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-	public class LoginSteps {
-		
-		WebDriver dr = null;
+	public class LoginSteps extends AbstractPageStepDefinition {
 		
 		
 		
-		@Before
-		public void initiateBrowser(){
-			dr = new FirefoxDriver();
-		}
 		
-		@After
-		public void testShutDown(){
-			dr.close();
-			dr.quit();
-		}
+		
+		WebDriver	dr = getDriver();
 		
 		@Given("^I browse to login page$")
 		public void shouldNavigateToLoginPage() {

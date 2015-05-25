@@ -10,5 +10,6 @@ Feature: LightHouse Add Application
 
     Examples: 
       | username                | password  | name | icon  | platform | packageID  | category        |
-      | orantest@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | 1122334455 | Automotive      |
-      | orantest@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | 1122334455 | Illegal Content |
+      | orantest@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | 1122334451 | Automotive      |
+      | orantest@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | 1122334452 | Sports      |
+     
