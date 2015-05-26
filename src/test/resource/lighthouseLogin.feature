@@ -5,6 +5,7 @@ Feature: LightHouse Login
     Given I browse to login page
     When I enter <username> and <password> first time
     Then validate login pass
+    And User log out
 
     Examples: 
       | username                | password  |

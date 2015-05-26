@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,15 +17,22 @@ import cucumber.api.java.en.When;
 
 	public class LoginSteps extends AbstractPageStepDefinition {
 		
+		WebDriver dr ;		
 		
-		
-		
-		
-		WebDriver	dr = getDriver();
+		@Before("@Login")
+		public void initiateBrowser(){
+			dr = getDriver();
+			dr.navigate().to("http://site.qalighthouseplatform.net/");
+		}
+			
+		@After("@Login")
+		public void testShutDown(){
+			dr.quit();
+			dr = null;
+		}
 		
 		@Given("^I browse to login page$")
 		public void shouldNavigateToLoginPage() {
-			dr.navigate().to("http://site.qalighthouseplatform.net/");
 			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
 								
 		}
@@ -64,15 +70,16 @@ import cucumber.api.java.en.When;
 		@Then("^validate login pass$")
 		public void validate_login_pass() throws Throwable {
 			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-			Assert.assertTrue(dr.getCurrentUrl().contains("http://www.qalighthouseplatform.net/dashboard#/dashboard"));
+			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard"));
 		}
 
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
 			dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			Assert.assertTrue(dr.getPageSource().contains(message)); 
-			
+			Assert.assertTrue(dr.getPageSource().contains(message));
+				
 		}	
+		
 		
 	}
