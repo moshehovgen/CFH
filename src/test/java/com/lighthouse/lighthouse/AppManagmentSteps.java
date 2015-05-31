@@ -2,6 +2,8 @@ package com.lighthouse.lighthouse;
 
 
 
+import junit.framework.Assert;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -58,26 +60,26 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.cssSelector("[id='name']")).sendKeys(appName);
 		
 		//check platform radio button
-		dr.findElement(By.cssSelector("label[ng-value='1']")).click();
+		//dr.findElement(By.cssSelector("input[ng-value='1']")).click();
 		//dr.findElement(By.xpath("input[value=" + platform + "]")).click();
-		
 		
 		//set bundleID
 		dr.findElement(By.cssSelector("[id='bundle']")).sendKeys(packageID);
 		
 		//select category
-		Select dropdown = new Select (dr.findElement(By.cssSelector("select[ng-model='categoryId']")));
+		Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
 		dropdown.selectByVisibleText(category);
 	}
 
 	@When("^Click Add button$")
 	public void click_Add_button() throws Throwable {
-		dr.findElement(By.xpath(".//*[@id='add_app_form']/div[6]/button[2]")).click();	
+		waitForVisibleElement(By.xpath("//button[text()='Add']"), 15);
+		dr.findElement(By.xpath("//button[text()='Add']")).click();	
 	}
 
 	@Then("^validate App created$")
 	public void validate_App_created() throws Throwable {
-		//Assert.assertTrue(isElementExist(By.xpath(".//a[@class='ng-binding'] and text()='" + appName + "']")));
+		Assert.assertTrue(isElementExist(By.xpath(".//a[@class='ng-binding'] and text()='" + appName + "']")));
 		//Assert.assertTrue(IsTextPresent(appName));
 		
 	}

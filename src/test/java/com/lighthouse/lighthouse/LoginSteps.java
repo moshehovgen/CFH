@@ -19,13 +19,13 @@ import cucumber.api.java.en.When;
 		
 		WebDriver dr ;		
 		
-		@Before("@Login, @LoginA")
+		@Before()
 		public void initiateBrowser(){
 			dr = getDriver();
 			dr.navigate().to("http://site.qalighthouseplatform.net/");
 		}
 			
-		@After("@Login, @LoginA")
+		@After()
 		public void testShutDown(){
 			dr.quit();
 			dr = null;
@@ -34,11 +34,13 @@ import cucumber.api.java.en.When;
 		@Given("^I browse to login page$")
 		public void shouldNavigateToLoginPage() {
 			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
+			//waitForVisibleElement(By.cssSelector("iframe[title='myFrame']"), 15);
 								
 		}
 		
 		@Given("^I enter ([^\"]*) and ([^\"]*) and checkbox$")
 		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
+			//dr.switchTo().frame(dr.findElement(By.cssSelector("iframe[title='myFrame']")));
 			dr.switchTo().frame("myFrame");
 			dr.findElement(By.xpath("//*[@id='PersistLogin']")).click();
 			dr.findElement(By.xpath("//*[@id='Email']")).sendKeys(username);

@@ -26,7 +26,7 @@ Feature: LightHouse Login
       | ronen.yurik@perion.com  | 1q2w3e4r$ | The email or password is incorrect. |
       |                         |           | Please enter an email.              |
 
-  @LoginA
+  @Login
   Scenario Outline: : Remember me check box (Test Case 107249)
     Given I browse to login page
     And I enter <username> and <password> and checkbox
