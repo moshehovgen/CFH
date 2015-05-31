@@ -26,13 +26,13 @@ Feature: LightHouse Login
       | ronen.yurik@perion.com  | 1q2w3e4r$ | The email or password is incorrect. |
       |                         |           | Please enter an email.              |
 
-  @Login
+  @LoginA
   Scenario Outline: : Remember me check box (Test Case 107249)
     Given I browse to login page
     And I enter <username> and <password> and checkbox
     When User log out
     And click Login
-    Then validate login pass
+    Then validate login Fail
 
     Examples: 
       | username                | password  |

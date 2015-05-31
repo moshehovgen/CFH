@@ -19,13 +19,13 @@ import cucumber.api.java.en.When;
 		
 		WebDriver dr ;		
 		
-		@Before("@Login")
+		@Before("@Login, @LoginA")
 		public void initiateBrowser(){
 			dr = getDriver();
 			dr.navigate().to("http://site.qalighthouseplatform.net/");
 		}
 			
-		@After("@Login")
+		@After("@Login, @LoginA")
 		public void testShutDown(){
 			dr.quit();
 			dr = null;
@@ -71,6 +71,12 @@ import cucumber.api.java.en.When;
 		public void validate_login_pass() throws Throwable {
 			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard"));
+		}
+		
+		@Then("^validate login Fail$")
+		public void validate_login_fail() throws Throwable {
+			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}
 
 		

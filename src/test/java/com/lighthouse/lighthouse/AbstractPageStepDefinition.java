@@ -5,7 +5,7 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class AbstractPageStepDefinition {
 	
@@ -13,7 +13,9 @@ public class AbstractPageStepDefinition {
 	
 	protected WebDriver getDriver(){
 		if (dr == null){
-			dr = new FirefoxDriver();
+			System.setProperty("webdriver.chrome.driver", "C:/eclipse/cucumberjars/chromedriver.exe");
+			dr = new ChromeDriver();
+			dr.manage().window().maximize();
 	}
 	return dr;
 	}
