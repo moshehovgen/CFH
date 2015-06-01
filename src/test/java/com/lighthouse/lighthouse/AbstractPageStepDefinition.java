@@ -19,7 +19,7 @@ public class AbstractPageStepDefinition {
 		if (dr == null){
 			System.setProperty("webdriver.chrome.driver", "C:/eclipse/cucumberjars/chromedriver.exe");
 			dr = new ChromeDriver();
-			//dr = new FirefoxDriver();
+			
 			dr.manage().window().maximize();
 	}
 	return dr;

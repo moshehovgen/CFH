@@ -19,13 +19,13 @@ import cucumber.api.java.en.When;
 		
 		WebDriver dr ;		
 		
-		@Before()
+		@Before("@Login")
 		public void initiateBrowser(){
 			dr = getDriver();
 			dr.navigate().to("http://site.qalighthouseplatform.net/");
 		}
 			
-		@After()
+		@After("@Login")
 		public void testShutDown(){
 			dr.quit();
 			dr = null;
