@@ -13,7 +13,7 @@ Feature: LightHouse Add Application
       | orantest@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app1 | Automotive |
       | orantest@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app2  | Sports     |
 
-  @Application
+  @Application1
   Scenario Outline: Create app with diff parameters (107363 107364 107365 107366 107368)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
@@ -29,8 +29,8 @@ Feature: LightHouse Add Application
       | orantest@mailinator.com | 1q2w3e4r$ | T364-autoLonggggg#@&* | iconX | 2        | A1122B33C4451D                | Hobbies & Interests     |
       | orantest@mailinator.com | 1q2w3e4r$ | T366-auto             | iconX | 1        | #Auto@yahoo&*SpecialChars     | Law, Gov't & Politics   |
       | orantest@mailinator.com | 1q2w3e4r$ | T365-auto             | iconX | 2        | SpecialChars#@&*              | Science                 |
-      | orantest@mailinator.com | 1q2w3e4r$ | T369-auto             | iconX | 1        | 1122334451LongPackageIDllllll | Style & Fashion         |
-      | orantest@mailinator.com | 1q2w3e4r$ | T368-auto             | iconX | 1        | 1122334451LongBundleIDlllllll | Religion & Spirituality |
+      | orantest@mailinator.com | 1q2w3e4r$ | T369-auto             | iconX | 2        | 1122334451LongBundleIDlllllll | Style & Fashion         |
+      | orantest@mailinator.com | 1q2w3e4r$ | T368-auto             | iconX | 1        | 1122334451LongPackageIDllllll | Religion & Spirituality |
 
   @Application
   Scenario Outline: validate error message (test case:  107369 - 107374)
