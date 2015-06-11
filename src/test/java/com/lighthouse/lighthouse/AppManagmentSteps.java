@@ -2,12 +2,10 @@ package com.lighthouse.lighthouse;
 
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,15 +21,19 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	String appName = null;
 	
 	
-	WebDriver dr;
+	WebDriver dr;  
 	
-	@Before("@Application1")
+	@Before("@Application")
 	public void initiateBrowser(){
-		dr = getDriver();
-		dr.navigate().to("http://site.qalighthouseplatform.net/");
+		String Turl = System.getenv("QA_URL");
+		
+		dr = initWebDriver();
+		dr.manage().window().maximize();
+		dr.get(Turl);
+		
 	}
 		
-	@After("@Application1")
+	@After("@Application")
 	public void testShutDown(){
 		dr.quit();
 		dr = null;
@@ -40,15 +42,17 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void user_logged_into_the_portal(String username, String password) throws Throwable {
 		dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
-		dr.switchTo().frame("myFrame");
-		dr.findElement(By.xpath("//*[@id='Email']")).sendKeys(username);
-	    dr.findElement(By.xpath("//*[@id='Password']")).sendKeys(password);
+		WebDriverWait wait = new WebDriverWait(dr, 20);
+		switchFrame("myFrame");
+		dr.findElement(By.cssSelector("[id='Email']")).sendKeys(username);
+	    dr.findElement(By.cssSelector("[id='Password']")).sendKeys(password);
 	    dr.findElement(By.id("login")).click();	
 	}
 
 	@When("^User select App tab and click on Add app button$")
 	public void select_App_tab_click_addApp() throws Throwable {
-		WebElement AddApp = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("[href='#/addApp']")));
+		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.findElement(By.cssSelector("[href='#/addApp']")).click();
 		
 	}
@@ -63,11 +67,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		else{
 			appName = "";
 		}
-		
+		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[id='name']")).sendKeys(appName);
-		
 		dr.findElement(By.xpath("//input[@ng-value='" + platform + "']/..")).click();
-		
 		dr.findElement(By.cssSelector("[id='bundle']")).sendKeys(packageID);
 		
 		if (!category.isEmpty()){
@@ -78,33 +80,52 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@When("^Click Add button$")
 	public void click_Add_button() throws Throwable {
-		waitForVisibleElement(By.xpath("//button[text()='Add']"), 15);
-		dr.findElement(By.xpath("//button[text()='Add']")).click();	
+		dr.findElement(By.xpath("//button[text()='Add']")).click();
+		
 	}
 	
 	@When("^Click cancel button$")
 	public void click_cancel_button() throws Throwable {
-		waitForVisibleElement(By.xpath("//button[text()='Add']"), 15);
 		dr.findElement(By.xpath("//button[text()='Cancel']")).click();	
 	}
 
 	@Then("^validate App created$")
 	public void validate_App_created() throws Throwable {
-		Assert.assertTrue(isElementExist(By.xpath(".//a[@class='ng-binding'] and text()='" + appName + "']")));
+		
+		String temp = ".//a[text()='" + appName + "']";
+		By by = By.xpath(temp);
+		
+		WebElement elem = dr.findElement(by);
+		boolean isElementExist = null!=elem?true:false;
+		
+		Assert.assertTrue("New App creation Pass!", isElementExist);
 		
 	}
 	
-
 	@Then("^validate error message ([^\"]*)$")
 	public void validate_error_message_errorMessage(String message) throws Throwable {
 		dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		Assert.assertTrue(dr.getPageSource().contains(message));;
 	}
 
-	@Then("^validate fields cleared$")
-	public void validate_fields_cleared() throws Throwable {
+	@Then("^Validate back to app list$")
+	public void Validate_back_to_app_list() throws Throwable {
+		
+		String temp = ".//a[text()='" + appName + "']";
+		By by = By.xpath(temp);
+		
+		
+		WebElement elem = dr.findElement(by);
+		boolean isElementExist = null!=elem?true:false;
+		
+		Assert.assertTrue("New App creation Fail!", isElementExist);
 	
-		dr.findElement(By.cssSelector("[id='name']")).getText();
-		dr.findElement(By.cssSelector("[id='bundle']")).getText();
 	}
+	
+	
+	public void switchFrame(String frameId) {
+		   dr.switchTo().defaultContent();
+	       dr.switchTo().frame(frameId);
+	}
+	
 }

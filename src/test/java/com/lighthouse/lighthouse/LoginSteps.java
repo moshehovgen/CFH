@@ -21,8 +21,11 @@ import cucumber.api.java.en.When;
 		
 		@Before("@Login")
 		public void initiateBrowser(){
-			dr = getDriver();
-			dr.navigate().to("http://site.qalighthouseplatform.net/");
+			String Turl = System.getenv("QA_URL");
+			
+			dr = initWebDriver();
+			dr.manage().window().maximize();
+			dr.get(Turl);
 		}
 			
 		@After("@Login")
@@ -34,13 +37,12 @@ import cucumber.api.java.en.When;
 		@Given("^I browse to login page$")
 		public void shouldNavigateToLoginPage() {
 			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
-			//waitForVisibleElement(By.cssSelector("iframe[title='myFrame']"), 15);
 								
 		}
 		
 		@Given("^I enter ([^\"]*) and ([^\"]*) and checkbox$")
 		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
-			//dr.switchTo().frame(dr.findElement(By.cssSelector("iframe[title='myFrame']")));
+
 			dr.switchTo().frame("myFrame");
 			dr.findElement(By.xpath("//*[@id='PersistLogin']")).click();
 			dr.findElement(By.xpath("//*[@id='Email']")).sendKeys(username);
@@ -54,8 +56,7 @@ import cucumber.api.java.en.When;
 			dr.switchTo().frame("myFrame");
 			dr.findElement(By.xpath("//*[@id='Email']")).sendKeys(username);
 		    dr.findElement(By.xpath("//*[@id='Password']")).sendKeys(password);
-		    dr.findElement(By.id("login")).click();	
-		    
+		    dr.findElement(By.id("login")).click();			    
 		}
 		
 		@When("^User log out$")
@@ -86,7 +87,6 @@ import cucumber.api.java.en.When;
 		public void validate_login_fail(String message) throws Throwable {
 			dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			Assert.assertTrue(dr.getPageSource().contains(message));
-				
 		}	
 		
 		
