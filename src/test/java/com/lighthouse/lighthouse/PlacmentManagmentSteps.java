@@ -1,5 +1,5 @@
 package com.lighthouse.lighthouse;
-
+/*
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +15,7 @@ import cucumber.api.java.en.When;
 		
 		WebDriver dr ;		
 		
-	/*	@Before("@Test")
+		@Before("@Test")
 		public void initiateBrowser(){
 			dr = getDriver();
 			dr.navigate().to("about:preferences");
@@ -46,5 +46,5 @@ import cucumber.api.java.en.When;
 		    // Write code here that turns the phrase above into concrete actions
 		    throw new PendingException();
 		}
-	*/	
-	}
+	
+	}*/	

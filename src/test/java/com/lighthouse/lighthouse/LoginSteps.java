@@ -5,9 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -21,7 +18,7 @@ import cucumber.api.java.en.When;
 		
 		@Before("@Login")
 		public void initiateBrowser(){
-			String Turl = System.getenv("QA_URL");
+			String Turl = System.getenv("PROD_URL");
 			
 			dr = initWebDriver();
 			dr.manage().window().maximize();
@@ -30,7 +27,11 @@ import cucumber.api.java.en.When;
 			
 		@After("@Login")
 		public void testShutDown(){
-			dr.quit();
+			if (dr != null) {
+				dr.quit();
+				System.out.println("closing webdriver...");
+				}
+			
 			dr = null;
 		}
 		
@@ -61,7 +62,7 @@ import cucumber.api.java.en.When;
 		
 		@When("^User log out$")
 		public void user_log_out() throws Throwable {
-			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 		    dr.findElement(By.xpath("//*[@id='logout']")).click();
 		}
 		
@@ -72,13 +73,13 @@ import cucumber.api.java.en.When;
 
 		@Then("^validate login pass$")
 		public void validate_login_pass() throws Throwable {
-			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard"));
 		}
 		
 		@Then("^validate login Fail$")
 		public void validate_login_fail() throws Throwable {
-			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}
 
