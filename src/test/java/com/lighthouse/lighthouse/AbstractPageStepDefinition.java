@@ -57,7 +57,7 @@ public boolean isElementExist(By locator) {
 		 }
 */
 	public WebDriver initWebDriver() {
-			switch (System.getenv("BROWSER_TYPE")) {
+		/*	switch (System.getenv("BROWSER_TYPE")) {
 				case "firefox":
 					System.out.println("init FF webdriver");
 				return new FirefoxDriver();
@@ -73,7 +73,7 @@ public boolean isElementExist(By locator) {
 				System.out.println("init IE webdriver");
 				return new InternetExplorerDriver();
 		}
-		// default if no valid browser value
+		// default if no valid browser value*/
 		return new FirefoxDriver();
 	}
 
