@@ -46,8 +46,10 @@ import cucumber.api.java.en.When;
 
 			dr.switchTo().frame("myFrame");
 			dr.findElement(By.id("PersistLogin")).click();
+			dr.findElement(By.id("Email")).clear();
 			dr.findElement(By.id("Email")).sendKeys(username);
-		    dr.findElement(By.id("Password")).sendKeys(password);
+			dr.findElement(By.id("Password")).clear();
+			dr.findElement(By.id("Password")).sendKeys(password);
 		    dr.findElement(By.id("login")).click();	
 		    
 		}
