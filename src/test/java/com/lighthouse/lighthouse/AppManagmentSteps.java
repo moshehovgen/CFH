@@ -22,7 +22,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	WebDriver dr;  
 	
-	@Before("@Application1")
+	@Before("@Application")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		
@@ -32,7 +32,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application1")
+	@After("@Application")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -45,7 +45,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void user_logged_into_the_portal(String username, String password) throws Throwable {
 		dr.findElement(By.id("loginBtn")).click();
-		//WebDriverWait wait = new WebDriverWait(dr, 20);
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		switchFrame("myFrame");
 		dr.findElement(By.id("Email")).sendKeys(username);
 	    dr.findElement(By.id("Password")).sendKeys(password);
@@ -54,9 +54,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@When("^User select App tab and click on Add app button$")
 	public void select_App_tab_click_addApp() throws Throwable {
-		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.findElement(By.id("addAppBtn")).click();
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
 	}
 
@@ -72,9 +73,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		}
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		dr.findElement(By.id("name")).sendKeys(appName);
-		dr.findElement(By.cssSelector("[ng-value='" + platform + "']")).click();
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		//dr.findElement(By.xpath("//.[@ng-value='" + platform + "']")).click();
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
-		
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		if (!category.isEmpty()){
 			//Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
 			Select dropdown = new Select (dr.findElement(By.id("appsCategory")));
