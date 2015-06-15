@@ -63,8 +63,8 @@ public boolean isElementExist(By locator) {
 				return new FirefoxDriver();
 				
 			case "chrome":
-				//String chromeLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/chrome/chromedriver.exe";
-				String chromeLocation = "/drivers/chrome/chromedriver.exe";
+				String chromeLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/chrome/chromedriver.exe";
+				//String chromeLocation = "/drivers/chrome/chromedriver.exe";
 				System.setProperty("webdriver.chrome.driver", chromeLocation);
 				System.out.println("init CH webdriver");
 				return new ChromeDriver();
