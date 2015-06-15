@@ -45,9 +45,9 @@ import cucumber.api.java.en.When;
 		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
 
 			dr.switchTo().frame("myFrame");
-			dr.findElement(By.xpath("//*[@id='PersistLogin']")).click();
-			dr.findElement(By.xpath("//*[@id='Email']")).sendKeys(username);
-		    dr.findElement(By.xpath("//*[@id='Password']")).sendKeys(password);
+			dr.findElement(By.id("PersistLogin")).click();
+			dr.findElement(By.id("Email")).sendKeys(username);
+		    dr.findElement(By.id("Password")).sendKeys(password);
 		    dr.findElement(By.id("login")).click();	
 		    
 		}
@@ -55,20 +55,20 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
-			dr.findElement(By.xpath("//*[@id='Email']")).sendKeys(username);
-		    dr.findElement(By.xpath("//*[@id='Password']")).sendKeys(password);
+			dr.findElement(By.id("Email")).sendKeys(username);
+		    dr.findElement(By.id("Password")).sendKeys(password);
 		    dr.findElement(By.id("login")).click();			    
 		}
 		
 		@When("^User log out$")
 		public void user_log_out() throws Throwable {
 			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-		    dr.findElement(By.xpath("//*[@id='logout']")).click();
+		    dr.findElement(By.id("logout")).click();
 		}
 		
 		@When("^click Login$")
 		public void click_Login() throws Throwable {
-			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
+			dr.findElement(By.id("loginBtn")).click();
 		}
 
 		@Then("^validate login pass$")

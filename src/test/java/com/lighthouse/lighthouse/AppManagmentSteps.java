@@ -44,11 +44,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void user_logged_into_the_portal(String username, String password) throws Throwable {
-		dr.findElement(By.cssSelector("[id='loginBtn']")).click();
+		dr.findElement(By.id("loginBtn")).click();
 		//WebDriverWait wait = new WebDriverWait(dr, 20);
 		switchFrame("myFrame");
-		dr.findElement(By.cssSelector("[id='Email']")).sendKeys(username);
-	    dr.findElement(By.cssSelector("[id='Password']")).sendKeys(password);
+		dr.findElement(By.id("Email")).sendKeys(username);
+	    dr.findElement(By.id("Password")).sendKeys(password);
 	    dr.findElement(By.id("login")).click();	
 	}
 
@@ -56,7 +56,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	public void select_App_tab_click_addApp() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
-		dr.findElement(By.cssSelector("[href='#/addApp']")).click();
+		dr.findElement(By.id("addAppBtn")).click();
 		
 	}
 
@@ -71,25 +71,26 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			appName = "";
 		}
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		dr.findElement(By.cssSelector("[id='name']")).sendKeys(appName);
-		//dr.findElement(By.cssSelector("[ng-value='" + platform + "']")).click();
-		dr.findElement(By.cssSelector("[id='bundle']")).sendKeys(packageID);
+		dr.findElement(By.id("name")).sendKeys(appName);
+		dr.findElement(By.cssSelector("[ng-value='" + platform + "']")).click();
+		dr.findElement(By.id("bundle")).sendKeys(packageID);
 		
 		if (!category.isEmpty()){
-			Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
+			//Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
+			Select dropdown = new Select (dr.findElement(By.id("appsCategory")));
 			dropdown.selectByVisibleText(category);
 		}
 	}
 
 	@When("^Click Add button$")
 	public void click_Add_button() throws Throwable {
-		dr.findElement(By.xpath("//button[text()='Add']")).click();
+		dr.findElement(By.id("appsSave")).click();
 		
 	}
 	
 	@When("^Click cancel button$")
 	public void click_cancel_button() throws Throwable {
-		dr.findElement(By.xpath("//button[text()='Cancel']")).click();	
+		dr.findElement(By.id("appsCancel")).click();	
 	}
 
 	@Then("^validate App created$")
