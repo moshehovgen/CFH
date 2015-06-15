@@ -44,7 +44,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void user_logged_into_the_portal(String username, String password) throws Throwable {
-		dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
+		dr.findElement(By.cssSelector("[id='loginBtn']")).click();
 		//WebDriverWait wait = new WebDriverWait(dr, 20);
 		switchFrame("myFrame");
 		dr.findElement(By.cssSelector("[id='Email']")).sendKeys(username);
