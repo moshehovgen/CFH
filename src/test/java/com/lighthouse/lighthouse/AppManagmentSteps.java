@@ -22,9 +22,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	WebDriver dr;  
 	
-	@Before("@Application")
+	@Before("@Application1")
 	public void initiateBrowser(){
-		String Turl = System.getenv("PROD_URL");
+		String Turl = System.getenv("QA_URL");
 		
 		dr = initWebDriver();
 		dr.manage().window().maximize();
@@ -32,7 +32,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application")
+	@After("@Application1")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -72,7 +72,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		}
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[id='name']")).sendKeys(appName);
-		dr.findElement(By.xpath("//input[@ng-value='" + platform + "']/..")).click();
+		//dr.findElement(By.cssSelector("[ng-value='" + platform + "']")).click();
 		dr.findElement(By.cssSelector("[id='bundle']")).sendKeys(packageID);
 		
 		if (!category.isEmpty()){

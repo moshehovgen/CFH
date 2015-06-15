@@ -1,6 +1,6 @@
 Feature: LightHouse Add Application
 
-  @Application
+  @Application1
   Scenario Outline: Create new android/IOS App (test case: 107378 107362)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
