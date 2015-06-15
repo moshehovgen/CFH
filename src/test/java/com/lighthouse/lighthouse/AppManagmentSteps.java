@@ -73,11 +73,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		}
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		dr.findElement(By.id("name")).sendKeys(appName);
-		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
 		//dr.findElement(By.xpath("//.[@ng-value='" + platform + "']")).click();
-		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
-		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
 		if (!category.isEmpty()){
 			//Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
 			Select dropdown = new Select (dr.findElement(By.id("appsCategory")));
