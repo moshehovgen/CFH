@@ -21,7 +21,7 @@ import cucumber.api.java.en.When;
 		
 		@Before("@Login")
 		public void initiateBrowser(){
-			String Turl = System.getenv("PROD_URL");
+			String Turl = System.getenv("QA_URL");
 			
 			dr = initWebDriver();
 			dr.manage().window().maximize();
