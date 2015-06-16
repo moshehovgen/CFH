@@ -46,21 +46,35 @@ import cucumber.api.java.en.When;
 
 			dr.switchTo().frame("myFrame");
 			dr.findElement(By.id("PersistLogin")).click();
+			dr.findElement(By.id("Email")).click();
 			dr.findElement(By.id("Email")).clear();
+			dr.wait(2);
+			System.out.println("Email");
 			dr.findElement(By.id("Email")).sendKeys(username);
+			dr.findElement(By.id("Password")).click();
 			dr.findElement(By.id("Password")).clear();
+			dr.wait(2);
+			System.out.println("Password");
 			dr.findElement(By.id("Password")).sendKeys(password);
-		    dr.findElement(By.id("login")).click();	
+			dr.wait(2);
+			dr.findElement(By.id("login")).click();	
 		    
 		}
 		
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
+			dr.findElement(By.id("Email")).click();
 			dr.findElement(By.id("Email")).clear();
+			dr.wait(2);
+			System.out.println("Email");
 			dr.findElement(By.id("Email")).sendKeys(username);
+			dr.findElement(By.id("Password")).click();
 			dr.findElement(By.id("Password")).clear();
+			dr.wait(2);
+			System.out.println("Password");
 			dr.findElement(By.id("Password")).sendKeys(password);
+			dr.wait(2);
 		    dr.findElement(By.id("login")).click();			    
 		}
 		

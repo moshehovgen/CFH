@@ -47,11 +47,18 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("loginBtn")).click();
 		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		switchFrame("myFrame");
+		dr.findElement(By.id("Email")).click();
 		dr.findElement(By.id("Email")).clear();
+		dr.wait(2);
+		System.out.println("Email");
 		dr.findElement(By.id("Email")).sendKeys(username);
+		dr.findElement(By.id("Password")).click();
 		dr.findElement(By.id("Password")).clear();
+		dr.wait(2);
+		System.out.println("Password");
 		dr.findElement(By.id("Password")).sendKeys(password);
-	    dr.findElement(By.id("login")).click();	
+		dr.wait(2);
+		dr.findElement(By.id("login")).click();	
 	}
 
 	@When("^User select App tab and click on Add app button$")
