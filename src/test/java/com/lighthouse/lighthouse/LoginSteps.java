@@ -45,6 +45,7 @@ import cucumber.api.java.en.When;
 		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
 
 			dr.switchTo().frame("myFrame");
+			dr.wait(5);
 			dr.findElement(By.id("PersistLogin")).click();
 			dr.findElement(By.id("Email")).click();
 			dr.findElement(By.id("Email")).clear();
@@ -64,6 +65,7 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
+			dr.wait(5);
 			dr.findElement(By.id("Email")).click();
 			dr.findElement(By.id("Email")).clear();
 			dr.wait(2);

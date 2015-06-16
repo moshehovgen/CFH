@@ -47,6 +47,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("loginBtn")).click();
 		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		switchFrame("myFrame");
+		dr.wait(5);
 		dr.findElement(By.id("Email")).click();
 		dr.findElement(By.id("Email")).clear();
 		dr.wait(2);
