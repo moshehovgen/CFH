@@ -6,7 +6,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -47,18 +49,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("loginBtn")).click();
 		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		switchFrame("myFrame");
-		//dr.wait(5);
-		//dr.findElement(By.id("Email")).click();
-		//dr.findElement(By.id("Email")).clear();
-		//dr.wait(2);
-		//System.out.println("Email");
 		dr.findElement(By.id("Email")).sendKeys(username);
-		//dr.findElement(By.id("Password")).click();
-		//dr.findElement(By.id("Password")).clear();
-		//dr.wait(2);
-		//System.out.println("Password");
 		dr.findElement(By.id("Password")).sendKeys(password);
-		//dr.wait(2);
 		dr.findElement(By.id("login")).click();	
 	}
 
@@ -82,14 +74,17 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			appName = "";
 		}
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		WebElement AppName = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("name")));
 		dr.findElement(By.id("name")).sendKeys(appName);
 		
 		//dr.findElement(By.xpath("//.[@ng-value='" + platform + "']")).click();
 		
+		WebElement BundleID = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("bundle")));
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
 		
 		if (!category.isEmpty()){
 			//Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
+			WebElement AppCat = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("appsCategory")));
 			Select dropdown = new Select (dr.findElement(By.id("appsCategory")));
 			dropdown.selectByVisibleText(category);
 		}

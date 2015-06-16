@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -43,21 +46,10 @@ import cucumber.api.java.en.When;
 		
 		@Given("^I enter ([^\"]*) and ([^\"]*) and checkbox$")
 		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
-
 			dr.switchTo().frame("myFrame");
-			//dr.wait(5);
 			dr.findElement(By.id("PersistLogin")).click();
-			//dr.findElement(By.id("Email")).click();
-			//dr.findElement(By.id("Email")).clear();
-			//dr.wait(2);
-			//System.out.println("Email");
 			dr.findElement(By.id("Email")).sendKeys(username);
-			//dr.findElement(By.id("Password")).click();
-			//dr.findElement(By.id("Password")).clear();
-			//dr.wait(2);
-			//System.out.println("Password");
 			dr.findElement(By.id("Password")).sendKeys(password);
-			//dr.wait(2);
 			dr.findElement(By.id("login")).click();	
 		    
 		}
@@ -65,24 +57,14 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
-			//dr.wait(5);
-			//dr.findElement(By.id("Email")).click();
-			//dr.findElement(By.id("Email")).clear();
-			//dr.wait(2);
-			//System.out.println("Email");
 			dr.findElement(By.id("Email")).sendKeys(username);
-			//dr.findElement(By.id("Password")).click();
-			//dr.findElement(By.id("Password")).clear();
-			//dr.wait(2);
-			//System.out.println("Password");
 			dr.findElement(By.id("Password")).sendKeys(password);
-			//dr.wait(2);
-		    dr.findElement(By.id("login")).click();			    
+			dr.findElement(By.id("login")).click();			    
 		}
 		
 		@When("^User log out$")
 		public void user_log_out() throws Throwable {
-			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 		    dr.findElement(By.id("logout")).click();
 		}
 		
@@ -93,7 +75,7 @@ import cucumber.api.java.en.When;
 
 		@Then("^validate login pass$")
 		public void validate_login_pass() throws Throwable {
-			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard"));
 		}
 		
