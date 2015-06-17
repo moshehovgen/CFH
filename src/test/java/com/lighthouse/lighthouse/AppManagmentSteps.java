@@ -6,9 +6,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -58,8 +56,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@When("^User select App tab and click on Add app button$")
 	public void select_App_tab_click_addApp() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-		
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.findElement(By.id("addAppBtn")).click();	
 		
@@ -76,17 +72,14 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			appName = "";
 		}
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		WebElement AppName = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("name")));
+		
 		dr.findElement(By.id("name")).sendKeys(appName);
 		
-		//dr.findElement(By.xpath("//.[@ng-value='" + platform + "']")).click();
 		
-		WebElement BundleID = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("bundle")));
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
 		
 		if (!category.isEmpty()){
-			//Select dropdown = new Select (dr.findElement(By.cssSelector("[ng-model='categorySelected']")));
-			WebElement AppCat = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("appsCategory")));
+			
 			Select dropdown = new Select (dr.findElement(By.id("appsCategory")));
 			dropdown.selectByVisibleText(category);
 		}
