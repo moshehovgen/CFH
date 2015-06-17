@@ -24,7 +24,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	WebDriver dr;  
 	
-	@Before("@Application1")
+	@Before("@Application")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		
@@ -34,7 +34,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application1")
+	@After("@Application")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -52,7 +52,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("Email")).sendKeys(username);
 		dr.findElement(By.id("Password")).sendKeys(password);
 		dr.findElement(By.id("login")).click();
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 	}
 
 	@When("^User select App tab and click on Add app button$")

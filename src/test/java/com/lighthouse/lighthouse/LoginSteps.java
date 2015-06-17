@@ -51,6 +51,7 @@ import cucumber.api.java.en.When;
 			dr.findElement(By.id("Email")).sendKeys(username);
 			dr.findElement(By.id("Password")).sendKeys(password);
 			dr.findElement(By.id("login")).click();	
+			Thread.sleep(3000);
 		    
 		}
 		
@@ -59,7 +60,8 @@ import cucumber.api.java.en.When;
 			dr.switchTo().frame("myFrame");
 			dr.findElement(By.id("Email")).sendKeys(username);
 			dr.findElement(By.id("Password")).sendKeys(password);
-			dr.findElement(By.id("login")).click();			    
+			dr.findElement(By.id("login")).click();	
+			Thread.sleep(3000);
 		}
 		
 		@When("^User log out$")
