@@ -37,8 +37,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@After("@Application1")
 	public void testShutDown(){
 		if (dr != null) {
-			//dr.quit();
-			//System.out.println("closing webdriver...");
+			dr.quit();
+			System.out.println("closing webdriver...");
 			}
 		
 		dr = null;
@@ -51,7 +51,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		switchFrame("myFrame");
 		dr.findElement(By.id("Email")).sendKeys(username);
 		dr.findElement(By.id("Password")).sendKeys(password);
-		dr.findElement(By.id("login")).click();	
+		dr.findElement(By.id("login")).click();
+		Thread.sleep(5000);
 	}
 
 	@When("^User select App tab and click on Add app button$")
@@ -59,8 +60,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 		
-		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
-		dr.findElement(By.cssSelector("[href='#/']")).click();
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.findElement(By.id("addAppBtn")).click();	
 		
