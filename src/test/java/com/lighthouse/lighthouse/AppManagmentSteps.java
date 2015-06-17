@@ -60,7 +60,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 		
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
-		
+		dr.findElement(By.cssSelector("[href='#/']")).click();
+		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.findElement(By.id("addAppBtn")).click();	
 		
 	}
