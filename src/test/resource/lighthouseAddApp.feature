@@ -22,15 +22,15 @@ Feature: LightHouse Add Application
     Then validate App created
 
     Examples: 
-      | username               | password  | name                    | icon  | platform | packageID                     | category                |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T363-auto               | iconX | 1        | auto.google.com               | Automotive              |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | "T363-#@&*auto"         | iconX | 2        | auto.yahoo.com                | Sports                  |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | "T364-auto#@&*Longgggg" | iconX | 1        | auto1122.yahoo33.com          | Education               |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | "T364-autoLonggggg#@&*" | iconX | 2        | A1122B33C4451D                | Hobbies & Interests     |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T366-auto               | iconX | 1        | "#Auto@yahoo&*SpecialChars"   | Law, Gov't & Politics   |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T365-auto               | iconX | 2        | "SpecialChars#@&*"            | Science                 |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T369-auto               | iconX | 2        | 1122334451LongBundleIDlllllll | Style & Fashion         |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T368-auto               | iconX | 1        | 1122334451LongPackageIDllllll | Religion & Spirituality |
+      | username               | password  | name                  | icon  | platform | packageID                     | category                |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T363-auto             | iconX | 1        | auto.google.com               | Automotive              |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T363-#@&*auto         | iconX | 2        | auto.yahoo.com                | Sports                  |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T364-auto#@&*Longgggg | iconX | 1        | auto1122.yahoo33.com          | Education               |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T364-autoLonggggg#@&* | iconX | 2        | A1122B33C4451D                | Hobbies & Interests     |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T366-auto             | iconX | 1        | #Auto@yahoo&*SpecialChars     | Law, Gov't & Politics   |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T365-auto             | iconX | 2        | SpecialChars#@&*              | Science                 |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T369-auto             | iconX | 2        | 1122334451LongBundleIDlllllll | Style & Fashion         |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T368-auto             | iconX | 1        | 1122334451LongPackageIDllllll | Religion & Spirituality |
 
   @Application
   Scenario Outline: validate error message (test case:  107369 - 107374)
