@@ -57,13 +57,12 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@When("^User select App tab and click on Add app button$")
 	public void select_App_tab_click_addApp() throws Throwable {
 		
-		WebElement appList = (new WebDriverWait(dr, 20)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[href='#/appsList']")));
+		//WebElement appList = (new WebDriverWait(dr, 2220)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[href='#/appsList']")));
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		
-		WebElement addAppBtn = (new WebDriverWait(dr, 120)).until(ExpectedConditions.presenceOfElementLocated(By.id("addAppBtn")));
-		dr.findElement(By.id("addAppBtn")).click();
-		
-		
+		WebDriverWait wait = new WebDriverWait(dr, 1110);
+		WebElement elmAddAppBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("addAppBtn")));
+		dr.findElement(By.id("addAppBtn")).click();	
 		
 	}
 
