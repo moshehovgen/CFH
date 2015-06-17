@@ -41,7 +41,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			System.out.println("closing webdriver...");
 			}
 		
-		dr = null;
+		dr = null; 
 	}
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
