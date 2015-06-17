@@ -59,6 +59,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		//WebElement AppAddBtn = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("addAppBtn")));
+		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		dr.findElement(By.id("addAppBtn")).click();
 		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
