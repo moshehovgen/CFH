@@ -60,7 +60,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		WebElement appList = (new WebDriverWait(dr, 20)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[href='#/appsList']")));
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		
-		WebElement addAppBtn = (new WebDriverWait(dr, 20)).until(ExpectedConditions.presenceOfElementLocated(By.id("addAppBtn")));
+		WebElement addAppBtn = (new WebDriverWait(dr, 120)).until(ExpectedConditions.presenceOfElementLocated(By.id("addAppBtn")));
 		dr.findElement(By.id("addAppBtn")).click();
 		
 		
