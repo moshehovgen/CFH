@@ -49,7 +49,7 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | T374-auto | iconX | 2        | auto.bundleID.com        |                        | Please choose a Category                |
       | ronen.yurik@perion.com | 1q2w3e4r$ | T373-auto | iconX | 1        | auto.packageID.com       |                        | Please choose a Category                |
 
-  @Application
+  @Application1
   Scenario Outline: Click cancel button (test case: 107375)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button

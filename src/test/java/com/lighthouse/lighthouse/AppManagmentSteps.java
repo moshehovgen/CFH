@@ -18,11 +18,12 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	long Time = System.currentTimeMillis();
 	String appName = null;
+	String AppListBaseURL = null;
 	
 	
 	WebDriver dr;  
 	
-	@Before("@Application")
+	@Before("@Application1")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		
@@ -32,7 +33,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application")
+	@After("@Application1")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -57,6 +58,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	public void select_App_tab_click_addApp() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
+		
+		AppListBaseURL = dr.getCurrentUrl();
+		
 		dr.findElement(By.id("addAppBtn")).click();	
 		
 	}
@@ -74,6 +78,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		
 		dr.findElement(By.id("name")).sendKeys(appName);
+		
 		
 		
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
@@ -118,14 +123,25 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Then("^Validate back to app list$")
 	public void Validate_back_to_app_list() throws Throwable {
 		
-		String temp = ".//a[text()='" + appName + "']";
+		/*String temp = ".//a[text()='" + appName + "']";
 		By by = By.xpath(temp);
 		
 		
 		WebElement elem = dr.findElement(by);
-		boolean isElementExist = null!=elem?true:false;
+		*/
+		String CurrURL = dr.getCurrentUrl();
 		
-		Assert.assertTrue("New App creation Fail!", isElementExist);
+		
+		if (AppListBaseURL .equals(CurrURL)) {
+			
+			boolean cancel = true;
+			Assert.assertTrue(cancel);
+		}
+		else {
+			boolean cancel = false;
+			Assert.assertTrue(cancel);
+			
+		}
 	
 	}
 	
