@@ -56,7 +56,7 @@ import cucumber.api.java.en.When;
 		    
 		}
 		
-		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
+		@When("^I enter \"([^\"]*)\" and \"([^\"]\"*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
 			System.out.println("**** Found Frame ****");
