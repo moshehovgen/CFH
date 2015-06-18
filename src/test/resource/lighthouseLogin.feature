@@ -21,10 +21,10 @@ Feature: LightHouse Login
       | username               | password  | message                             |
       | badUserName@perion.com | 123456    | The email or password is incorrect  |
       | ronen.yurik@perion.com |           | Please enter your password         |
-      |                        | 1q2w3e4r$ | Please enter an email              |
+      | 1                       | 1q2w3e4r$ | Please enter an email              |
       | ronen.yurik@perion.com | 123456    | The email or password is incorrect |
       | badUserName@perion.com | 1q2w3e4r$ | The email or password is incorrect |
-      |                        |           | Please enter an email              |
+      | 1                       | 1          | Please enter an email              |
 
   @Login
   Scenario Outline: : Remember me check box (Test Case 107249)
