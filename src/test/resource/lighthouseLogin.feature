@@ -18,13 +18,13 @@ Feature: LightHouse Login
     Then validate warning message <message>
 
     Examples: 
-      | username               | password  | message                             |
-      | badUserName@perion.com | 123456    | The email or password is incorrect  |
+      | username               | password  | message                            |
+      | badUserName@perion.com | 123456    | The email or password is incorrect |
       | ronen.yurik@perion.com |           | Please enter your password         |
-      | 1                       | 1q2w3e4r$ | Please enter an email              |
+      |                        | 1q2w3e4r$ | Please enter an email              |
       | ronen.yurik@perion.com | 123456    | The email or password is incorrect |
       | badUserName@perion.com | 1q2w3e4r$ | The email or password is incorrect |
-      | 1                       | 1          | Please enter an email              |
+      |                        |           | Please enter your password         |
 
   @Login
   Scenario Outline: : Remember me check box (Test Case 107249)
