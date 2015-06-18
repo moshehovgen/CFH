@@ -47,6 +47,7 @@ import cucumber.api.java.en.When;
 		@Given("^I enter ([^\"]*) and ([^\"]*) and checkbox$")
 		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
 			dr.switchTo().frame("myFrame");
+			System.out.println("**** Found Frame ****");
 			dr.findElement(By.id("PersistLogin")).click();
 			dr.findElement(By.id("Email")).sendKeys(username);
 			dr.findElement(By.id("Password")).sendKeys(password);
@@ -58,12 +59,15 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
+			System.out.println("**** Found Frame ****");
 			
 			dr.findElement(By.id("Email")).sendKeys(username);
-			
+			System.out.println("**** Fill Email Field with" + username + "  ****");
 			dr.findElement(By.id("Password")).sendKeys(password);
-			dr.findElement(By.id("login")).click();	
-			Thread.sleep(3000);
+			System.out.println("**** Fill Password Field with" + password + "  ****");
+			dr.findElement(By.id("login")).click();
+			System.out.println("**** click on login button  ****");
+			
 		}
 		
 		@When("^User log out$")
@@ -92,11 +96,19 @@ import cucumber.api.java.en.When;
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
-			Thread.sleep(1000);
+		
 			//WebElement errMess = (new WebDriverWait(dr, 10)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[" + locator + "']")));
 			//dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			boolean found = false;
 			String pageSource = dr.getPageSource();
-			Assert.assertTrue(pageSource.contains(message));
+			System.out.println("**** pulling page source ****");
+			System.out.println("**** Message = " + message + "  ****");
+			System.out.println(found);
+			found = pageSource .contains(message);
+			System.out.println(found);
+			//System.out.println("**** pageSource equals message  ****");
+			
+			Assert.assertTrue(found);
 		}	
 		
 		
