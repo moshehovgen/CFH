@@ -60,11 +60,18 @@ import cucumber.api.java.en.When;
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
 			System.out.println("**** Found Frame ****");
+			if (username != null){
+				dr.findElement(By.id("Email")).click();
+				dr.findElement(By.id("Email")).sendKeys(username);
+				System.out.println("**** Fill Email Field with" + username + "  ****");
+			}
 			
-			dr.findElement(By.id("Email")).sendKeys(username);
-			System.out.println("**** Fill Email Field with" + username + "  ****");
-			dr.findElement(By.id("Password")).sendKeys(password);
-			System.out.println("**** Fill Password Field with" + password + "  ****");
+			if (password != null){
+				dr.findElement(By.id("Password")).click();
+				dr.findElement(By.id("Password")).sendKeys(password);
+				System.out.println("**** Fill Password Field with" + password + "  ****");	
+			}
+			
 			dr.findElement(By.id("login")).click();
 			System.out.println("**** click on login button  ****");
 			
