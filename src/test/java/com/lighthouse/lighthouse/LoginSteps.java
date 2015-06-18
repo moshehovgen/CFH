@@ -59,23 +59,28 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
-			
 			System.out.println("**** Found Frame ****");
+			
+			if (username != "skip"){
 				dr.findElement(By.id("Email")).sendKeys(username);
-			System.out.println("**** Fill Email Field with" + username + "  ****");
-				
+				System.out.println("**** Fill Email Field with" + username + "  ****");	
+			}
+							
 				dr.findElement(By.id("Password")).sendKeys(password);
-			System.out.println("**** Fill Password Field with" + password + "  ****");	
+				System.out.println("**** Fill Password Field with" + password + "  ****");	
 			
 				dr.findElement(By.id("login")).click();
-			System.out.println("**** click on login button  ****");
+				System.out.println("**** click on login button  ****");
 			
 		}
 		
 		@When("^User log out$")
 		public void user_log_out() throws Throwable {
 			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-		    dr.findElement(By.id("logout")).click();
+		    //dr.findElement(By.id("logout")).click();
+			dr.close();
+			
+			
 		}
 		
 		@When("^click Login$")
