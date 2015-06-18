@@ -19,7 +19,7 @@ import cucumber.api.java.en.When;
 		
 		WebDriver dr ;		
 		
-		@Before("@Login1")
+		@Before("@Login")
 		public void initiateBrowser(){
 			String Turl = System.getenv("QA_URL");
 			
@@ -28,7 +28,7 @@ import cucumber.api.java.en.When;
 			dr.get(Turl);
 		}
 			
-		@After("@Login1")
+		@After("@Login")
 		public void testShutDown(){
 			if (dr != null) {
 				dr.quit();
