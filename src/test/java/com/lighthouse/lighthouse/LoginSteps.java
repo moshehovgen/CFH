@@ -19,7 +19,7 @@ import cucumber.api.java.en.When;
 		
 		WebDriver dr ;		
 		
-		@Before("@Login")
+		@Before("@Login1")
 		public void initiateBrowser(){
 			String Turl = System.getenv("QA_URL");
 			
@@ -28,7 +28,7 @@ import cucumber.api.java.en.When;
 			dr.get(Turl);
 		}
 			
-		@After("@Login")
+		@After("@Login1")
 		public void testShutDown(){
 			if (dr != null) {
 				dr.quit();
@@ -83,14 +83,14 @@ import cucumber.api.java.en.When;
 		
 		@Then("^validate login Fail$")
 		public void validate_login_fail() throws Throwable {
-			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			
 			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}
 
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
-			dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			
 			Assert.assertTrue(dr.getPageSource().contains(message));
 		}	
 		
