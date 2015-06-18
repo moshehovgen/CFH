@@ -90,8 +90,11 @@ import cucumber.api.java.en.When;
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
-			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-			Assert.assertTrue(dr.getPageSource().contains(message));
+			
+			//WebElement errMess = (new WebDriverWait(dr, 10)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[" + locator + "']")));
+			//dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			String pageSource = dr.getPageSource();
+			Assert.assertTrue(pageSource.contains(message));
 		}	
 		
 		
