@@ -90,7 +90,7 @@ import cucumber.api.java.en.When;
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
-			
+			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			Assert.assertTrue(dr.getPageSource().contains(message));
 		}	
 		
