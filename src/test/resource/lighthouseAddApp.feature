@@ -10,8 +10,8 @@ Feature: LightHouse Add Application
 
     Examples: 
       | username               | password  | name | icon  | platform | packageID       | category   |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app1 | Automotive |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app2  | Sports     |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     |
 
   @Application
   Scenario Outline: Create app with diff parameters (107363 107364 107365 107366 107368)
