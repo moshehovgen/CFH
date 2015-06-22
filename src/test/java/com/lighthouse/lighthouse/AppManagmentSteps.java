@@ -6,7 +6,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -78,6 +80,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		
 		dr.findElement(By.id("name")).sendKeys(appName);
+		
+		
+		dr.findElement(By.id("platformType" + platform)).click();
 		
 		
 		
