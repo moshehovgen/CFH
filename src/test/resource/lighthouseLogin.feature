@@ -11,7 +11,7 @@ Feature: LightHouse Login
       | username               | password  |
       | ronen.yurik@perion.com | 1q2w3e4r$ |
 
-  @Login
+  @Login1
   Scenario Outline: Login negetive (test cases: 107214, 107217, 107215, 107218, 107258)
     Given I browse to login page
     When I enter <username> and <password> first time
