@@ -44,17 +44,6 @@ import cucumber.api.java.en.When;
 								
 		}
 		
-		@Given("^I enter ([^\"]*) and ([^\"]*) and checkbox$")
-		public void i_check_the_remember_check_box(String username, String password) throws Throwable {
-			dr.switchTo().frame("myFrame");
-			System.out.println("**** Found Frame ****");
-			dr.findElement(By.id("PersistLogin")).click();
-			dr.findElement(By.id("Email")).sendKeys(username);
-			dr.findElement(By.id("Password")).sendKeys(password);
-			dr.findElement(By.id("login")).click();	
-			
-		    
-		}
 		
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
@@ -74,15 +63,7 @@ import cucumber.api.java.en.When;
 			
 		}
 		
-		@When("^User log out$")
-		public void user_log_out() throws Throwable {
-			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-		    //dr.findElement(By.id("logout")).click();
-			dr.close();
-			
-			
-		}
-		
+				
 		@When("^click Login$")
 		public void click_Login() throws Throwable {
 			dr.findElement(By.id("loginBtn")).click();
@@ -104,8 +85,6 @@ import cucumber.api.java.en.When;
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
 		
-			//WebElement errMess = (new WebDriverWait(dr, 10)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[" + locator + "']")));
-			//dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			boolean found = false;
 			String pageSource = dr.getPageSource();
 			System.out.println("**** pulling page source ****");
@@ -113,7 +92,7 @@ import cucumber.api.java.en.When;
 			System.out.println(found);
 			found = pageSource .contains(message);
 			System.out.println(found);
-			//System.out.println("**** pageSource equals message  ****");
+			
 			
 			Assert.assertTrue(found);
 		}	
