@@ -23,7 +23,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	WebDriver dr;  
 	
-	@Before("@Application")
+	@Before("@Application1")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		
@@ -33,7 +33,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application")
+	@After("@Application1")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -68,6 +68,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.navigate().refresh();
+		AppListBaseURL = dr.getCurrentUrl();
 		
 		dr.findElement(By.id("addAppBtn")).click();	
 		
