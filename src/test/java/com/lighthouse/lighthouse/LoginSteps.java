@@ -47,22 +47,17 @@ import cucumber.api.java.en.When;
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
 			
-			
 			if (username != "skip"){
-				dr.findElement(By.id("Email")).clear();;
+				dr.findElement(By.id("Email")).click();
+				dr.findElement(By.id("Email")).clear();
 				dr.findElement(By.id("Email")).sendKeys(username);
 					
 			}
-							
+				dr.findElement(By.id("Password")).click();
 				dr.findElement(By.id("Password")).clear();
 				dr.findElement(By.id("Password")).sendKeys(password);
-					
-			
 				dr.findElement(By.id("login")).click();
-				
-			
 		}
-		
 				
 		@When("^click Login$")
 		public void click_Login() throws Throwable {
@@ -77,19 +72,16 @@ import cucumber.api.java.en.When;
 		
 		@Then("^validate login Fail$")
 		public void validate_login_fail() throws Throwable {
-			
 			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}
 
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
-		
 			boolean found = false;
 			String pageSource = dr.getPageSource();
 			found = pageSource .contains(message);
 			Assert.assertTrue(found);
 		}	
-		
 		
 	}
