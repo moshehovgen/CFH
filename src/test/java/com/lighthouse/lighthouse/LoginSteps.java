@@ -1,5 +1,7 @@
 package com.lighthouse.lighthouse;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +40,7 @@ import cucumber.api.java.en.When;
 		
 		@Given("^I browse to login page$")
 		public void shouldNavigateToLoginPage() {
-			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
+			dr.findElement(By.id("loginBtn")).click();
 								
 		}
 		
@@ -47,15 +49,16 @@ import cucumber.api.java.en.When;
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
 			
+			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			
 			if (username != "skip"){
-				dr.findElement(By.id("Email")).click();
-				dr.findElement(By.id("Email")).clear();
+				
 				dr.findElement(By.id("Email")).sendKeys(username);
 					
 			}
-				dr.findElement(By.id("Password")).click();
-				dr.findElement(By.id("Password")).clear();
+				
 				dr.findElement(By.id("Password")).sendKeys(password);
+				
 				dr.findElement(By.id("login")).click();
 		}
 				
