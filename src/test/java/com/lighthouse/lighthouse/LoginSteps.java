@@ -48,18 +48,18 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
-			System.out.println("**** Found Frame ****");
+			
 			
 			if (username != "skip"){
 				dr.findElement(By.id("Email")).sendKeys(username);
-				System.out.println("**** Fill Email Field with" + username + "  ****");	
+					
 			}
 							
 				dr.findElement(By.id("Password")).sendKeys(password);
-				System.out.println("**** Fill Password Field with" + password + "  ****");	
+					
 			
 				dr.findElement(By.id("login")).click();
-				System.out.println("**** click on login button  ****");
+				
 			
 		}
 		
@@ -87,13 +87,7 @@ import cucumber.api.java.en.When;
 		
 			boolean found = false;
 			String pageSource = dr.getPageSource();
-			System.out.println("**** pulling page source ****");
-			System.out.println("**** Message = " + message + "  ****");
-			System.out.println(found);
 			found = pageSource .contains(message);
-			System.out.println(found);
-			
-			
 			Assert.assertTrue(found);
 		}	
 		
