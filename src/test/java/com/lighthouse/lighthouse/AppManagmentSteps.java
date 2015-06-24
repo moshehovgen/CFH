@@ -25,7 +25,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	WebDriver dr;  
 	
-	@Before("@Application1")
+	@Before("@Application")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		
@@ -35,7 +35,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application1")
+	@After("@Application")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
