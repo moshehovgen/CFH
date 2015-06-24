@@ -69,8 +69,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
-		
-		AppListBaseURL = dr.getCurrentUrl();
+		dr.navigate().refresh();
 		
 		dr.findElement(By.id("addAppBtn")).click();	
 		
