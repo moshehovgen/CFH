@@ -131,22 +131,16 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@Then("^Validate back to app list$")
 	public void Validate_back_to_app_list() throws Throwable {
-		
-		
+		dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		String CurrURL = dr.getCurrentUrl();
-		
-		
-		if (AppListBaseURL .equals(CurrURL)) {
-			
+	if (AppListBaseURL .equals(CurrURL)) {
 			boolean cancel = true;
 			Assert.assertTrue(cancel);
 		}
 		else {
 			boolean cancel = false;
 			Assert.assertTrue(cancel);
-			
 		}
-	
 	}
 	
 	

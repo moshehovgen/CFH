@@ -48,17 +48,11 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
-			
 			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-			
 			if (username != "skip"){
-				
 				dr.findElement(By.id("Email")).sendKeys(username);
-					
 			}
-				
 				dr.findElement(By.id("Password")).sendKeys(password);
-				
 				dr.findElement(By.id("login")).click();
 		}
 				
