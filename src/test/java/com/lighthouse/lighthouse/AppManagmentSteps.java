@@ -68,8 +68,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		dr.navigate().refresh();
-		//dr.wait(2);
+		
+		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
+		
 		dr.findElement(By.id("addAppBtn")).click();	
 		
 	}
@@ -120,7 +122,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		boolean isElementExist = null!=elem?true:false;
 		
 		Assert.assertTrue("New App creation Pass!", isElementExist);
-		
 	}
 	
 	@Then("^validate error message ([^\"]*)$")
@@ -135,7 +136,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		String CurrURL = dr.getCurrentUrl();
 		System.out.println("AppListBaseURL = " + AppListBaseURL);
 		System.out.println("CurrURL = " + CurrURL);
-	if (AppListBaseURL .equals(CurrURL)) {
+		
+		if (AppListBaseURL .equals(CurrURL)) {
 			System.out.println("#### URL's equals #### ");
 			boolean cancel = true;
 			Assert.assertTrue(cancel);
