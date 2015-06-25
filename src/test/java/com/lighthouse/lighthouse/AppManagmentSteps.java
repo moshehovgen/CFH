@@ -133,6 +133,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	public void Validate_back_to_app_list() throws Throwable {
 		
 		String CurrURL = dr.getCurrentUrl();
+		System.out.println("AppListBaseURL = " + AppListBaseURL);
 		System.out.println("CurrURL = " + CurrURL);
 	if (AppListBaseURL .equals(CurrURL)) {
 			System.out.println("#### URL's equals #### ");
