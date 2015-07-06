@@ -66,7 +66,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
+		dr.findElement(By.id("mainMenuManageAppId")).click();
 		dr.navigate().refresh();
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
