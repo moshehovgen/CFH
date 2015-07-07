@@ -10,11 +10,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 		plugin = {"pretty", "html:target/html/", "json:target/cucumber.json"},
 		features = "src/test/resource",
-<<<<<<< HEAD
 		tags = {"@Placement"}
-=======
-		tags = {"@Application, @Login"}
->>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 		
 		)
 

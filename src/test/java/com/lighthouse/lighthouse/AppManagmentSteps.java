@@ -55,12 +55,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
-<<<<<<< HEAD
 	public void loginToPortal(String username, String password) throws Throwable {
-=======
-	public void user_logged_into_the_portal(String username, String password) throws Throwable {
-		
->>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 		dr.findElement(By.id("loginBtn")).click();
 		
 		
@@ -77,13 +72,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 
 	@When("^User select App tab and click on Add app button$")
-<<<<<<< HEAD
 	public void selectAppAndClickAdd() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
-=======
-	public void select_App_tab_click_addApp() throws Throwable {
->>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
@@ -156,7 +147,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		boolean isElementExist = null!=elem?true:false;
 		
 		Assert.assertTrue("New App creation Pass!", isElementExist);
-<<<<<<< HEAD
 		
 	}
 	
@@ -177,8 +167,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		
 		
-=======
->>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 	}
 	
 	@Then("^validate error message ([^\"]*)$")

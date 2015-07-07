@@ -1,5 +1,7 @@
 package com.lighthouse.lighthouse;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -37,13 +39,13 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Given("^I browse to login page$")
-<<<<<<< HEAD
+
 		public void navigateToLoginPage() {
 			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
-=======
+		}
 		public void shouldNavigateToLoginPage() {
 			dr.findElement(By.id("loginBtn")).click();
->>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
+
 								
 		}
 		
@@ -71,12 +73,8 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Then("^validate login Fail$")
-<<<<<<< HEAD
-		public void validateLoginFail() throws Throwable {
-			
-=======
 		public void validate_login_fail() throws Throwable {
->>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
+
 			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}
 
