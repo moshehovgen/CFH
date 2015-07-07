@@ -1,10 +1,35 @@
 package com.lighthouse.lighthouse;
 
+import org.openqa.selenium.WebDriver;
+
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class RegistrationSteps {
+	
+	WebDriver dr ;		
+	
+	@Before("@Registration")
+	public void initiateBrowser(){
+		String Turl = System.getenv("QA_URL");
+		
+		dr = initWebDriver();
+		dr.manage().window().maximize();
+		dr.get(Turl);
+	}
+		
+	@After("@Registration")
+	public void testShutDown(){
+		if (dr != null) {
+			dr.quit();
+			System.out.println("closing webdriver...");
+			}
+		
+		dr = null;
+	}
 
 	@Given("^Browse to registration page$")
 	public void browse_to_registration_page() throws Throwable {

@@ -1,5 +1,6 @@
 Feature: Registration page tests
 
+@Registration
   Background: create mail acount on mailinator
     Given create mail on mailinater <mail>
     
