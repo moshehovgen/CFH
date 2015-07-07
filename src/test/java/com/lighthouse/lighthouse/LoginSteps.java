@@ -1,7 +1,5 @@
 package com.lighthouse.lighthouse;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -39,14 +37,14 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Given("^I browse to login page$")
-		public void shouldNavigateToLoginPage() {
+		public void navigateToLoginPage() {
 			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
 								
 		}
 		
 		
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
-		public void i_enter_ronen_and_pass(String username, String password) throws Throwable {				
+		public void enterUserAndPass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
 			System.out.println("**** Found Frame ****");
 			
@@ -65,18 +63,18 @@ import cucumber.api.java.en.When;
 		
 				
 		@When("^click Login$")
-		public void click_Login() throws Throwable {
+		public void clickLogin() throws Throwable {
 			dr.findElement(By.id("loginBtn")).click();
 		}
 
 		@Then("^validate login pass$")
-		public void validate_login_pass() throws Throwable {
+		public void validateLogin() throws Throwable {
 			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard"));
 		}
 		
 		@Then("^validate login Fail$")
-		public void validate_login_fail() throws Throwable {
+		public void validateLoginFail() throws Throwable {
 			
 			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}

@@ -7,9 +7,10 @@ Feature: LightHouse Add Application
     And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
     And Click Add button
     Then validate App created
+    And validate properties are correct; <name>, <platform>, <packageID>, <category>
 
     Examples: 
-      | username               | password  | name | icon  | platform | packageID       | category   |
+      | username               | password  | name | icon  | platform | packageID      | category   |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     |
 
@@ -61,3 +62,23 @@ Feature: LightHouse Add Application
       | username               | password  | name | icon  | platform | packageID       | category   |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app1 | Automotive |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app2  | Sports     |
+
+  @Test
+  Scenario Outline: Create App and then edit information (Test case: 107499)
+    Given User logged into the portal enter <username> and <password>
+    When User select App tab and click on Add app button
+    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Click Add button
+    Then validate App created
+    And edit app
+    And change app name <newname> and category <newCategory>
+    And click save edit
+    And validate name and category changed to <newname> <newCategory>
+
+    Examples: 
+      | username               | password  | name | icon  | platform | packageID      | category   | newname            | newCategory   |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | NewAuto            | Food & Drinks |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     | Pretty application | Uncategorized |
+      
+      
+      

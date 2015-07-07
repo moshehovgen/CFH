@@ -1,5 +1,6 @@
 package com.lighthouse.lighthouse;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -23,9 +25,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	String AppListBaseURL = null;
 	
 	
-	WebDriver dr;  
+	public static WebDriver dr;  
 	
-	@Before("@Application")
+	@Before("@Application, @Placement")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		
@@ -35,7 +37,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application")
+	@After("@Application, @Placement")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -45,8 +47,17 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr = null; 
 	}
 	
+	public static WebDriver getDriver(){
+		return dr;
+	}
+	
+	@Given("^User logged into the portal enter \"(.*?)\" and \"(.*?)\"$")
+	public void loginBackground(String name, String password) throws Throwable {
+		loginToPortal(name, password);
+	}
+	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
-	public void user_logged_into_the_portal(String username, String password) throws Throwable {
+	public void loginToPortal(String username, String password) throws Throwable {
 		dr.findElement(By.id("loginBtn")).click();
 		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		switchFrame("myFrame");
@@ -57,7 +68,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 
 	@When("^User select App tab and click on Add app button$")
-	public void select_App_tab_click_addApp() throws Throwable {
+	public void selectAppAndClickAdd() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		
@@ -67,8 +78,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 
+	@When("^Enter App \"(.*?)\" upload \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\" choose category \"(.*?)\"$")
+	public void addAppBackground(String name, String icon, int platform, String packageID, String category) throws Throwable {
+	    createApp(name, icon, platform, packageID, category);
+	}
+	
 	@When("^Enter App ([^\"]*) upload ([^\"]*) select ([^\"]*) Enter packageID ([^\"]*) choose category ([^\"]*)$")
-	public void create_App(String name, String icon, int platform, String packageID, String category) throws Throwable {
+	public void createApp(String name, String icon, int platform, String packageID, String category) throws Throwable {
 		
 		//set unique name
 		if (!name.isEmpty()) {
@@ -96,13 +112,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 
 	@When("^Click Add button$")
-	public void click_Add_button() throws Throwable {
+	public void clickAdd() throws Throwable {
 		dr.findElement(By.id("appsSave")).click();
 		
 	}
 	
 	@When("^Click cancel button$")
-	public void click_cancel_button() throws Throwable {
+	public void clickCancel() throws Throwable {
 		dr.findElement(By.id("appsCancel")).click();	
 	}
 
@@ -116,6 +132,25 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		boolean isElementExist = null!=elem?true:false;
 		
 		Assert.assertTrue("New App creation Pass!", isElementExist);
+		
+	}
+	
+	@Then("^validate properties are correct; ([^\"]*), ([^\"]*), ([^\"]*), ([^\"]*)$")
+	public void validateAppProperties(String name, int platform, String packageID, String category) throws Throwable {
+		String appName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
+		String appPlatform = dr.findElement(By.id("header_content_platform")).getText();
+		String appBundle = dr.findElement(By.id("header_content_id")).getText();
+		String appCategory = dr.findElement(By.id("header_content_category")).getText();
+		
+		//check app name is correct
+		if(appName.equals(name) && appPlatform.equals("Patform: "+platform) && 
+				appBundle.equals("Bundle ID: "+packageID) && appCategory.equals("Category: "+category)){
+			System.out.println("All app properties are correct!");
+		}
+		else
+			System.out.println("Not all properties were added correctly! "+ false);
+		
+		
 		
 	}
 	
@@ -150,6 +185,61 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	}
 	
+	@And("^edit app$")
+	public void editApp() throws Throwable {
+	    dr.findElement(By.id("app_edit")).click();
+	    
+	}
+
+	@And("^change app name ([^\"]*) and category ([^\"]*)$")
+	public void changeAppNameAndCategory(String appName, String category) throws Throwable {
+		WebElement name = dr.findElement(By.id("name"));
+	//	WebElement categoryElem = dr.findElement(By.id("select"));
+		
+		name.clear();
+		name.sendKeys(appName);
+		
+	}
+
+	@And("^validate name and category changed to ([^\"]*) ([^\"]*)$")
+	public void validateAppEdit(String appName, String category) throws Throwable {
+	   String actualAppName;
+	   String actualCategory;
+	   
+	   actualAppName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
+	   actualCategory = dr.findElement(By.id("header_content_id")).getText();
+	   
+	   if(actualAppName == appName && actualCategory == "Category: " + category){
+		   System.out.println("App was edited successfully!");
+	   } else
+		   System.out.println("App was edited information is incorrect!"); 
+	   
+	   
+	}
+	
+	@And("^click save edit$")
+	public void saveEditApp() throws Throwable {
+	    dr.findElement(By.id("app_edit")).click();
+	    
+	}
+	
+	@And("^check app list$")
+	public boolean doesAppInList(String appName){
+		boolean found = false;
+		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+		String name;
+		
+		for (int i = 0; i < items.size() && !found; i++) {
+			
+			name = items.get(i).findElement(By.className("ng-binding")).getText();
+			if(name.equals(appName)){
+				found = true;				
+			}
+		}
+		
+		
+		return found;
+	}
 	
 	public void switchFrame(String frameId) {
 		   dr.switchTo().defaultContent();
