@@ -90,7 +90,15 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.findElement(By.id("name")).sendKeys(appName);
 		
-		dr.findElement(By.id("platformType" + platform)).click();
+		
+			if (platform == 1){
+				dr.findElement(By.id("addAndroidBtn")).click();
+			}
+			if (platform == 2){
+				dr.findElement(By.id("addiOSBtn")).click();
+			}
+				
+		
 		
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
 		

@@ -9,7 +9,7 @@ Feature: LightHouse Add Application
     Then validate App created
 
     Examples: 
-      | username               | password  | name | icon  | platform | packageID       | category   |
+      | username               | password  | name | icon  | platform | packageID      | category   |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     |
 
