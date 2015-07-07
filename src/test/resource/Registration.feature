@@ -2,7 +2,8 @@ Feature: Registration page tests
 
   Background: create mail acount on mailinator
     Given create mail on mailinater <mail>
-
+    
+@Registration
   Scenario Outline: Create new acount positve test - (Test cases: 114364)
     And Browse to registration page
     When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail <mail>, password <password>, publisher type <pubType>
