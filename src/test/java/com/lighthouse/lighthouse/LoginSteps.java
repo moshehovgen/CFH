@@ -37,8 +37,13 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Given("^I browse to login page$")
+<<<<<<< HEAD
 		public void navigateToLoginPage() {
 			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
+=======
+		public void shouldNavigateToLoginPage() {
+			dr.findElement(By.id("loginBtn")).click();
+>>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 								
 		}
 		
@@ -46,21 +51,13 @@ import cucumber.api.java.en.When;
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void enterUserAndPass(String username, String password) throws Throwable {				
 			dr.switchTo().frame("myFrame");
-			System.out.println("**** Found Frame ****");
-			
+			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			if (username != "skip"){
 				dr.findElement(By.id("Email")).sendKeys(username);
-				System.out.println("**** Fill Email Field with" + username + "  ****");	
 			}
-							
 				dr.findElement(By.id("Password")).sendKeys(password);
-				System.out.println("**** Fill Password Field with" + password + "  ****");	
-			
 				dr.findElement(By.id("login")).click();
-				System.out.println("**** click on login button  ****");
-			
 		}
-		
 				
 		@When("^click Login$")
 		public void clickLogin() throws Throwable {
@@ -74,26 +71,22 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Then("^validate login Fail$")
+<<<<<<< HEAD
 		public void validateLoginFail() throws Throwable {
 			
+=======
+		public void validate_login_fail() throws Throwable {
+>>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 			Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 		}
 
 		
 		@Then("^validate warning message ([^\"]*)$")
 		public void validate_login_fail(String message) throws Throwable {
-		
 			boolean found = false;
 			String pageSource = dr.getPageSource();
-			System.out.println("**** pulling page source ****");
-			System.out.println("**** Message = " + message + "  ****");
-			System.out.println(found);
 			found = pageSource .contains(message);
-			System.out.println(found);
-			
-			
 			Assert.assertTrue(found);
 		}	
-		
 		
 	}

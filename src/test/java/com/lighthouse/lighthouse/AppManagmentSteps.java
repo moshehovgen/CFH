@@ -7,9 +7,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -57,21 +55,42 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
+<<<<<<< HEAD
 	public void loginToPortal(String username, String password) throws Throwable {
+=======
+	public void user_logged_into_the_portal(String username, String password) throws Throwable {
+		
+>>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 		dr.findElement(By.id("loginBtn")).click();
-		dr.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
+		
 		switchFrame("myFrame");
+		//dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		
 		dr.findElement(By.id("Email")).sendKeys(username);
+		
+		dr.findElement(By.id("Password")).clear();
 		dr.findElement(By.id("Password")).sendKeys(password);
+		
 		dr.findElement(By.id("login")).click();
-		Thread.sleep(3000);
+		
 	}
 
 	@When("^User select App tab and click on Add app button$")
+<<<<<<< HEAD
 	public void selectAppAndClickAdd() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		dr.findElement(By.cssSelector("[href='#/appsList']")).click();
+=======
+	public void select_App_tab_click_addApp() throws Throwable {
+>>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 		
+		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		dr.findElement(By.id("mainMenuManageAppId")).click();
+		dr.navigate().refresh();
+		
+		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
 		
 		dr.findElement(By.id("addAppBtn")).click();	
@@ -98,8 +117,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("name")).sendKeys(appName);
 		
 		
-		dr.findElement(By.id("platformType" + platform)).click();
-		
+			if (platform == 1){
+				dr.findElement(By.id("addAndroidBtn")).click();
+			}
+			if (platform == 2){
+				dr.findElement(By.id("addiOSBtn")).click();
+			}
+				
 		
 		
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
@@ -132,6 +156,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		boolean isElementExist = null!=elem?true:false;
 		
 		Assert.assertTrue("New App creation Pass!", isElementExist);
+<<<<<<< HEAD
 		
 	}
 	
@@ -152,6 +177,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		
 		
+=======
+>>>>>>> branch 'master' of https://github.com/ronenPerion/lightHouse.git
 	}
 	
 	@Then("^validate error message ([^\"]*)$")
@@ -163,26 +190,20 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Then("^Validate back to app list$")
 	public void Validate_back_to_app_list() throws Throwable {
 		
-		/*String temp = ".//a[text()='" + appName + "']";
-		By by = By.xpath(temp);
-		
-		
-		WebElement elem = dr.findElement(by);
-		*/
 		String CurrURL = dr.getCurrentUrl();
-		
+		System.out.println("AppListBaseURL = " + AppListBaseURL);
+		System.out.println("CurrURL = " + CurrURL);
 		
 		if (AppListBaseURL .equals(CurrURL)) {
-			
+			System.out.println("#### URL's equals #### ");
 			boolean cancel = true;
 			Assert.assertTrue(cancel);
 		}
 		else {
+			System.out.println("#### URL's ARE NOT equals #### ");
 			boolean cancel = false;
 			Assert.assertTrue(cancel);
-			
 		}
-	
 	}
 	
 	@And("^edit app$")
