@@ -1,64 +1,168 @@
 package com.lighthouse.lighthouse;
 
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.sql.Time;
+import java.util.List;
+
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class RegistrationSteps {
+public class RegistrationSteps extends AbstractPageStepDefinition {
 	
+	WebDriver dr;
+	MailinatorImplement mailObj = new MailinatorImplement();
+	String mailAddress = "";
+	long Time = System.currentTimeMillis();
 	
-
-	@Given("^Browse to registration page$")
-	public void browse_to_registration_page() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	//used the before implemented in app manage
+	
+	@After("@Password")
+	public void testShutDown(){
+		if (dr != null) {
+			dr.quit();
+			System.out.println("closing webdriver...");
+			}
+		
+		dr = null;
+	}
+	
+	@Given("^create mail on mailinater ([^\"]*)$")
+	public void createMailAccount(String mail) throws Throwable {
+	    if(!mailAddress.endsWith("com")){
+	    	mailAddress = mail + Time + "@mailinator.com";
+	    } 
+	    if(mail.endsWith("com"))
+	    	mailAddress = mail;
+	    
+	    mailObj.initiateBrowser();
+	    mailObj.createMailAddress(mailAddress);
+	    
+	   // mailObj.dr.close();
+	}
+	
+	@And("^Browse to registration page$")
+	public void openRegisterPage() throws Throwable {
+		dr = initWebDriver();
+		dr.manage().window().maximize();
+		
+		dr.get(System.getenv("QA_URL"));//go to our page
+		
+	    dr.findElement(By.id("registerBtn")).click();
 	}
 
-	@When("^I enter publisher name Nofs company, first name Nofar, last name Diamant, mail nofard@mailinator\\.com, password (\\d+), publisher type Mobile publisher$")
-	public void i_enter_publisher_name_Nofs_company_first_name_Nofar_last_name_Diamant_mail_nofard_mailinator_com_password_publisher_type_Mobile_publisher(int arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail, password ([^\"]*), publisher type ([^\"]*)$")
+	public void enterDetailsToRegister(String pubName, String fName, String lName, String password, String pubType) throws Throwable {
+		dr.switchTo().frame("myRegisterFrame");
+		
+		dr.findElement(By.id("Publisher")).sendKeys(pubName);
+		dr.findElement(By.id("FirstName")).sendKeys(fName);
+		dr.findElement(By.id("LastName")).sendKeys(lName);
+		dr.findElement(By.id("Email")).sendKeys(mailAddress);
+		dr.findElement(By.id("Password")).sendKeys(password);
+		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
+		
+		WebElement pubMenu = dr.findElement(By.id("dd"));
+		
+		pubMenu.click();
+		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
+
+		for (int i = 0; i < menuElem.size(); i++) {
+			if(menuElem.get(i).getText().equals(pubType)){
+				menuElem.get(i).click();
+			}
+		}
+		Thread.sleep(1000);
+
 	}
 
-	@When("^click submit$")
-	public void click_submit() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	private boolean clickOnAccept(){
+		try{
+			WebElement elem = dr.findElement(By.id("forPersist")); 
+		    Actions action = new Actions(dr);
+		  
+		    Dimension d = elem.getSize();
+		    
+		    int x = d.getWidth()/4;
+		    int y = d.getHeight()/2;
+		    
+		    action.moveToElement(elem,x,y).click().perform();
+		    
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+
+		if(dr.findElement(By.id("ConditionsChecker")).getAttribute("checked").equals("true")){
+	    	return true;
+	    }
+	    else
+	    	return false;
+	}
+	
+	@And("^click submit$")
+	public void clickSubmit() throws Throwable {
+		if(clickOnAccept())
+		{
+			dr.findElement(By.id("submit")).click();
+			Thread.sleep(1000);
+			dr.findElement(By.id("submit")).click(); //tell them to change the name
+		}
+		
+		dr.close();
 	}
 
-	@When("^Verify mail sent to nofard@mailinator\\.com$")
-	public void verify_mail_sent_to_nofard_mailinator_com() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	@When("^Verify mail sent$")
+	public void verifyMailRecieved() throws Throwable {
+		createMailAccount(mailAddress);
+		Thread.sleep(1000);
+	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mailAddress);
+	    Thread.sleep(1000);
 	}
 
-	@Then("^click on registration complete$")
-	public void click_on_registration_complete() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	@Then("^click on link in mail$")
+	public void clickRegisterInMail() throws Throwable {
+		mailObj.clickOnLinkInMail("SURE, ACTIVATE MY ACCOUNT");
+		
+		mailObj.dr.close();
 	}
 
-	@Then("^verify registration complete$")
-	public void verify_registration_complete() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	@Then("^verify registration complete ([^\"]*)$")
+	public void verify_registration_complete(String password) throws Throwable {
+		LoginSteps login = new LoginSteps();
+		
+		login.initiateBrowser();
+		
+		login.navigateToLoginPage();
+		login.enterUserAndPass(mailAddress, password);
+		login.validateLogin(); //check with Ronen if relevant
+
+		
+	}
+	
+	@Then("^validate warning message in register ([^\"]*)$")
+	public void validateRegisterFail(String message) throws Throwable {
+		boolean found = false;
+		String pageSource = dr.switchTo().frame("myRegisterFrame").getPageSource();
+		found = pageSource .contains(message);
+		Assert.assertTrue(found);
 	}
 
-	@When("^I enter publisher name Nofs companr, first name Nofgr, last name Digmant, mail nogrd@mailinator\\.com, password (\\d+), publisher type Mobile publisher$")
-	public void i_enter_publisher_name_Nofs_companr_first_name_Nofgr_last_name_Digmant_mail_nogrd_mailinator_com_password_publisher_type_Mobile_publisher(int arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
 
-	@When("^Verify mail sent to nogrd@mailinator\\.com$")
-	public void verify_mail_sent_to_nogrd_mailinator_com() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
+
 	
 }

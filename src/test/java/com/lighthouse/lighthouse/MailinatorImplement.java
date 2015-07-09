@@ -14,30 +14,34 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 		
-		dr.get("mailinator.com");
+		dr.get("http://mailinator.com/");
 	}
 	
 	public void createMailAddress(String mailAddress){
 		
 		dr.findElement(By.xpath("//*[@id=\"inboxfield\"]")).sendKeys(mailAddress);
-		dr.findElement(By.className("btn btn-success")).click();
+		dr.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div/div[2]/div/div/btn")).click();
 		
 	}
-	public void clickOnMail(){
-		List<WebElement> mailItems = dr.findElement(By.id("mailcontainer")).findElements(By.tagName("li"));
-		WebElement mailName;
+	public void clickOnMailRecieved(String xpath, String mail){
+		dr.findElement(By.xpath(xpath)).click();
 		
-		for (int i = 0; i < mailItems.size(); i++) {
-			mailName = mailItems.get(i).findElement(By.className("subject ng-binding"));
-			
-			if(mailName.getText().equals("subject")){
-				mailName.click();
-			}
-		}
+		
+//		List<WebElement> mailItems = dr.findElement(By.id("mailcontainer")).findElements(By.tagName("li"));
+//		WebElement mailName;
+//		
+//		for (int i = 0; i < mailItems.size(); i++) {
+//			mailName = mailItems.get(i).findElement(By.className("subject ng-binding"));
+//			
+//			if(mailName.getText().equals(subject)){
+//				mailName.click();
+//			}
+//		}
 	}
 	
-	public void clickOnRegistration() {
-		
+	public void clickOnLinkInMail(String link) {
+		dr.switchTo().frame(dr.findElement(By.name("rendermail")));
+		dr.findElement(By.partialLinkText(link)).click();
 		
 	}
 	

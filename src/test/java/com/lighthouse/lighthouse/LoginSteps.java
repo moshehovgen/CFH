@@ -39,16 +39,11 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Given("^I browse to login page$")
-
 		public void navigateToLoginPage() {
-			dr.findElement(By.xpath("//*[@id='loginBtn']")).click();
-		}
-		public void shouldNavigateToLoginPage() {
 			dr.findElement(By.id("loginBtn")).click();
+		}
 
 								
-		}
-		
 		
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void enterUserAndPass(String username, String password) throws Throwable {				
@@ -69,7 +64,7 @@ import cucumber.api.java.en.When;
 		@Then("^validate login pass$")
 		public void validateLogin() throws Throwable {
 			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard"));
+			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard") || dr.getCurrentUrl().contains("newUser"));
 		}
 		
 		@Then("^validate login Fail$")
@@ -85,6 +80,6 @@ import cucumber.api.java.en.When;
 			String pageSource = dr.getPageSource();
 			found = pageSource .contains(message);
 			Assert.assertTrue(found);
-		}	
+		}
 		
 	}

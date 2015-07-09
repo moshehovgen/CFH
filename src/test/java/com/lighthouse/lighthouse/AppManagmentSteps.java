@@ -25,7 +25,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	public static WebDriver dr;  
 	
-	@Before("@Application, @Placement")
+	@Before("@Application, @Placement, @Password")
 	public void initiateBrowser(){
 		String Turl = System.getenv("QA_URL");
 		

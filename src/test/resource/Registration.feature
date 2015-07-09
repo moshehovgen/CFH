@@ -1,19 +1,28 @@
 Feature: Registration page tests
 
-@Registration
-  Background: create mail acount on mailinator
+  @Registration
+  Scenario Outline: Create new acount positve test - (Test cases: 114364, 107253, part of 107254)
     Given create mail on mailinater <mail>
-    
-@Registration
-  Scenario Outline: Create new acount positve test - (Test cases: 114364)
     And Browse to registration page
-    When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail <mail>, password <password>, publisher type <pubType>
+    When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail, password <password>, publisher type <pubType>
     And click submit
-    And Verify mail sent to <mail>
-    Then click on registration complete
-    And verify registration complete
+    And Verify mail sent
+    Then click on link in mail
+    And verify registration complete <password>
 
     Examples: 
-      | Publisher    | fName | lName   | mail                  | password | pubType          |
-      | Nofs company | Nofar | Diamant | nofard@mailinator.com | 123456   | Mobile publisher |
-      | Nofs companr | Nofgr | Digmant | nogrd@mailinator.com  | 123556   | Mobile publisher |
+      | Publisher    | fName | lName  | mail                        | password  | pubType          |
+      | Auto company | Auto  | Mation | auto                        | 1q2w3e4r$ | Mobile publisher |
+      | Auto company | Auto  | Mation | auto                        | 1q2w3e4r$ | Mobile publisher |
+      | Auto company | Auto  | Mation | autoCodefeul@mailinator.com | 1q2w3e4r$ | Mobile publisher |
+
+  @Registration
+  Scenario Outline: Create new acount positve test - (Test cases: continue of 107254)
+    Given create mail on mailinater <mail>
+    And Browse to registration page
+    When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail, password <password>, publisher type <pubType>
+    And validate warning message in register <message>
+
+    Examples: 
+      | Publisher    | fName | lName  | mail                        | password  | pubType          | message                     |
+      | Auto company | Auto  | Mation | autoCodefeul@mailinator.com | 1q2w3e4r$ | Mobile publisher | You are already registered. |
