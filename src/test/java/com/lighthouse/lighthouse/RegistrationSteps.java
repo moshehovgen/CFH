@@ -38,23 +38,31 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			dr.quit();
 			System.out.println("closing webdriver...");
 			}
+		if(mailObj.dr != null)
+			mailObj.dr.quit();
 		
 		dr = null;
 	}
 	
 	@Given("^create mail on mailinater ([^\"]*)$")
 	public void createMailAccount(String mail) throws Throwable {
-	    if(!mailAddress.endsWith("com")){
+	    boolean mailCreated = false;
+		
+		if(!mailAddress.endsWith("com")){
 	    	mailAddress = mail + Time + "@mailinator.com";
+	    	mailCreated = true;
 	    } 
-	    if(mail.endsWith("com"))
+	    if(mail.endsWith("com") && mail.startsWith("autoCodefeul")) {
 	    	mailAddress = mail;
-	    
+	    	mailCreated = true;
+	    } 
 	    mailObj.initiateBrowser();
 	    mailObj.createMailAddress(mailAddress);
 	    
-	   // mailObj.dr.close();
+	    if(mailCreated)
+	    	mailObj.dr.quit();
 	}
+	
 	
 	@And("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
@@ -123,7 +131,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			dr.findElement(By.id("submit")).click(); //tell them to change the name
 		}
 		
-		dr.close();
+		dr.quit();
 	}
 
 	@When("^Verify mail sent$")
@@ -137,8 +145,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	@Then("^click on link in mail$")
 	public void clickRegisterInMail() throws Throwable {
 		mailObj.clickOnLinkInMail("SURE, ACTIVATE MY ACCOUNT");
+		Thread.sleep(1000);
 		
-		mailObj.dr.close();
+		mailObj.dr.quit();
 	}
 
 	@Then("^verify registration complete ([^\"]*)$")
@@ -150,15 +159,19 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		login.navigateToLoginPage();
 		login.enterUserAndPass(mailAddress, password);
 		login.validateLogin(); //check with Ronen if relevant
+		
+		login.dr.quit();
 
 		
 	}
 	
-	@Then("^validate warning message in register ([^\"]*)$")
+	@Then("^validate the warning message in register ([^\"]*)$")
 	public void validateRegisterFail(String message) throws Throwable {
 		boolean found = false;
-		String pageSource = dr.switchTo().frame("myRegisterFrame").getPageSource();
-		found = pageSource .contains(message);
+		
+		dr.switchTo().activeElement();
+		String pageSource = dr.getPageSource();
+		found = pageSource.contains(message);
 		Assert.assertTrue(found);
 	}
 
