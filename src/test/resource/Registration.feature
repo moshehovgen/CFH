@@ -1,6 +1,6 @@
 Feature: Registration page tests
 
-  @Test
+  @Registration
   Scenario Outline: Create new acount positve test - (Test cases: 114364, 107253, part of 107254)
     Given create mail on mailinater <mail>
     And Browse to registration page
