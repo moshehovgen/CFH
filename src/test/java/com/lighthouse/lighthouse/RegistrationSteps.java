@@ -32,7 +32,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	//used the before implemented in app manage
 	
-	@After("@Password")
+	@After("@Registration")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -44,7 +44,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		dr = null;
 	}
 	
-	@Given("^create mail on mailinater ([^\"]*)$")
+	@Given("^create mail on mailinater for registration ([^\"]*)$")
 	public void createMailAccount(String mail) throws Throwable {
 	    boolean mailCreated = false;
 		
@@ -61,8 +61,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	    
 	    if(mailCreated)
 	    	mailObj.dr.quit();
+	    
+	    
 	}
 	
+		
 	
 	@And("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
@@ -134,17 +137,20 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		dr.quit();
 	}
 
-	@When("^Verify mail sent$")
-	public void verifyMailRecieved() throws Throwable {
-		createMailAccount(mailAddress);
+	@When("^Verify mail for register sent to ([^\"]*)$")
+	public void verifyMailRecieved(String mail) throws Throwable {
+		if(!mail.endsWith(".com"))
+			mail = mailAddress;
+		
+		createMailAccount(mail);
 		Thread.sleep(1000);
-	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mailAddress);
+	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mail);
 	    Thread.sleep(1000);
 	}
 
-	@Then("^click on link in mail$")
-	public void clickRegisterInMail() throws Throwable {
-		mailObj.clickOnLinkInMail("SURE, ACTIVATE MY ACCOUNT");
+	@Then("^click on link in mail ([^\"]*)$")
+	public void clickRegisterInMail(String link) throws Throwable {
+		mailObj.clickOnLinkInMail(link);
 		Thread.sleep(1000);
 		
 		mailObj.dr.quit();
@@ -165,7 +171,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 	}
 	
-	@Then("^validate the warning message in register ([^\"]*)$")
+	public void setDriver(WebDriver driver){
+		dr = driver;
+	}
+	
+	@Then("^validate the warning message ([^\"]*)$")
 	public void validateRegisterFail(String message) throws Throwable {
 		boolean found = false;
 		

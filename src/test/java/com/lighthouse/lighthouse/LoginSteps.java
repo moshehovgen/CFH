@@ -39,10 +39,14 @@ import cucumber.api.java.en.When;
 		}
 		
 		@Given("^I browse to login page$")
-		public void navigateToLoginPage() {
+		public void navigateToLoginPage() throws InterruptedException {
+			Thread.sleep(1000);
 			dr.findElement(By.id("loginBtn")).click();
 		}
-
+		
+		public void setDriver(WebDriver driver){
+			dr = driver;
+		}
 								
 		
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")

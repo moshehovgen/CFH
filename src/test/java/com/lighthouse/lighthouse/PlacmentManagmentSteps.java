@@ -17,24 +17,6 @@ import cucumber.api.java.en.Then;
 		
 		WebDriver dr = AppManagmentSteps.getDriver();		
 		
-//		@Before("@Placement")
-//		public void LoginAndAddApp()
-//		{
-//			AppManagmentSteps app = new AppManagmentSteps();
-//			//login
-//			LoginSteps a = new LoginSteps();
-//			a.navigateToLoginPage();
-//			try {
-//				a.enterUserAndPass("ronen.yurik@perion.com", "1q2w3e4r$");
-//				a.clickLogin();
-//				a.validateLogin();
-//			} catch (Throwable e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			
-//		}
 		
 		 @And("^verify default placement exists$")
 		 public void defaultPlaceExists() throws Throwable {

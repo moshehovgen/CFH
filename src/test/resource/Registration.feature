@@ -2,25 +2,25 @@ Feature: Registration page tests
 
   @Registration
   Scenario Outline: Create new acount positve test - (Test cases: 114364, 107253, part of 107254)
-    Given create mail on mailinater <mail>
+    Given create mail on mailinater for registration <mail>
     And Browse to registration page
     When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail, password <password>, publisher type <pubType>
     And click submit
-    And Verify mail sent
-    Then click on link in mail
+    And Verify mail for register sent
+    Then click on link in mail <link>
     And verify registration complete <password>
 
     Examples: 
-      | Publisher    | fName | lName  | mail                        | password  | pubType          |
-      | Auto company | Auto  | Mation | auto                        | 1q2w3e4r$ | Mobile publisher |
-      | Auto company | Auto  | Mation | auto                        | 1q2w3e4r$ | Mobile publisher |
+      | Publisher    | fName | lName  | mail | password  | pubType          | link                      |
+      | Auto company | Auto  | Mation | auto | 1q2w3e4r$ | Mobile publisher | SURE, ACTIVATE MY ACCOUNT |
+      | Auto company | Auto  | Mation | auto | 1q2w3e4r$ | Mobile publisher | SURE, ACTIVATE MY ACCOUNT |
 
   @Registration
   Scenario Outline: Create new acount positve test - (Test cases: 107254)
-    Given create mail on mailinater <mail>
+    Given create mail on mailinater for registration <mail>
     And Browse to registration page
     When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail, password <password>, publisher type <pubType>
-    And validate the warning message in register <message>
+    And validate the warning message <message>
 
     Examples: 
       | Publisher    | fName | lName  | mail                        | password  | pubType          | message                     |

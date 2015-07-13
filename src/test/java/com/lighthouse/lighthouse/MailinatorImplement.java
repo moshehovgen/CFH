@@ -26,17 +26,6 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 	public void clickOnMailRecieved(String xpath, String mail){
 		dr.findElement(By.xpath(xpath)).click();
 		
-		
-//		List<WebElement> mailItems = dr.findElement(By.id("mailcontainer")).findElements(By.tagName("li"));
-//		WebElement mailName;
-//		
-//		for (int i = 0; i < mailItems.size(); i++) {
-//			mailName = mailItems.get(i).findElement(By.className("subject ng-binding"));
-//			
-//			if(mailName.getText().equals(subject)){
-//				mailName.click();
-//			}
-//		}
 	}
 	
 	public void clickOnLinkInMail(String link) {
