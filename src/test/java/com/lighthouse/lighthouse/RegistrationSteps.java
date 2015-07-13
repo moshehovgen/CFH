@@ -29,8 +29,15 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	MailinatorImplement mailObj = new MailinatorImplement();
 	String mailAddress = "";
 	long Time = System.currentTimeMillis();
+	String Turl = System.getenv("QA_URL");
 	
 	//used the before implemented in app manage
+	
+	@Before("@Registration")
+	public void initiateBrowser(){
+		dr = initWebDriver();
+		dr.manage().window().maximize();
+	}
 	
 	@After("@Registration")
 	public void testShutDown(){
@@ -38,47 +45,22 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			dr.quit();
 			System.out.println("closing webdriver...");
 			}
-		if(mailObj.dr != null)
-			mailObj.dr.quit();
 		
 		dr = null;
 	}
 	
-	@Given("^create mail on mailinater for registration ([^\"]*)$")
-	public void createMailAccount(String mail) throws Throwable {
-	    boolean mailCreated = false;
-		
-		if(!mailAddress.endsWith("com")){
-	    	mailAddress = mail + Time + "@mailinator.com";
-	    	mailCreated = true;
-	    } 
-	    if(mail.endsWith("com") && mail.startsWith("autoCodefeul")) {
-	    	mailAddress = mail;
-	    	mailCreated = true;
-	    } 
-	    mailObj.initiateBrowser();
-	    mailObj.createMailAddress(mailAddress);
-	    
-	    if(mailCreated)
-	    	mailObj.dr.quit();
-	    
-	    
-	}
-	
-		
-	
-	@And("^Browse to registration page$")
+	@Given("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
-		dr = initWebDriver();
-		dr.manage().window().maximize();
 		
-		dr.get(System.getenv("QA_URL"));//go to our page
-		
+		dr.get(Turl);
+		Thread.sleep(1000);
 	    dr.findElement(By.id("registerBtn")).click();
 	}
-
-	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail, password ([^\"]*), publisher type ([^\"]*)$")
-	public void enterDetailsToRegister(String pubName, String fName, String lName, String password, String pubType) throws Throwable {
+	
+	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")
+	public void enterDetailsToRegister(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable {
+		setEmail(mail);
+		
 		dr.switchTo().frame("myRegisterFrame");
 		
 		dr.findElement(By.id("Publisher")).sendKeys(pubName);
@@ -101,7 +83,36 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		Thread.sleep(1000);
 
 	}
-
+	
+	@And("^click submit$")
+	public void clickSubmit() throws Throwable {
+		if(clickOnAccept())
+		{
+			dr.findElement(By.id("submit")).click();
+			Thread.sleep(1000);
+			dr.findElement(By.id("submit")).click(); //tell them to change the name
+		}
+		
+	}
+	
+	@And("^create mail on mailinater for registration ([^\"]*)$")
+	public void createMailAccount(String mail) throws Throwable {
+	    
+	    mailObj.setDriver(dr);
+	    mailObj.navigateToMail();
+	    mailObj.createMailAddress(mailAddress);
+	    
+	}
+	
+	public void setEmail(String mail){
+		if(!mailAddress.endsWith("com")){
+	    	mailAddress = mail + Time + "@mailinator.com";
+	    } 
+	    if(mail.endsWith("com") && mail.startsWith("autoCodefuel")) {
+	    	mailAddress = mail;
+	    }
+	}
+	
 	private boolean clickOnAccept(){
 		try{
 			WebElement elem = dr.findElement(By.id("forPersist")); 
@@ -125,24 +136,10 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	    	return false;
 	}
 	
-	@And("^click submit$")
-	public void clickSubmit() throws Throwable {
-		if(clickOnAccept())
-		{
-			dr.findElement(By.id("submit")).click();
-			Thread.sleep(1000);
-			dr.findElement(By.id("submit")).click(); //tell them to change the name
-		}
-		
-		dr.quit();
-	}
+	
 
 	@When("^Verify mail for register sent to ([^\"]*)$")
 	public void verifyMailRecieved(String mail) throws Throwable {
-		if(!mail.endsWith(".com"))
-			mail = mailAddress;
-		
-		createMailAccount(mail);
 		Thread.sleep(1000);
 	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mail);
 	    Thread.sleep(1000);
@@ -152,19 +149,16 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public void clickRegisterInMail(String link) throws Throwable {
 		mailObj.clickOnLinkInMail(link);
 		Thread.sleep(1000);
-		
-		mailObj.dr.quit();
 	}
 
 	@Then("^verify registration complete ([^\"]*)$")
 	public void verify_registration_complete(String password) throws Throwable {
 		LoginSteps login = new LoginSteps();
 		
-		login.initiateBrowser();
+		login.setDriver(dr);
 		
 		login.navigateToLoginPage();
-		login.enterUserAndPass(mailAddress, password);
-		login.validateLogin(); //check with Ronen if relevant
+		login.validateLogin();
 		
 		login.dr.quit();
 

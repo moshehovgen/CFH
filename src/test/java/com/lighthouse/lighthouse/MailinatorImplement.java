@@ -13,8 +13,14 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 	public void initiateBrowser(){
 		dr = initWebDriver();
 		dr.manage().window().maximize();
-		
+	}
+	
+	public void navigateToMail() {
 		dr.get("http://mailinator.com/");
+	}
+	
+	public void setDriver(WebDriver driver){
+		dr = driver;
 	}
 	
 	public void createMailAddress(String mailAddress){
