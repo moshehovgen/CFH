@@ -1,4 +1,4 @@
-package com.lighthouse.lighthouse;
+package com.codefuelhub.codefuelhub;
 
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -51,7 +51,6 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@Given("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
-		WebElement registerElem;
 		
 		dr.get(Turl);
 		

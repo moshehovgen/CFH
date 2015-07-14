@@ -1,4 +1,4 @@
-package com.lighthouse.lighthouse;
+package com.codefuelhub.codefuelhub;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
