@@ -17,12 +17,12 @@ public class AbstractPageStepDefinition {
 	
 	WebDriver dr;
 	
-	public boolean waitForVisibleElement(By locator, int timeout) {		  
+	public boolean waitForVisibleElement(WebDriver driver, By locator, int timeout) {		  
 		  try {
 		   // disable implicit wait
-		   dr.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+			  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		   
-		   WebDriverWait wait = new WebDriverWait(dr, timeout);
+		   WebDriverWait wait = new WebDriverWait(driver, timeout);
 		   WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		   
 		   if (result == null) {
@@ -35,7 +35,7 @@ public class AbstractPageStepDefinition {
 		  } finally {
 		   
 		   // enable implicit wait
-		   dr.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);		   
+			  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);		   
 		  }   		  
 		 }
 /*	

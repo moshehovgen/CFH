@@ -51,10 +51,22 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@Given("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
+		WebElement registerElem;
 		
 		dr.get(Turl);
-		Thread.sleep(1000);
-	    dr.findElement(By.id("registerBtn")).click();
+		
+		if(waitForElement(By.id("registerBtn"))){
+			dr.findElement(By.id("registerBtn")).click();
+		}
+		else
+			System.out.println("Register element wasn't found!"+ false);
+	}
+	
+	public boolean waitForElement(By locator){
+		
+		AbstractPageStepDefinition abs = new AbstractPageStepDefinition();
+		return abs.waitForVisibleElement(dr, locator, 10000);
+		
 	}
 	
 	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")

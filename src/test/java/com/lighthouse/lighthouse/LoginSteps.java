@@ -38,12 +38,23 @@ import cucumber.api.java.en.When;
 		@Given("^I browse to login page$")
 		public void navigateToLoginPage() throws InterruptedException {
 			dr.get(Turl);
-			Thread.sleep(1000);
-			dr.findElement(By.id("loginBtn")).click();
+			
+			if(waitForElement(By.id("loginBtn"))){
+				dr.findElement(By.id("loginBtn")).click();
+			}
+			else
+				System.out.println("Login element wasn't found!"+ false);
+			
 		}
 		
 		public void setDriver(WebDriver driver){
 			dr = driver;
+		}
+		public boolean waitForElement(By locator){
+			
+			AbstractPageStepDefinition abs = new AbstractPageStepDefinition();
+			return abs.waitForVisibleElement(dr, locator, 10000);
+			
 		}
 								
 		
