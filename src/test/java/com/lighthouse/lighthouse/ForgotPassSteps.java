@@ -45,7 +45,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	
 	@When("^click on forgot password$")
 	public void clickForgot() throws Throwable {
-		Thread.sleep(1000);
+		
 		dr.switchTo().frame("myFrame");
 		dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		dr.findElement(By.id("forgot-password")).click();
