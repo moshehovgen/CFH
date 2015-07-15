@@ -37,25 +37,8 @@ public class AbstractPageStepDefinition {
 		   // enable implicit wait
 			  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);		   
 		  }   		  
-		 }
-/*	
-public boolean isElementExist(By locator) {	  
-		  try {		 
-		   WebElement element = dr.findElement(locator);		   
-		  } catch (NoSuchElementException e) {		   
-		   return false;
-		   
-		  } catch (ElementNotVisibleException e) {
-		   
-		   return false;
-		   
-		  }
-		  
-		  
-		  return true;
-		  
-		 }
-*/
+	}
+	
 	public WebDriver initWebDriver() {
 			switch (System.getenv("BROWSER_TYPE")) {
 				case "firefox":
@@ -77,42 +60,14 @@ public boolean isElementExist(By locator) {
 		// default if no valid browser value
 		return new FirefoxDriver();
 	}
-
-	 public boolean isElementExist(By locator, int defaultWaitPeriod) {
-		  
-		  WebElement result;
-		  
-		  try {
-		   
-		   // disable implicit wait
-		   dr.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		   WebDriverWait wait = new WebDriverWait(dr, defaultWaitPeriod);
-		   
-		   try {
-		    
-		    result = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-		    
-		   } catch (TimeoutException e) {
-		    
-		    return false;
-		    
-		   }
-		   
-		   if (result == null) {
-		    
-		    return false;
-		    
-		   }
-		     
-		   return true;
-		   
-		  } finally {
-		   
-		   // enable implicit wait
-		   dr.manage().timeouts().implicitlyWait(60 , TimeUnit.SECONDS);
-		   
-		  }
-		  
-		 }	
+	
+	public void deleteAppsFromDB() throws ClassNotFoundException{
+		DBconnect db = new DBconnect();
+		
+		db.establishConnection();
+		db.executeCmd("DELETE FROM `PublisherPortalDB`.`Apps` "+ 
+						"where publisher_id = 'f5099e07-0b4f-45d3-b384-7127db0ed93a';");
+		
+	}
 	
 }

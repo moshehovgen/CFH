@@ -148,6 +148,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		Assert.assertTrue("New App creation Pass!", isElementExist);
 		
+		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+		a.deleteAppsFromDB();
 	}
 	
 	@Then("^validate properties are correct; ([^\"]*), ([^\"]*), ([^\"]*), ([^\"]*)$")

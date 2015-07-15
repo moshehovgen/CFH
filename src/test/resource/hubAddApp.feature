@@ -63,7 +63,7 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app1 | Automotive |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app2  | Sports     |
 
-  @Test
+  @Application
   Scenario Outline: Create App and then edit information (Test case: 107499)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
@@ -80,5 +80,6 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | NewAuto            | Food & Drinks |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     | Pretty application | Uncategorized |
       
+
       
       
