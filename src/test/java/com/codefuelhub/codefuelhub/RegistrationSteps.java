@@ -64,7 +64,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public boolean waitForElement(By locator){
 		
 		AbstractPageStepDefinition abs = new AbstractPageStepDefinition();
-		return abs.waitForVisibleElement(dr, locator, 10000);
+		return abs.waitForVisibleElement(dr, locator, 10000); 
 		
 	}
 	
