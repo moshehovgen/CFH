@@ -22,18 +22,16 @@ public class AbstractPageStepDefinition {
 		   // disable implicit wait
 			  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		   
-		   WebDriverWait wait = new WebDriverWait(driver, timeout);
-		   WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+			  WebDriverWait wait = new WebDriverWait(driver, timeout);
+			  WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		   
-		   if (result == null) {
-		    
-		    return false;	    
-		   }
+			  if (result == null) {
+				  return false;	    
+			  }
 		   
-		   return true;
+			  return true;
 		   
 		  } finally {
-		   
 		   // enable implicit wait
 			  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);		   
 		  }   		  
@@ -41,8 +39,9 @@ public class AbstractPageStepDefinition {
 	
 	public WebDriver initWebDriver() {
 			switch (System.getenv("BROWSER_TYPE")) {
-				case "firefox":
-					System.out.println("init FF webdriver");
+			
+			case "firefox":
+				System.out.println("init FF webdriver");
 				return new FirefoxDriver();
 				
 			case "chrome":
@@ -52,10 +51,10 @@ public class AbstractPageStepDefinition {
 				System.out.println("init CH webdriver");
 				return new ChromeDriver();
 				
-				
 			case "ie":
 				System.out.println("init IE webdriver");
 				return new InternetExplorerDriver();
+		
 		}
 		// default if no valid browser value
 		return new FirefoxDriver();
