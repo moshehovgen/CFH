@@ -1,4 +1,4 @@
-package com.lighthouse.lighthouse;
+package com.codefuelhub.codefuelhub;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -38,12 +39,23 @@ import cucumber.api.java.en.When;
 		@Given("^I browse to login page$")
 		public void navigateToLoginPage() throws InterruptedException {
 			dr.get(Turl);
-			Thread.sleep(1000);
-			dr.findElement(By.id("loginBtn")).click();
+			
+			if(waitForElement(By.id("loginBtn"))){
+				dr.findElement(By.id("loginBtn")).click();
+			}
+			else
+				System.out.println("Login element wasn't found!"+ false);
+			
 		}
 		
 		public void setDriver(WebDriver driver){
 			dr = driver;
+		}
+		public boolean waitForElement(By locator){
+			
+			AbstractPageStepDefinition abs = new AbstractPageStepDefinition();
+			return abs.waitForVisibleElement(dr, locator, 10000);
+			
 		}
 								
 		
@@ -82,6 +94,11 @@ import cucumber.api.java.en.When;
 			String pageSource = dr.getPageSource();
 			found = pageSource .contains(message);
 			Assert.assertTrue(found);
+		}
+		
+		@And("^User log out$")
+		public void userLogout() throws Throwable {
+		    dr.findElement(By.id("logout")).click();
 		}
 		
 	}

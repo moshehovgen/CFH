@@ -1,4 +1,4 @@
-package com.lighthouse.lighthouse;
+package com.codefuelhub.codefuelhub;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.lighthouse.lighthouse;
+package com.codefuelhub.codefuelhub;
 
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -53,8 +53,19 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public void openRegisterPage() throws Throwable {
 		
 		dr.get(Turl);
-		Thread.sleep(1000);
-	    dr.findElement(By.id("registerBtn")).click();
+		
+		if(waitForElement(By.id("registerBtn"))){
+			dr.findElement(By.id("registerBtn")).click();
+		}
+		else
+			System.out.println("Register element wasn't found!"+ false);
+	}
+	
+	public boolean waitForElement(By locator){
+		
+		AbstractPageStepDefinition abs = new AbstractPageStepDefinition();
+		return abs.waitForVisibleElement(dr, locator, 10000); 
+		
 	}
 	
 	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")
@@ -63,11 +74,23 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		dr.switchTo().frame("myRegisterFrame");
 		
-		dr.findElement(By.id("Publisher")).sendKeys(pubName);
+		WebElement pubElem = dr.findElement(By.id("Publisher"));
+		
+		pubElem.sendKeys(pubName);
 		dr.findElement(By.id("FirstName")).sendKeys(fName);
-		dr.findElement(By.id("LastName")).sendKeys(lName);
+		Thread.sleep(2000);
+		
+		
+		if (waitForElement(By.id("LastName"))) {
+			dr.findElement(By.id("LastName")).click();
+			dr.findElement(By.id("LastName")).sendKeys(lName);
+		}
+		Thread.sleep(2000);
+		dr.findElement(By.id("Email")).click();
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
+		Thread.sleep(2000);
 		dr.findElement(By.id("Password")).sendKeys(password);
+		Thread.sleep(2000);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
 		
 		WebElement pubMenu = dr.findElement(By.id("dd"));

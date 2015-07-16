@@ -1,4 +1,4 @@
-package com.lighthouse.lighthouse;
+package com.codefuelhub.codefuelhub;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -148,6 +148,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		Assert.assertTrue("New App creation Pass!", isElementExist);
 		
+		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+		a.deleteAppsFromDB();
 	}
 	
 	@Then("^validate properties are correct; ([^\"]*), ([^\"]*), ([^\"]*), ([^\"]*)$")
