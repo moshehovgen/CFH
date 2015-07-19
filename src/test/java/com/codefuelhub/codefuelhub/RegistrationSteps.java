@@ -1,21 +1,15 @@
 package com.codefuelhub.codefuelhub;
 
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.sql.Time;
 import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -77,20 +71,16 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		WebElement pubElem = dr.findElement(By.id("Publisher"));
 		
 		pubElem.sendKeys(pubName);
-		dr.findElement(By.id("FirstName")).sendKeys(fName);
-		Thread.sleep(2000);
 		
+		//WebDriverWait wait = new WebDriverWait(dr, TimeSpan.FromSeconds(4));
+		dr.findElement(By.cssSelector("#FirstName")).sendKeys(fName);
 		
-		if (waitForElement(By.id("LastName"))) {
-			dr.findElement(By.id("LastName")).click();
-			dr.findElement(By.id("LastName")).sendKeys(lName);
-		}
-		Thread.sleep(2000);
-		dr.findElement(By.id("Email")).click();
+		dr.findElement(By.id("LastName")).sendKeys(lName);
+		
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
-		Thread.sleep(2000);
+		
 		dr.findElement(By.id("Password")).sendKeys(password);
-		Thread.sleep(2000);
+		
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
 		
 		WebElement pubMenu = dr.findElement(By.id("dd"));
@@ -103,8 +93,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				menuElem.get(i).click();
 			}
 		}
-		Thread.sleep(1000);
-
+		
 	}
 	
 	@And("^click submit$")
@@ -112,7 +101,6 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		if(clickOnAccept())
 		{
 			dr.findElement(By.id("submit")).click();
-			Thread.sleep(1000);
 			dr.findElement(By.id("submit")).click(); //tell them to change the name
 		}
 		
