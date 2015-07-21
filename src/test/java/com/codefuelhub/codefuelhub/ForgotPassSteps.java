@@ -18,6 +18,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	
 	@Before("@Password")
 	public void initiateBrowser(){
+		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 	}

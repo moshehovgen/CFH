@@ -1,6 +1,6 @@
 Feature: LightHouse Login
 
-  @Login
+  @Login @Regression @Sanity
   Scenario Outline: Login to Portal (test case: 107213)
     Given I browse to login page
     When I enter <username> and <password> first time

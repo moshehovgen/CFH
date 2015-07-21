@@ -27,11 +27,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Before("@Application, @Placement")
 	public void initiateBrowser(){
-		String Turl = System.getenv("QA_URL");
-		
+		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
-		dr.get(Turl);
+		dr.get(BASE_URL);
 		
 	}
 		
