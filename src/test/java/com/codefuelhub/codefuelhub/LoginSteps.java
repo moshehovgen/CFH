@@ -19,9 +19,11 @@ import cucumber.api.java.en.When;
 	public class LoginSteps extends AbstractPageStepDefinition {
 		
 		WebDriver dr ;		
-		String Turl = System.getenv("QA_URL");
+		
+		
 		@Before("@Login")
 		public void initiateBrowser(){
+			init();
 			dr = initWebDriver();
 			dr.manage().window().maximize();
 		}
@@ -38,7 +40,7 @@ import cucumber.api.java.en.When;
 		
 		@Given("^I browse to login page$")
 		public void navigateToLoginPage() throws InterruptedException {
-			dr.get(Turl);
+			dr.get(BASE_URL);
 			
 			if(waitForElement(By.id("loginBtn"))){
 				dr.findElement(By.id("loginBtn")).click();

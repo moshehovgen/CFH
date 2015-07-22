@@ -35,6 +35,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@Before("@Registration")
 	public void initiateBrowser(){
+		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 	}
@@ -52,7 +53,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	@Given("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
 		
-		dr.get(Turl);
+		dr.get(BASE_URL);
 		
 		if(waitForElement(By.id("registerBtn"))){
 			dr.findElement(By.id("registerBtn")).click();
@@ -103,8 +104,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				menuElem.get(i).click();
 			}
 		}
-		Thread.sleep(1000);
-
+		
 	}
 	
 	@And("^click submit$")

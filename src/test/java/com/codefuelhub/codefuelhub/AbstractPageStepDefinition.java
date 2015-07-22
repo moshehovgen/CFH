@@ -16,9 +16,28 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class AbstractPageStepDefinition {
-	
+	public static final String TEST_ENV = System.getenv("TEST_ENV");
+	public static final String QA_URL = System.getenv("QA_URL");
+	public static final String PROD_URL = System.getenv("PROD_URL");
+	public static String BASE_URL = null;
 	WebDriver dr;
 	
+	
+	public void init() {
+		  
+		  switch(TEST_ENV) {
+		  case "QA":
+		   BASE_URL=QA_URL;
+		   break;
+		   
+		  case "PROD":
+		   BASE_URL=PROD_URL;
+		   break;
+		  }
+	}
+	
+	
+
 	public boolean waitForVisibleElement(WebDriver driver, By locator, int timeout) {		  
 		  try {
 		   // disable implicit wait
