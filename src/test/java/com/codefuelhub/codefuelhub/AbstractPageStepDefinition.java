@@ -1,6 +1,7 @@
 package com.codefuelhub.codefuelhub;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -12,6 +13,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class AbstractPageStepDefinition {
 	
@@ -52,6 +54,14 @@ public class AbstractPageStepDefinition {
 				return new ChromeDriver();
 				
 			case "ie":
+				String ieLocation = "";
+				//if(isOs64Bit())
+				//	ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_x64/IEDriverServer.exe";
+			//	else
+				addKeyForIE();
+				ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_Win32/IEDriverServer.exe";
+					
+				System.setProperty("webdriver.ie.driver", ieLocation);
 				System.out.println("init IE webdriver");
 				return new InternetExplorerDriver();
 		
@@ -68,5 +78,44 @@ public class AbstractPageStepDefinition {
 						"where publisher_id = 'f5099e07-0b4f-45d3-b384-7127db0ed93a';");
 		
 	}
+	
+	public static boolean isOs64Bit() {
+  
+        String arch = System.getenv("PROCESSOR_ARCHITECTURE");
+        String wow64Arch = System.getenv("PROCESSOR_ARCHITEW6432");
+
+        if(arch.endsWith("64")|| wow64Arch != null && wow64Arch.endsWith("64"))
+        	return true;
+        else 
+        	return false;
+	
+	}
+	
+	public void addKeyForIE(){
+		String keyIE32 = "Software\\Microsoft\\Internet Explorer\\MAIN\\FeatureControl\\FEATURE_BFCACHE";
+		String keyIE64 = "Software\\Wow6432Node\\Microsoft\\Internet Explorer\\MAIN\\FeatureControl\\FEATURE_BFCACHE";
+		
+		try {
+			
+			RegistryManagement.createKey(RegistryManagement.HKEY_LOCAL_MACHINE, keyIE64);
+			RegistryManagement.writeDwordValue(keyIE64, "iexplore.exe", "0");
+			
+			
+			//for some reason doesn't work, but if the machine will be 64-bit, it won't be necessary 
+			RegistryManagement.createKey(RegistryManagement.HKEY_LOCAL_MACHINE, keyIE32);
+			RegistryManagement.writeDwordValue(keyIE32, "iexplore.exe", "0");
+			
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 	
 }

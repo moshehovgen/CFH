@@ -78,19 +78,19 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		pubElem.sendKeys(pubName);
 		dr.findElement(By.id("FirstName")).sendKeys(fName);
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		
 		
 		if (waitForElement(By.id("LastName"))) {
 			dr.findElement(By.id("LastName")).click();
 			dr.findElement(By.id("LastName")).sendKeys(lName);
 		}
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		dr.findElement(By.id("Email")).click();
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		dr.findElement(By.id("Password")).sendKeys(password);
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
 		
 		WebElement pubMenu = dr.findElement(By.id("dd"));
@@ -143,8 +143,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		  
 		    Dimension d = elem.getSize();
 		    
-		    int x = d.getWidth()/4;
-		    int y = d.getHeight()/2;
+		    int x = d.getWidth()/8;
+		    int y = d.getHeight()/4;
 		    
 		    action.moveToElement(elem,x,y).click().perform();
 		    
