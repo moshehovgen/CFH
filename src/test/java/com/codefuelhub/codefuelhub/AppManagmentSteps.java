@@ -128,6 +128,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@When("^Click Add button$")
 	public void clickAdd() throws Throwable {
 		dr.findElement(By.id("appsSave")).click();
+		Thread.sleep(1000);
 		
 	}
 	

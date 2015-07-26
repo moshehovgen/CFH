@@ -66,11 +66,7 @@ import cucumber.api.java.en.Then;
 						found = true;
 					}
 				 }
-				
-				 
 			 }
-			 
-			 
 		 }
 
 		 @Then("^edit place to \"(.*?)\"$")

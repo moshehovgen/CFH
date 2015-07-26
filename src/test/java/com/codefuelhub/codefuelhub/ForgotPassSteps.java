@@ -54,13 +54,14 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	public void enterMailForForgot(String mailAddress) throws Throwable {
 		RegistrationSteps register = new RegistrationSteps();
 		
+		Thread.sleep(2000);
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
 	}
 	
 	@And("^click on send$")
 	public void clickSendPass() throws Throwable {
 		dr.findElement(By.className("CP_btn")).click();
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		
 	}
 	

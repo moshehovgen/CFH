@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -81,8 +83,14 @@ public class AbstractPageStepDefinition {
 				ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_Win32/IEDriverServer.exe";
 					
 				System.setProperty("webdriver.ie.driver", ieLocation);
+				DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+				capabilities.setCapability("enablePersistentHover", false);
 				System.out.println("init IE webdriver");
-				return new InternetExplorerDriver();
+				return new InternetExplorerDriver(capabilities);
+				
+			case "safari":
+				System.out.println("init safari webdriver");
+				return new SafariDriver();
 		
 		}
 		// default if no valid browser value

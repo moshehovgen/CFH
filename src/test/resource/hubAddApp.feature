@@ -1,6 +1,6 @@
 Feature: LightHouse Add Application
 
-  @Application
+  @Application @Regression @Sanity
   Scenario Outline: Create new android/IOS App (test case: 107378 107362)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
@@ -14,7 +14,7 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     |
 
-  @Application
+  @Application @Regression
   Scenario Outline: Create app with diff parameters (107363 107364 107365 107366 107368)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
@@ -33,7 +33,7 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | T369-auto             | iconX | 2        | 1122334451LongBundleIDlllllll | Style & Fashion         |
       | ronen.yurik@perion.com | 1q2w3e4r$ | T368-auto             | iconX | 1        | 1122334451LongPackageIDllllll | Religion & Spirituality |
 
-  @Application
+  @Application @Regression
   Scenario Outline: validate error message (test case:  107369 - 107374)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
@@ -50,7 +50,7 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | T374-auto | iconX | 2        | auto.bundleID.com        |                        | Please choose a Category                |
       | ronen.yurik@perion.com | 1q2w3e4r$ | T373-auto | iconX | 1        | auto.packageID.com       |                        | Please choose a Category                |
 
-  @Application
+  @Application @Regression
   Scenario Outline: Click cancel button (test case: 107375)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
@@ -63,7 +63,7 @@ Feature: LightHouse Add Application
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app1 | Automotive |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app2  | Sports     |
 
-  @Application
+  @Application @Regression @Sanity
   Scenario Outline: Create App and then edit information (Test case: 107499)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button

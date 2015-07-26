@@ -1,6 +1,6 @@
 Feature: Registration page tests
 
-  @Registration
+  @Registration @Sanity @Regression
   Scenario Outline: Create new acount positve test - (Test cases: 114364, 107253, part of 107254)
     Given Browse to registration page
     When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail <mail>, password <password>, publisher type <pubType>
@@ -15,7 +15,7 @@ Feature: Registration page tests
       | Auto company | Auto  | Mation | auto | 1q2w3e4r$ | Mobile publisher | SURE, ACTIVATE MY ACCOUNT |
       | Auto company | Auto  | Mation | auto | 1q2w3e4r$ | Mobile publisher | SURE, ACTIVATE MY ACCOUNT |
 
-  @Registration
+  @Registration @Regression
   Scenario Outline: Create new acount positve test - (Test cases: 107254)
     And Browse to registration page
     When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail <mail>, password <password>, publisher type <pubType>
