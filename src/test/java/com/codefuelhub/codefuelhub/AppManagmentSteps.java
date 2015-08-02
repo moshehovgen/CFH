@@ -152,9 +152,18 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 //		
 //		Assert.assertTrue("New App creation Pass!", isElementExist);
 		
-		boolean isElementExist = doesAppInList(appName);
-		Assert.assertTrue("New App creation Pass!", isElementExist);
+		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+				
+		if(a.waitForVisibleElement(dr, By.id("new_placement_btn"), 10000)) {
+			boolean isElementExist = doesAppInList(appName);
+			Assert.assertTrue("New App creation Pass!", isElementExist);
+		}
 		
+		
+	}
+	
+	@And("^delete apps$")
+	public void appDelete() throws Throwable {
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		a.deleteAppsFromDB();
 	}
@@ -164,12 +173,23 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		String appName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
 		String appPlatform = dr.findElement(By.id("header_content_platform")).getText();
 		String appBundle = dr.findElement(By.id("header_content_id")).getText();
-		String appCategory = dr.findElement(By.id("header_content_category")).getText();
+		String tempPlat = "";
+		//String appCategory = dr.findElement(By.id("header_content_category")).getText();
 		
 		//check app name is correct
-		if(appName.equals(name) && appPlatform.equals("Patform: "+platform) && 
-				appBundle.equals("Bundle ID: "+packageID) && appCategory.equals("Category: "+category)){
-			System.out.println("All app properties are correct!");
+		if(appName.equals(this.appName) && 
+				appBundle.equals("Bundle ID: "+packageID) ){
+			if(platform ==1){
+				tempPlat = "iOS";
+			}
+			else
+				tempPlat = "Android";
+			if(appPlatform.equals("Patform: "+tempPlat)){
+				
+				System.out.println("All app properties are correct!");
+			}
+			else
+				System.out.println("Not all properties were added correctly! "+ false);
 		}
 		else
 			System.out.println("Not all properties were added correctly! "+ false);
@@ -249,10 +269,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		for (int i = 0; i < items.size() && !found; i++) {
 			
-			WebElement appElem = items.get(i).findElement(By.className("ng-scope"));
+			WebElement appElem = items.get(i);
 			
-			name = appElem.findElement(By.tagName("span")).getText();
-			if(name.equals(appName)){
+			name = appElem.findElement(By.tagName("a")).getAttribute("tooltip");
+			if(name!= null && name.equals(appName)){
 				found = true;				
 			}
 		}
