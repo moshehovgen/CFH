@@ -97,6 +97,21 @@ import cucumber.api.java.en.Then;
 		 public void verifyDeleted(String newName) throws Throwable {
 			 
 		 }
+		 
+		 @Then("^verify active placement$")
+		 public void verify_active_placement() throws Throwable {
+			 
+		 }
+
+		 @Then("^click de\\active placement$")
+		 public void click_de_active_placement() throws Throwable {
+			 
+		 }
+
+		 @Then("^verify deactive placement$")
+		 public void verify_deactive_placement() throws Throwable {
+			 
+		 }
 		
 	
 	}

@@ -1,4 +1,4 @@
-Feature: LightHouse Add Application
+Feature: Codefuel Add Application
 
   @Application @Regression @Sanity
   Scenario Outline: Create new android/IOS App (test case: 107378 107362)
@@ -43,12 +43,12 @@ Feature: LightHouse Add Application
 
     Examples: 
       | username               | password  | name      | icon  | platform | packageID                | category               | errorMessage                            |
-      | ronen.yurik@perion.com | 1q2w3e4r$ |           | iconX | 1        | Auto@yahoo&*SpecialChars | Non-Standard Content   | Please provide an App Name              |
-      | ronen.yurik@perion.com | 1q2w3e4r$ |           | iconX | 2        | Auto@yahoo&*SpecialChars | Illegal Content        | Please provide an App Name              |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T372-auto | iconX | 1        |                          | Pets                   | Please provide a Package ID / Bundle ID |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T371-auto | iconX | 1        |                          | Technology & Computing | Please provide a Package ID / Bundle ID |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T374-auto | iconX | 2        | auto.bundleID.com        |                        | Please choose a Category                |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | T373-auto | iconX | 1        | auto.packageID.com       |                        | Please choose a Category                |
+      | ronen.yurik@perion.com | 1q2w3e4r$ |           | iconX | 1        | Auto@yahoo&*SpecialChars | Non-Standard Content   | This field is required              |
+      | ronen.yurik@perion.com | 1q2w3e4r$ |           | iconX | 2        | Auto@yahoo&*SpecialChars | Illegal Content        | This field is required              |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T372-auto | iconX | 1        |                          | Pets                   | This field is required |
+      | ronen.yurik@perion.com | 1q2w3e4r$ | T371-auto | iconX | 1        |                          | Technology & Computing | This field is required |
+    #  | ronen.yurik@perion.com | 1q2w3e4r$ | T374-auto | iconX | 2        | auto.bundleID.com        |                        | Please choose a Category                |
+     # | ronen.yurik@perion.com | 1q2w3e4r$ | T373-auto | iconX | 1        | auto.packageID.com       |                        | Please choose a Category                |
 
   @Application @Regression
   Scenario Outline: Click cancel button (test case: 107375)

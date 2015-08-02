@@ -1,4 +1,4 @@
-Feature: LightHouse Manage Placements
+Feature: Codefuel Manage Placements
 
   Background: Login to portal and add an app
     Given User logged into the portal enter "ronen.yurik@perion.com" and "1q2w3e4r$"
@@ -31,6 +31,14 @@ Feature: LightHouse Manage Placements
     And edit place to "newPlace"
     And click save placement edit
     And validate placement created with "newPlace"
+
+  @Placement @Regression @Sanity
+  Scenario: De-Activate existing placement (Test case: 107423)
+    And Add new placement with "placename"
+    And click save placement
+    And verify active placement
+    And click de\active placement
+    And verify deactive placement
 
   @Test
   Scenario: Check app list

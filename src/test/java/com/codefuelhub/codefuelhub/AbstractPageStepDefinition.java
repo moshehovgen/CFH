@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -90,7 +91,9 @@ public class AbstractPageStepDefinition {
 				
 			case "safari":
 				System.out.println("init safari webdriver");
-				return new SafariDriver();
+				DesiredCapabilities dms = DesiredCapabilities.safari();
+				dms.setPlatform(Platform.WINDOWS);
+				return new SafariDriver(dms);
 		
 		}
 		// default if no valid browser value
