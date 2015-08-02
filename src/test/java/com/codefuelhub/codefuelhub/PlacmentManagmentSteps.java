@@ -22,9 +22,11 @@ import cucumber.api.java.en.Then;
 		 public void defaultPlaceExists() throws Throwable {
 			  dr.findElement(By.id("new_placement_btn")).click();
 			  String name = dr.findElement(By.id("placement_name_id")).getText();
-			  Select dropDown = new Select(dr.findElement(By.id("placement_type"))); 
+			  // Select dropDown = new Select(dr.findElement(By.id("placement_type"))); 
 			  
-			  if(name.equals("") && dropDown.getFirstSelectedOption().getText().equals("Interstitial")){
+			  WebElement dropDown = dr.findElement(By.id("placement_type"));
+			  
+			  if(name.equals("") && dropDown.findElement(By.tagName("button")).getText().equals("Interstitial ")){
 				  System.out.println("Default placement is correct!");
 			  }
 		  }
@@ -39,12 +41,12 @@ import cucumber.api.java.en.Then;
 		 public void addNewPlacement(String name) throws Throwable {
 			 dr.findElement(By.id("new_placement_btn")).click();
 			 
-			 dr.findElement(By.xpath("//*[@id=\"placement_name\"]")).sendKeys(name);
+			 dr.findElement(By.xpath("//*[@id=\"placement_name_id\"]")).sendKeys(name);
 		 }
 		 
 		 @And("^click save placement$")
 		 public void savePlaceClick() throws Throwable {
-			 dr.findElement(By.id("placement_edit_btn")).click();
+			 dr.findElement(By.id("placement_edit_id")).click();
 		 }
 
 		 @And("^validate placement created with \"(.*?)\"$")
