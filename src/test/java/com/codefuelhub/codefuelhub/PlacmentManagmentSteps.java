@@ -21,7 +21,7 @@ import cucumber.api.java.en.Then;
 		 @And("^verify default placement exists$")
 		 public void defaultPlaceExists() throws Throwable {
 			  dr.findElement(By.id("new_placement_btn")).click();
-			  String name = dr.findElement(By.id("placement_name")).getText();
+			  String name = dr.findElement(By.id("placement_name_id")).getText();
 			  Select dropDown = new Select(dr.findElement(By.id("placement_type"))); 
 			  
 			  if(name.equals("") && dropDown.getFirstSelectedOption().getText().equals("Interstitial")){
