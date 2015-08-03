@@ -76,15 +76,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("login")).click();
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		
-		//wait.until((ExpectedConditions.visibilityOf((WebElement) By.className("pg-loading-logo"))));
-		
-//		while (element == null){
-//			element = wait.until(ExpectedConditions.visibilityOf((WebElement) By.id("loading_img")));
-//					//elementToBeClickable(By.id("mainMenuManageAppId")));
-//		}
-		//loginSuccess = a.waitForVisibleElement(dr, By.id("inner-loading-screen"), 10000);
-		//}
-		
 		wait.until((ExpectedConditions.invisibilityOfElementLocated(By.id("inner-loading-screen"))));
 		
 		try{
@@ -96,7 +87,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			}
 		} catch (Exception e) {
 			Thread.sleep(1000);
-		
 		}
 	}
 
