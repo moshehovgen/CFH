@@ -7,7 +7,11 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -55,6 +59,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void loginToPortal(String username, String password) throws Throwable {
+		boolean loginSuccess = false;
+		WebDriverWait wait = new WebDriverWait(dr, 100000);
+		
 		dr.findElement(By.id("loginBtn")).click();
 		
 		
@@ -67,7 +74,30 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("Password")).sendKeys(password);
 		
 		dr.findElement(By.id("login")).click();
+		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		
+		//wait.until((ExpectedConditions.visibilityOf((WebElement) By.className("pg-loading-logo"))));
+		
+//		while (element == null){
+//			element = wait.until(ExpectedConditions.visibilityOf((WebElement) By.id("loading_img")));
+//					//elementToBeClickable(By.id("mainMenuManageAppId")));
+//		}
+		//loginSuccess = a.waitForVisibleElement(dr, By.id("inner-loading-screen"), 10000);
+		//}
+		
+		wait.until((ExpectedConditions.invisibilityOfElementLocated(By.id("inner-loading-screen"))));
+		
+		try{
+			WebElement elem = dr.findElement(By.id("inner-loading-screen"));
+			
+		
+			while(elem != null){
+				elem = dr.findElement(By.id("inner-loading-screen"));
+			}
+		} catch (Exception e) {
+			Thread.sleep(1000);
+		
+		}
 	}
 
 	@When("^User select App tab and click on Add app button$")
@@ -75,7 +105,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	//	dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		
-		//dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		WebElement appMenu = dr.findElement(By.id("mainMenuManageAppId"));
 		appMenu.click();
