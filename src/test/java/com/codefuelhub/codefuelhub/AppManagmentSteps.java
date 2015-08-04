@@ -119,7 +119,15 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
 		System.out.println("apps_dd_btn befor click");
-		appMenu.findElement(By.id("apps_dd_btn")).click();
+		AbstractPageStepDefinition pageStepDefinition =new AbstractPageStepDefinition();
+		By by = By.id("apps_dd_btn");
+		boolean isVisible = pageStepDefinition.waitForVisibleElement(dr,by,10);
+		if(isVisible){
+			appMenu.findElement(by).click();
+		}else{
+			System.out.println("element(apps_dd_btn) not visible");
+		}
+		//appMenu.findElement(By.id("apps_dd_btn")).click();
 		System.out.println("apps_dd_btn after click");
 		System.out.println("addAppBtn befor click");
 		dr.findElement(By.id("addAppBtn")).click();	
