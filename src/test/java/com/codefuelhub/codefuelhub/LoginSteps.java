@@ -42,8 +42,12 @@ import cucumber.api.java.en.When;
 		public void navigateToLoginPage() throws InterruptedException {
 			dr.get(BASE_URL);
 			
+			AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+			
+			
 			if(waitForElement(By.id("loginBtn"))){
 				dr.findElement(By.id("loginBtn")).click();
+				a.waitForVisibleElement(dr, By.id("myModal"), 60);
 			}
 			else
 				System.out.println("Login element wasn't found!"+ false);

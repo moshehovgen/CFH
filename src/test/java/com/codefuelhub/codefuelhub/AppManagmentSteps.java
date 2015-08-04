@@ -60,8 +60,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void loginToPortal(String username, String password) throws Throwable {
-		boolean loginSuccess = false;
-		WebDriverWait wait = new WebDriverWait(dr, 100);
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		dr.findElement(By.id("loginBtn")).click();
 		
