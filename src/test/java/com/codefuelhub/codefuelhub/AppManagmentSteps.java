@@ -62,10 +62,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	public void loginToPortal(String username, String password) throws Throwable {
 		boolean loginSuccess = false;
 		WebDriverWait wait = new WebDriverWait(dr, 100);
-		
+		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		dr.findElement(By.id("loginBtn")).click();
 		
-		
+		a.waitForVisibleElement(dr, By.id("myModal"), 60);
 		switchFrame("myFrame");
 		//dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		
@@ -75,7 +75,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("Password")).sendKeys(password);
 		
 		dr.findElement(By.id("login")).click();
-		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+		
 		
 		if(waitUntilElementClassAttrChange(By.tagName("body"), "pg-loaded", 60000)){
 			System.out.println("page loaded");
