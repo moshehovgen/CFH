@@ -107,18 +107,14 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@When("^User select App tab and click on Add app button$")
 	public void selectAppAndClickAdd() throws Throwable {
-		System.out.println(" ^User select App tab and click on Add app button -------------------start");
-		System.out.println(" wait start");
-		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-		System.out.println(" wait end");
+		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement appMenu = dr.findElement(By.id("mainMenuManageAppId"));
-		System.out.println("mainMenuManageAppId after");
 		appMenu.click();
-		System.out.println("mainMenuManageAppId after click");
+		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
-		System.out.println("apps_dd_btn befor click");
+		
 		AbstractPageStepDefinition pageStepDefinition =new AbstractPageStepDefinition();
 		By by = By.id("apps_dd_btn");
 		boolean isVisible = pageStepDefinition.waitForVisibleElement(dr,by,10);
@@ -128,11 +124,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			System.out.println("element(apps_dd_btn) not visible");
 		}
 		//appMenu.findElement(By.id("apps_dd_btn")).click();
-		System.out.println("apps_dd_btn after click");
-		System.out.println("addAppBtn befor click");
+
 		dr.findElement(By.id("addAppBtn")).click();	
-		System.out.println("addAppBtn after click");
-		System.out.println(" ^User select App tab and click on Add app button -------------------end");
 	}
 
 	@When("^Enter App \"(.*?)\" upload \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\" choose category \"(.*?)\"$")
@@ -189,13 +182,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Then("^validate App created$")
 	public void validate_App_created() throws Throwable {
 		
-//		String temp = ".//a[text()='" + appName + "']";
-//		By by = By.xpath(temp);
-//		
-//		WebElement elem = dr.findElement(by);
-//		boolean isElementExist = null!=elem?true:false;
-//		
-//		Assert.assertTrue("New App creation Pass!", isElementExist);
 		
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 				
