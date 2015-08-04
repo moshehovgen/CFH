@@ -77,7 +77,8 @@ import cucumber.api.java.en.Then;
 			 
 			 dr.findElement(By.id("placement_edit_btn_icon")).click();
 			 
-			 WebElement placeName = dr.findElement(By.xpath("//*[@id=\"placement_table\"]/tbody[2]/tr[1]/td[1]/div"));
+			 WebElement placeName = dr.findElement(By.xpath("//*[@id=\"placement\"]/tr[2]/td/form/table/tbody/tr[1]/td[1]/div/input"));
+			
 			placeName.clear();
 			placeName.sendKeys(newName);
 			
