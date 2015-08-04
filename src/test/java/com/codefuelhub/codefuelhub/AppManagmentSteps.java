@@ -107,19 +107,24 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@When("^User select App tab and click on Add app button$")
 	public void selectAppAndClickAdd() throws Throwable {
+		System.out.println(" ^User select App tab and click on Add app button -------------------start");
+		System.out.println(" wait start");
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-		
+		System.out.println(" wait end");
 		WebElement appMenu = dr.findElement(By.id("mainMenuManageAppId"));
+		System.out.println("mainMenuManageAppId after");
 		appMenu.click();
-		
+		System.out.println("mainMenuManageAppId after click");
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
-		
+		System.out.println("apps_dd_btn befor click");
 		appMenu.findElement(By.id("apps_dd_btn")).click();
-		
+		System.out.println("apps_dd_btn after click");
+		System.out.println("addAppBtn befor click");
 		dr.findElement(By.id("addAppBtn")).click();	
-		
+		System.out.println("addAppBtn after click");
+		System.out.println(" ^User select App tab and click on Add app button -------------------end");
 	}
 
 	@When("^Enter App \"(.*?)\" upload \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\" choose category \"(.*?)\"$")
