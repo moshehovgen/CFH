@@ -52,11 +52,12 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@Given("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
-		
+		AbstractPageStepDefinition a = new  AbstractPageStepDefinition();
 		dr.get(BASE_URL);
 		
 		if(waitForElement(By.id("registerBtn"))){
 			dr.findElement(By.id("registerBtn")).click();
+			a.waitForVisibleElement(dr, By.id("myModal"), 60);
 		}
 		else
 			System.out.println("Register element wasn't found!"+ false);
