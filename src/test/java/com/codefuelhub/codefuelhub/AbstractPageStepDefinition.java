@@ -61,6 +61,24 @@ public class AbstractPageStepDefinition {
 		  }   		  
 	}
 	
+	public boolean waitUntilElementClassAttrChange(WebDriver dr, By by, String expectedClassName, long timeOutInMilSec) {
+        boolean isChanged = false;
+
+        long timeOut = timeOutInMilSec + System.currentTimeMillis();
+
+        while (!isChanged && timeOut > System.currentTimeMillis()) {
+              try {
+                    WebElement elem = dr.findElement(by);
+                    String className = elem.getAttribute("class");
+                    if (className.equals(expectedClassName)) {
+                          isChanged = true;
+                    }
+              } catch (Exception e) {
+              }
+        }
+        return isChanged;
+  }
+	
 	public WebDriver initWebDriver() {
 			switch (System.getenv("BROWSER_TYPE")) {
 			

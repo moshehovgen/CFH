@@ -79,7 +79,11 @@ import cucumber.api.java.en.When;
 
 		@Then("^validate login pass$")
 		public void validateLogin() throws Throwable {
-			WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+			
+			AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+			a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000);
+			
+			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
 			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard") || dr.getCurrentUrl().contains("newUser"));
 		}
 		

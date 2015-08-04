@@ -77,7 +77,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("login")).click();
 		
 		
-		if(waitUntilElementClassAttrChange(By.tagName("body"), "pg-loaded", 60000)){
+		if(a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
 			System.out.println("page loaded");
 		}
 		else{
@@ -86,23 +86,23 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 	
-	 private static boolean waitUntilElementClassAttrChange(By by, String expectedClassName, long timeOutInMilSec) {
-         boolean isChanged = false;
-
-         long timeOut = timeOutInMilSec + System.currentTimeMillis();
-
-         while (!isChanged && timeOut > System.currentTimeMillis()) {
-               try {
-                     WebElement elem = dr.findElement(by);
-                     String className = elem.getAttribute("class");
-                     if (className.equals(expectedClassName)) {
-                           isChanged = true;
-                     }
-               } catch (Exception e) {
-               }
-         }
-         return isChanged;
-   }
+//	 public static boolean waitUntilElementClassAttrChange(By by, String expectedClassName, long timeOutInMilSec) {
+//         boolean isChanged = false;
+//
+//         long timeOut = timeOutInMilSec + System.currentTimeMillis();
+//
+//         while (!isChanged && timeOut > System.currentTimeMillis()) {
+//               try {
+//                     WebElement elem = dr.findElement(by);
+//                     String className = elem.getAttribute("class");
+//                     if (className.equals(expectedClassName)) {
+//                           isChanged = true;
+//                     }
+//               } catch (Exception e) {
+//               }
+//         }
+//         return isChanged;
+//   }
 
 
 	@When("^User select App tab and click on Add app button$")

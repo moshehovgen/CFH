@@ -12,7 +12,7 @@ Feature: LightHouse Login
       | ronen.yurik@perion.com | 1q2w3e4r$ |
 
   @Login @Regression
-  Scenario Outline: Login negetive (test cases: 107214, 107217, 107215, 107218, 107258)
+  Scenario Outline: Login negative (test cases: 107214, 107217, 107215, 107218, 107258)
     Given I browse to login page
     When I enter <username> and <password> first time
     Then validate warning message <message>
