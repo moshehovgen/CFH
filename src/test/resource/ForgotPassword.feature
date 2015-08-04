@@ -1,4 +1,4 @@
-Feature: Tests cases relates to forgot password feature
+Feature: Forgot password feature
 
   @Password
   Scenario Outline: Reset password flow - positive flow (test case: 107223)

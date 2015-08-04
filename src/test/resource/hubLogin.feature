@@ -1,4 +1,4 @@
-Feature: LightHouse Login
+Feature: Codefuel Login
 
   @Login @Regression @Sanity
   Scenario Outline: Login to Portal (test case: 107213)
