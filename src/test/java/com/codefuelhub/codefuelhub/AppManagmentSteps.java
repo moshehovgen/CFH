@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
 import cucumber.api.java.After;
@@ -60,7 +61,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void loginToPortal(String username, String password) throws Throwable {
 		boolean loginSuccess = false;
-		WebDriverWait wait = new WebDriverWait(dr, 100000);
+		WebDriverWait wait = new WebDriverWait(dr, 100);
 		
 		dr.findElement(By.id("loginBtn")).click();
 		
@@ -76,29 +77,41 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("login")).click();
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		
-		wait.until((ExpectedConditions.invisibilityOfElementLocated(By.id("inner-loading-screen"))));
-		
-		try{
-			WebElement elem = dr.findElement(By.id("inner-loading-screen"));
-			
-		
-			while(elem != null){
-				elem = dr.findElement(By.id("inner-loading-screen"));
-			}
-		} catch (Exception e) {
-			Thread.sleep(1000);
+		if(waitUntilElementClassAttrChange(By.tagName("body"), "pg-loaded", 60000)){
+			System.out.println("page loaded");
 		}
+		else{
+		}
+		
+		
 	}
+	
+	 private static boolean waitUntilElementClassAttrChange(By by, String expectedClassName, long timeOutInMilSec) {
+         boolean isChanged = false;
+
+         long timeOut = timeOutInMilSec + System.currentTimeMillis();
+
+         while (!isChanged && timeOut > System.currentTimeMillis()) {
+               try {
+                     WebElement elem = dr.findElement(by);
+                     String className = elem.getAttribute("class");
+                     if (className.equals(expectedClassName)) {
+                           isChanged = true;
+                     }
+               } catch (Exception e) {
+               }
+         }
+         return isChanged;
+   }
+
 
 	@When("^User select App tab and click on Add app button$")
 	public void selectAppAndClickAdd() throws Throwable {
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	//	dr.findElement(By.cssSelector("[href='#/appsList']")).click();
 		
 		
 		WebElement appMenu = dr.findElement(By.id("mainMenuManageAppId"));
 		appMenu.click();
-		//dr.navigate().refresh();
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
