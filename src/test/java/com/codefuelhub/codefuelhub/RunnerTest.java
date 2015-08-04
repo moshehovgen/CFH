@@ -10,7 +10,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 		plugin = {"pretty", "html:target/html/", "json:target/cucumber.json"},
 		features = "src/test/resource",
-		tags = {"@Password"}
+		tags = {"@Registration"}
 		
 		)
 
