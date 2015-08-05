@@ -108,6 +108,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public void clickSubmit() throws Throwable {
 		if(clickOnAccept())
 		{
+			waitForElement(By.id("submit"));
 			dr.findElement(By.id("submit")).click();
 			Thread.sleep(3000);
 			dr.findElement(By.id("submit")).click(); //tell them to change the name
