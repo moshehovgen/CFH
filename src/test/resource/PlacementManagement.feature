@@ -32,7 +32,7 @@ Feature: Codefuel Manage Placements
     And click save placement edit
     And validate placement created with "newPlace"
 
-  @Placement @Regression @Sanity
+  @Placement @Sanity
   Scenario: De-Activate existing placement (Test case: 107423)
     And Add new placement with "placename"
     And click save placement

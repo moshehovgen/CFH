@@ -52,12 +52,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@Given("^Browse to registration page$")
 	public void openRegisterPage() throws Throwable {
-		AbstractPageStepDefinition a = new  AbstractPageStepDefinition();
 		dr.get(BASE_URL);
 		
 		if(waitForElement(By.id("registerBtn"))){
 			dr.findElement(By.id("registerBtn")).click();
-			a.waitForVisibleElement(dr, By.id("myModal"), 60);
+			waitForElement(By.id("myModal"));
 		}
 		else
 			System.out.println("Register element wasn't found!"+ false);
@@ -75,24 +74,21 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		setEmail(mail);
 		
 		dr.switchTo().frame("myRegisterFrame");
+		waitForElement(By.id("register-form"));
 		
 		WebElement pubElem = dr.findElement(By.id("Publisher"));
 		
 		pubElem.sendKeys(pubName);
 		dr.findElement(By.id("FirstName")).sendKeys(fName);
-//		Thread.sleep(2000);
 		
 		
 		if (waitForElement(By.id("LastName"))) {
 			dr.findElement(By.id("LastName")).click();
 			dr.findElement(By.id("LastName")).sendKeys(lName);
 		}
-//		Thread.sleep(2000);
 		dr.findElement(By.id("Email")).click();
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
-//		Thread.sleep(2000);
 		dr.findElement(By.id("Password")).sendKeys(password);
-//		Thread.sleep(2000);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
 		
 		WebElement pubMenu = dr.findElement(By.id("dd"));

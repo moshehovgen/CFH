@@ -1,6 +1,6 @@
 Feature: Forgot password feature
 
-  @Password
+  @Password @Regression
   Scenario Outline: Reset password flow - positive flow (test case: 107223)
     Given navigate to login page
     When click on forgot password
@@ -15,7 +15,7 @@ Feature: Forgot password feature
       | mail                        | password   | link                   | retypePassword |
       | autoCodefuel@mailinator.com | 1q2w3e4r@$ | YES, RESET MY PASSWORD | 1q2w3e4r@$     |
 
-  @Password
+  @Password @Regression
   Scenario Outline: Reset password flow - click send without mail (test case: 107225)
     Given navigate to login page
     When click on forgot password
@@ -26,7 +26,7 @@ Feature: Forgot password feature
       | message                        |
       | Please enter an email address. |
 
-  @Password
+  @Password @Regression
   Scenario Outline: Reset password flow - negative tests (test cases: 107226, 107228, 107229, 107235)
     Given navigate to login page
     When click on forgot password
