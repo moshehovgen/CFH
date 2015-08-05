@@ -87,7 +87,7 @@ import cucumber.api.java.en.Then;
 		 
 		 @Then("^click save placement edit$")
 		 public void click_save_placement_edit() throws Throwable {
-		     dr.findElement(By.id("placement_edit_id")).click();
+		     dr.findElement(By.id("placement_save_btn_icon")).click();
 		     Thread.sleep(1000);
 		 }
 

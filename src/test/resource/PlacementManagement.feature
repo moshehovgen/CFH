@@ -6,8 +6,9 @@ Feature: Codefuel Manage Placements
     And Enter App "Auto" upload "iconX" select "1" Enter packageID "com.google.app" choose category "Automotive"
     And Click Add button
     Then validate App created
+    And delete apps
 
-  @Placement @Regression
+  @Test @Regression
   Scenario: Create a new app and verify default placement (test case: 107401)
     And verify default placement exists
 
@@ -19,8 +20,8 @@ Feature: Codefuel Manage Placements
 
     Examples: 
       | username               | password  | name | icon  | platform | packageID      | category   | placename                   |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
+     # | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
+    #  | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place!@$%                   |
       | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | placenameplacenameplacename |
 
@@ -32,7 +33,7 @@ Feature: Codefuel Manage Placements
     And click save placement edit
     And validate placement created with "newPlace"
 
-  @Placement @Sanity
+  @Test @Sanity
   Scenario: De-Activate existing placement (Test case: 107423)
     And Add new placement with "placename"
     And click save placement

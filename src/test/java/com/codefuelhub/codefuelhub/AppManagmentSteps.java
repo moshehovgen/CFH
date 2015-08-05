@@ -185,7 +185,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 				
 		if(a.waitForVisibleElement(dr, By.id("new_placement_btn"), 10000)) {
 			boolean isElementExist = doesAppInList(appName);
-			Assert.assertTrue("New App creation Pass!", isElementExist);
+			Assert.assertTrue("New App creation " + isElementExist, isElementExist);
 		}
 		
 		
