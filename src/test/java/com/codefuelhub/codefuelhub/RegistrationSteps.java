@@ -138,8 +138,14 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		try{
 			waitForElement(By.id("innerConditions"));
 			WebElement elem = dr.findElement(By.id("innerConditions"));
-			elem.click();
-		   
+			
+			if(elem != null)
+			{
+				elem.click();
+				System.out.println("Element located");
+			}
+			else
+			 System.out.println("Element isn't located");
 			
 //			Actions action = new Actions(dr);
 //		  
