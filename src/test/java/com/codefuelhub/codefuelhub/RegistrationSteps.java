@@ -99,6 +99,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		for (int i = 0; i < menuElem.size(); i++) {
 			if(menuElem.get(i).getText().equals(pubType)){
 				menuElem.get(i).click();
+				Thread.sleep(2000);
 			}
 		}
 		
