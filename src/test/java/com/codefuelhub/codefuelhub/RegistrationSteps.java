@@ -106,13 +106,13 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@And("^click submit$")
 	public void clickSubmit() throws Throwable {
-		if(clickOnAccept())
-		{
+		clickOnAccept();
+		
 			waitForElement(By.id("submit"));
 			dr.findElement(By.id("submit")).click();
 			Thread.sleep(3000);
 			dr.findElement(By.id("submit")).click(); //tell them to change the name
-		}
+		
 		
 	}
 	
@@ -134,27 +134,31 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	    }
 	}
 	
-	private boolean clickOnAccept(){
+	private void clickOnAccept(){
 		try{
-			WebElement elem = dr.findElement(By.id("forPersist")); 
-		    Actions action = new Actions(dr);
-		  
-		    Dimension d = elem.getSize();
-		    
-		    int x = d.getWidth()/8;
-		    int y = d.getHeight()/4;
-		    
-		    action.moveToElement(elem,x,y).click().perform();
+			waitForElement(By.id("innerConditions"));
+			WebElement elem = dr.findElement(By.id("innerConditions"));
+			elem.click();
+		   
+			
+//			Actions action = new Actions(dr);
+//		  
+//		    Dimension d = elem.getSize();
+//		    
+//		    int x = d.getWidth()/8;
+//		    int y = d.getHeight()/4;
+//		    
+//		    action.moveToElement(elem,x,y).click().perform();
 		    
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
 
-		if(dr.findElement(By.id("ConditionsChecker")).getAttribute("checked").equals("true")){
-	    	return true;
-	    }
-	    else
-	    	return false;
+//		if(dr.findElement(By.id("ConditionsChecker")).getAttribute("checked").equals("true")){
+//	    	return true;
+//	    }
+//	    else
+//	    	return false;
 	}
 	
 	
