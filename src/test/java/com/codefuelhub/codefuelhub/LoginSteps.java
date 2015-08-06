@@ -42,9 +42,11 @@ import cucumber.api.java.en.When;
 		public void navigateToLoginPage() throws InterruptedException {
 			goToHubPage();
 			
+			AbstractPageStepDefinition a = new AbstractPageStepDefinition();
+			
 			if(waitForElement(By.id("loginBtn"))){
 				dr.findElement(By.id("loginBtn")).click();
-				
+				a.waitForVisibleElement(dr, By.id("myModal"), 60);
 			}
 			else
 				System.out.println("Login element wasn't found!"+ false);
@@ -68,8 +70,7 @@ import cucumber.api.java.en.When;
 		
 		@When("^I enter ([^\"]*) and ([^\"]*) first time$")
 		public void enterUserAndPass(String username, String password) throws Throwable {				
-			AbstractPageStepDefinition a = new AbstractPageStepDefinition();
-			a.waitForVisibleElement(dr, By.id("myModal"), 60);
+			
 			dr.switchTo().frame("myFrame");
 			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			if (username != "skip"){

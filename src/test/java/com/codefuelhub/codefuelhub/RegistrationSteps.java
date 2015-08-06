@@ -187,7 +187,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		login.setDriver(dr);
 		
-		login.navigateToLoginPage();
+		login.goToHubPage();
+		login.clickLogin();
 		login.validateLogin();
 		
 		login.dr.quit();
