@@ -83,10 +83,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		
 		if (waitForElement(By.id("LastName"))) {
-			dr.findElement(By.id("LastName")).click();
 			dr.findElement(By.id("LastName")).sendKeys(lName);
 		}
-		dr.findElement(By.id("Email")).click();
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
 		dr.findElement(By.id("Password")).sendKeys(password);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
