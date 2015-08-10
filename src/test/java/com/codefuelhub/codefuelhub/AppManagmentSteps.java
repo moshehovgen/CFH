@@ -33,7 +33,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	public static WebDriver dr;  
 	
-	@Before("@Application, @Placement")
+	@Before("@Application, @Placement, @Dashboard")
 	public void initiateBrowser(){
 		init();
 		dr = initWebDriver();
@@ -42,7 +42,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application, @Placement")
+	@After("@Application, @Placement , @Dashboard")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -130,7 +130,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.findElement(By.id("addAppBtn")).click();
 		
+		
+		
 		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+		while (items.size() == 1){
+			items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+		}
+		
 		numOfApps = items.size();
 	}
 
@@ -213,7 +219,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		//String appCategory = dr.findElement(By.id("header_content_category")).getText();
 		
 		//check app name is correct
-		if(appName.equals(this.appName) && 
+		if(appName.equalsIgnoreCase(this.appName) && 
 				appBundle.equals("Bundle ID: "+packageID) ){
 			if(platform ==1){
 				tempPlat = "iOS";
@@ -315,6 +321,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		if(items.size() == numOfApps +1)
 		{
+			Assert.assertTrue("New app added, number of apps: " + items.size(), true);	
 			return true;
 		}else
 			return false;
