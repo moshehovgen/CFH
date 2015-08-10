@@ -1,5 +1,6 @@
 package com.codefuelhub.codefuelhub;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
@@ -26,6 +28,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	long Time = System.currentTimeMillis();
 	String appName = null;
 	String AppListBaseURL = null;
+	int numOfApps;
 	
 	
 	public static WebDriver dr;  
@@ -122,8 +125,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			System.out.println("element(apps_dd_btn) not visible");
 		}
 		//appMenu.findElement(By.id("apps_dd_btn")).click();
-
-		dr.findElement(By.id("addAppBtn")).click();	
+		
+		
+		
+		dr.findElement(By.id("addAppBtn")).click();
+		
+		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+		numOfApps = items.size();
 	}
 
 	@When("^Enter App \"(.*?)\" upload \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\" choose category \"(.*?)\"$")
@@ -167,6 +175,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@When("^Click Add button$")
 	public void clickAdd() throws Throwable {
+		
 		dr.findElement(By.id("appsSave")).click();
 		Thread.sleep(1000);
 		
@@ -179,8 +188,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 
 	@Then("^validate App created$")
 	public void validate_App_created() throws Throwable {
-		
-		
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 				
 		if(a.waitForVisibleElement(dr, By.id("new_placement_btn"), 10000)) {
@@ -240,7 +247,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		System.out.println("AppListBaseURL = " + AppListBaseURL);
 		System.out.println("CurrURL = " + CurrURL);
 		
-		if (AppListBaseURL.equals(CurrURL) || AppListBaseURL.equals("http://admin.hub.qacodefuel.com/#/main/dashboard/activeUser")) {
+		if (AppListBaseURL.equals(CurrURL) || AppListBaseURL.equals("http://admin.hub.qacodefuel.com/#/main/dashboard/activeUser") ||  AppListBaseURL.equals("http://admin.hub.codefuel.com/#/main/dashboard/activeUser")) {
 			System.out.println("#### URL's equals #### ");
 			boolean cancel = true;
 			Assert.assertTrue(cancel);
@@ -296,18 +303,23 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
 		String name;
 		
-		for (int i = 0; i < items.size() && !found; i++) {
-			
-			WebElement appElem = items.get(i);
-			
-			name = appElem.findElement(By.tagName("a")).getAttribute("tooltip");
-			if(name!= null && name.equals(appName)){
-				found = true;				
-			}
-		}
+//		for (int i = 0; i < items.size() && !found; i++) {
+//			
+//			WebElement appElem = items.get(i);
+//			
+//			name = appElem.findElement(By.tagName("a")).getAttribute("tooltip");
+//			if(name!= null && name.equals(appName)){
+//				found = true;				
+//			}
+//		}
 		
+		if(items.size() == numOfApps +1)
+		{
+			return true;
+		}else
+			return false;
 		
-		return found;
+		//return found;
 	}
 	
 	public void switchFrame(String frameId) {
