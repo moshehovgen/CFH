@@ -9,7 +9,7 @@ Feature: Codefuel Login
 
     Examples: 
       | username               | password  |
-      | ronen.yurik@perion.com | 1q2w3e4r$ |
+      | nofardi1@mailinator.com | 1q2w3e4r$ |
 
   @Login @Regression
   Scenario Outline: Login negative (test cases: 107214, 107217, 107215, 107218, 107258)
@@ -20,9 +20,9 @@ Feature: Codefuel Login
     Examples: 
       | username               | password  | message                            |
       | badUserName@perion.com | 123456    | The email or password is incorrect |
-      | ronen.yurik@perion.com |           | Please enter your password         |
+      | nofardi1@mailinator.com |           | Please enter your password         |
       | skip                   | 1q2w3e4r$ | Please enter an email              |
-      | ronen.yurik@perion.com | 123456    | The email or password is incorrect |
+      | nofardi1@mailinator.com | 123456    | The email or password is incorrect |
       | badUserName@perion.com | 1q2w3e4r$ | The email or password is incorrect |
       | skip                   |           | Please enter your password         |
 

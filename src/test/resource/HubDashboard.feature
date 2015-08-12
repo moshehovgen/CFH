@@ -1,7 +1,7 @@
 Feature: Codefuel dashboard
 
   Background: Login to portal and add an app
-    Given User logged into the portal enter "ronen.yurik@perion.com" and "1q2w3e4r$"
+    Given User logged into the portal enter "nofardi1@mailinator.com" and "1q2w3e4r$"
 
   @Dashboard
   Scenario Outline: Mixed filters tests (Test cases: 116832, 116833, 116834, 116835)

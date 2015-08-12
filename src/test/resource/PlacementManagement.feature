@@ -1,7 +1,7 @@
 Feature: Codefuel Manage Placements
 
   Background: Login to portal and add an app
-    Given User logged into the portal enter "ronen.yurik@perion.com" and "1q2w3e4r$"
+    Given User logged into the portal enter "nofardi1@mailinator.com" and "1q2w3e4r$"
     When User select App tab and click on Add app button
     And Enter App "Auto" upload "iconX" select "1" Enter packageID "com.google.app" choose category "Automotive"
     And Click Add button
@@ -20,10 +20,10 @@ Feature: Codefuel Manage Placements
 
     Examples: 
       | username               | password  | name | icon  | platform | packageID      | category   | placename                   |
-     # | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
-    #  | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place!@$%                   |
-      | ronen.yurik@perion.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | placenameplacenameplacename |
+     # | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
+    #  | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place!@$%                   |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | placenameplacenameplacename |
 
   @Placement @Regression @Sanity
   Scenario: Edit existing placement (Test case: 107404)
