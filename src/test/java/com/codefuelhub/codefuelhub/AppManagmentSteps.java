@@ -329,6 +329,37 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		//return found;
 	}
 	
+	@Then("^validate App active$")
+	public void validate_App_active() throws Throwable {
+		WebElement activeElem = dr.findElement(By.id("app_activate"));
+		 
+		 if(! activeElem.getAttribute("class").contains("inactive")){
+			 Assert.assertTrue("App is active", true);
+		 }
+		 else
+			 Assert.assertFalse("App isn't active",false);
+	}
+
+	@Then("^deactive app$")
+	public void deactive_app() throws Throwable {
+		dr.findElement(By.id("app_activate")).click();
+	}
+
+	@Then("^validate app deactive$")
+	public void validate_app_deactive() throws Throwable {
+		WebElement activeElem = dr.findElement(By.id("app_activate"));
+		dr.findElement(By.id("apps_list_active")).click();
+		
+		//check if button was given the class of deactive and also verify app isn't in the active list
+		if(activeElem.getAttribute("class").contains("inactive") &&
+				(!doesAppInList(dr.findElement(By.id("app_header_wrapper_subtitle")).getText()))) 
+			Assert.assertTrue("App isn't active",true);
+		else
+			 Assert.assertFalse("App is active", false);
+	}
+	
+	
+	
 	public void switchFrame(String frameId) {
 		   dr.switchTo().defaultContent();
 	       dr.switchTo().frame(frameId);

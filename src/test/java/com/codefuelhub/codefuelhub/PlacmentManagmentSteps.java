@@ -2,6 +2,8 @@ package com.codefuelhub.codefuelhub;
 
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +31,8 @@ import cucumber.api.java.en.Then;
 			  if(name.equals("") && dropDown.findElement(By.tagName("button")).getText().equals("Interstitial ")){
 				  System.out.println("Default placement is correct!");
 			  }
+			  else
+				  Assert.assertTrue("Default placement isn't correct", false);
 		  }
 		 
 		 @And("^Add new placement with \"(.*?)\"$")
@@ -69,6 +73,7 @@ import cucumber.api.java.en.Then;
 					}
 				 }
 			 }
+			 Assert.assertTrue("Placment created", found);
 		 }
 
 		 @Then("^edit place to \"(.*?)\"$")
@@ -102,18 +107,32 @@ import cucumber.api.java.en.Then;
 		 }
 		 
 		 @Then("^verify active placement$")
-		 public void verify_active_placement() throws Throwable {
+		 public void verifyActive() throws Throwable {
+			 WebElement activeElem = dr.findElement(By.id("placement_activate_btn_icon"));
+			 
+			 if(! activeElem.getAttribute("class").contains("inactive")){
+				 Assert.assertTrue("Placment is active", true);
+			 }
+			 else
+				 Assert.assertFalse("Placment isn't active",false);
 			 
 		 }
 
-		 @Then("^click de\\active placement$")
-		 public void click_de_active_placement() throws Throwable {
-			 
+		 @Then("^click deactive placement$")
+		 public void clickDeactive() throws Throwable {
+			 dr.findElement(By.id("placement_activate_btn_icon")).click();
 		 }
 
 		 @Then("^verify deactive placement$")
-		 public void verify_deactive_placement() throws Throwable {
+		 public void verifyDeactive() throws Throwable {
+			 WebElement activeElem = dr.findElement(By.id("placement_activate_btn_icon"));
 			 
+			 if(activeElem.getAttribute("class").contains("inactive")){
+				 
+				 Assert.assertTrue("Placment isn't active",true);
+			 }
+			 else
+				 Assert.assertFalse("Placment is active", false);
 		 }
 		
 	

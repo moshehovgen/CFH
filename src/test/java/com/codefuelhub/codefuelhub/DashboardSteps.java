@@ -89,8 +89,10 @@ public class DashboardSteps extends AbstractPageStepDefinition{
 	
 	@When("^choose Period ([^\"]*), Country ([^\"]*), and app ([^\"]*)$")
 	public void chooseFilters(String period, String country, String app) throws Throwable {
-		dr.findElement(By.id("period_dd_btn")).click();
+		dr.findElement(By.cssSelector("#period_dd_btn > div > button")).click();
 		Thread.sleep(1000);
+		
+		
 		
 		dr.findElement(By.id("country_dd_btn")).click();
 		Thread.sleep(1000);
