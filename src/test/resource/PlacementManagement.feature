@@ -8,11 +8,11 @@ Feature: Codefuel Manage Placements
     Then validate App created
     And delete apps
 
-  @Test @Regression
+  @Placement @Regression
   Scenario: Create a new app and verify default placement (test case: 107401)
     And verify default placement exists
 
-  @Placement @Regression @Sanity
+  @Test @Regression @Sanity
   Scenario Outline: Add new placement (regular, special char, long string, and with space) (Test cases: 107402, 107493, 107494)
     And Add new placement with <placename>
     And click save placement
@@ -25,7 +25,7 @@ Feature: Codefuel Manage Placements
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place!@$%                   |
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | placenameplacenameplacename |
 
-  @Placement @Regression @Sanity
+  @Test @Regression @Sanity
   Scenario: Edit existing placement (Test case: 107404)
     And Add new placement with "placename"
     And click save placement
@@ -33,12 +33,12 @@ Feature: Codefuel Manage Placements
     And click save placement edit
     And validate placement created with "newPlace"
 
-  @Test @Sanity
+  @Placement @Sanity
   Scenario: De-Activate existing placement (Test case: 107423)
     And Add new placement with "placename"
     And click save placement
     And verify active placement
-    And click de\active placement
+    And click deactive placement
     And verify deactive placement
 
   @Test

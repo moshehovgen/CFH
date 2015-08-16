@@ -80,6 +80,16 @@ Feature: Codefuel Add Application
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | NewAuto            | Food & Drinks |
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     | Pretty application | Uncategorized |
       
+   @Application @Regression
+   Scenario: Deactive app (Test case: 107407)
+   Given User logged into the portal enter <username> and <password>
+    When User select App tab and click on Add app button
+    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Click Add button
+    Then validate App created
+    And validate App active
+    And deactive app
+    And validate app deactive
 
       
       
