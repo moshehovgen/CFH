@@ -118,7 +118,7 @@ import cucumber.api.java.en.Then;
 			 
 		 }
 
-		 @Then("^click de\\active placement$")
+		 @Then("^click deactive placement$")
 		 public void clickDeactive() throws Throwable {
 			 dr.findElement(By.id("placement_activate_btn_icon")).click();
 		 }
