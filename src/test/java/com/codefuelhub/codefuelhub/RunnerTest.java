@@ -11,7 +11,7 @@ import cucumber.api.junit.Cucumber;
 		plugin = {"pretty", "html:target/html/", "json:target/cucumber.json"},
 		features = "src/test/resource",
 		tags = {"@Regression"}
-		 
+		
 		)
 
 public class RunnerTest {
