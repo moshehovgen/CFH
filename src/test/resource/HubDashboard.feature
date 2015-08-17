@@ -1,3 +1,4 @@
+@Dashboard
 Feature: Codefuel dashboard
 
   Background: Login to portal and add an app

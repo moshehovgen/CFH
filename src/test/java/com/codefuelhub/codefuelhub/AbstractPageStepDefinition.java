@@ -22,6 +22,7 @@ public class AbstractPageStepDefinition {
 	public static final String TEST_ENV = System.getenv("TEST_ENV");
 	public static final String QA_URL = System.getenv("QA_URL");
 	public static final String PROD_URL = System.getenv("PROD_URL");
+	public static String MAIL_ADD = "";
 	public static String BASE_URL = null;
 	WebDriver dr;
 	

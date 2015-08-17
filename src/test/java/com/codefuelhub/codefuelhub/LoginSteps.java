@@ -74,7 +74,11 @@ import cucumber.api.java.en.When;
 			dr.switchTo().frame("myFrame");
 			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			if (username != "skip"){
-				dr.findElement(By.id("Email")).sendKeys(username);
+				//dr.findElement(By.id("Email")).sendKeys(username);
+				if(username.contains("Codefuel"))
+					dr.findElement(By.id("Email")).sendKeys(username);
+				else
+					dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
 			}
 				dr.findElement(By.id("Password")).sendKeys(password);
 				dr.findElement(By.id("login")).click();

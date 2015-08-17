@@ -33,14 +33,14 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	//used the before implemented in app manage
 	
-	@Before("@Registration")
+	@Before("@Registration, @BeforeAll")
 	public void initiateBrowser(){
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 	}
 	
-	@After("@Registration")
+	@After("@Registration, @BeforeAll")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
@@ -131,6 +131,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	    if(mail.endsWith("com") && mail.startsWith("autoCodefuel")) {
 	    	mailAddress = mail;
 	    }
+	    MAIL_ADD = mailAddress;
+	}
+	
+	public String getEmail(){
+		return mailAddress;
 	}
 	
 	private void clickOnAccept(){
@@ -210,6 +215,31 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		Assert.assertTrue(found);
 	}
 
+	@Then("^validate registration complete in before ([^\"]*)$")
+	public void verify_registration_complete_in_complete(String password) throws Throwable {
+		LoginSteps login = new LoginSteps();
+		
+		login.setDriver(dr);
+		
+		login.goToHubPage();
+		login.clickLogin();
+		login.validateLogin();
+		
+		//login.dr.quit();
+
+		
+	}
+
+	@Then("^add first app$")
+	public void add_first_app() throws Throwable {
+		AppManagmentSteps app = new AppManagmentSteps();
+		
+		dr.findElement(By.className("first-app-btn")).click();
+		app.setDriver(dr);
+		app.createApp("auto", "", 1, "auto.first.app","");
+		app.clickAdd();
+		
+	}
 
 
 	

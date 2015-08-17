@@ -56,9 +56,14 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		return dr;
 	}
 	
+	public void setDriver(WebDriver driver){
+		dr = driver;
+	} 
+	
 	@Given("^User logged into the portal enter \"(.*?)\" and \"(.*?)\"$")
 	public void loginBackground(String name, String password) throws Throwable {
-		loginToPortal(name, password);
+		//loginToPortal(name, password);
+		loginToPortal(MAIL_ADD, password);
 	}
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
@@ -70,7 +75,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		switchFrame("myFrame");
 		//dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		
-		dr.findElement(By.id("Email")).sendKeys(username);
+		//dr.findElement(By.id("Email")).sendKeys(username);
+		dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
 		
 		dr.findElement(By.id("Password")).clear();
 		dr.findElement(By.id("Password")).sendKeys(password);
