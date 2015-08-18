@@ -67,7 +67,7 @@ import cucumber.api.java.en.Then;
 			 for(int i= 0 ; i< tableRows.size() && !found; i++){
 				 List<WebElement> column = tableRows.get(i).findElements(By.tagName("td"));
 				 
-				 for (int j = 0; j < column.size() && found; j++) {
+				 for (int j = 0; j < column.size() && !found; j++) {
 					if(column.get(j).getText().equals(name)){
 						found = true;
 					}
