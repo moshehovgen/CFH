@@ -71,7 +71,20 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")
 	public void enterDetailsToRegister(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable {
-		setEmail(mail);
+		setEmail(mail, false);
+		
+		registerForm(pubName, fName, lName, mail, password, pubType);
+		
+	}
+	
+	@When("^begin I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")
+	public void enterDetailsToRegisterBegin(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable {
+		setEmail(mail, true);
+		
+		registerForm(pubName, fName, lName, mail, password, pubType);
+	}
+	
+	private void registerForm(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable{
 		
 		dr.switchTo().frame("myRegisterFrame");
 		waitForElement(By.id("register-form"));
@@ -100,7 +113,6 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				Thread.sleep(2000);
 			}
 		}
-		
 	}
 	
 	@And("^click submit$")
@@ -124,14 +136,16 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	    
 	}
 	
-	public void setEmail(String mail){
+	public void setEmail(String mail, boolean isBegin){
 		if(!mailAddress.endsWith("com")){
 	    	mailAddress = mail + Time + "@mailinator.com";
+	    	if(isBegin)
+	    		MAIL_ADD = mailAddress;
 	    } 
 	    if(mail.endsWith("com") && mail.startsWith("autoCodefuel")) {
 	    	mailAddress = mail;
 	    }
-	    MAIL_ADD = mailAddress;
+	    
 	}
 	
 	public String getEmail(){
