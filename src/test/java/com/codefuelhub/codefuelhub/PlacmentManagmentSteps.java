@@ -61,14 +61,14 @@ import cucumber.api.java.en.Then;
 		 @And("^validate placement created with ([^\"]*)$")
 		 public void validatePlaceCreated(String name) throws Throwable {
 			 boolean found = false;
-			 WebElement baseTable = dr.findElement(By.id("placement_table"));
+			 WebElement baseTable = dr.findElement(By.id("placement"));
 			 List<WebElement> tableRows = baseTable.findElements(By.tagName("tr"));
 			 
 			 for(int i= 0 ; i< tableRows.size() && !found; i++){
 				 List<WebElement> column = tableRows.get(i).findElements(By.tagName("td"));
-				 
+				//*[@id="placementH5XGST"]/table/tbody/tr[1]/td[1]/div
 				 for (int j = 0; j < column.size() && !found; j++) {
-					if(column.get(j).getText().equals(name)){
+					if(column.get(j).getText().equals(name) || (name.contains(column.get(j).getText()) && !name.isEmpty())){
 						found = true;
 					}
 				 }
@@ -83,7 +83,7 @@ import cucumber.api.java.en.Then;
 			 dr.findElement(By.id("placement_edit_btn_icon")).click();
 			 
 			 WebElement placeName = dr.findElement(By.xpath("//*[@id=\"placement\"]/tr[2]/td/form/table/tbody/tr[1]/td[1]/div/input"));
-			
+			//*[@id="placementWREEH0"]/table/tbody/tr[1]/td[1]/input  - dev changed the xpath
 			placeName.clear();
 			placeName.sendKeys(newName);
 			

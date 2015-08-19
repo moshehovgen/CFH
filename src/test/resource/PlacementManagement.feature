@@ -16,7 +16,7 @@ Feature: Codefuel Manage Placements
   Scenario Outline: Add new placement (regular, special char, long string, and with space) (Test cases: 107402, 107493, 107494)
     And Add new placement with <placename>
     And click save placement
-    And validate placement created with <placeName>
+    And validate placement created with <placename>
 
     Examples: 
       | username               | password  | name | icon  | platform | packageID      | category   | placename                   |
