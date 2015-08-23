@@ -6,7 +6,7 @@ Feature: Codefuel Manage Placements
     And Enter App "Auto" upload "iconX" select "1" Enter packageID "com.google.app" choose category "Automotive"
     And Click Add button
     Then validate App created
-    And delete apps
+   # And delete apps
 
   @Placement @Regression
   Scenario: Create a new app and verify default placement (test case: 107401)
@@ -20,8 +20,8 @@ Feature: Codefuel Manage Placements
 
     Examples: 
       | username               | password  | name | icon  | platform | packageID      | category   | placename                   |
-     # | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
-    #  | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place!@$%                   |
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | placenameplacenameplacename |
 

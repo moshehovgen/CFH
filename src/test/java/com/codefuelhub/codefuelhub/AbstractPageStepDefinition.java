@@ -1,12 +1,15 @@
 package com.codefuelhub.codefuelhub;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,6 +27,7 @@ public class AbstractPageStepDefinition {
 	public static final String PROD_URL = System.getenv("PROD_URL");
 	public static String MAIL_ADD = "";
 	public static String BASE_URL = null;
+	public static final String PS_FILE_NAME = "\\192.168.20.7\\clients\\Automation\\CFH\\";
 	WebDriver dr;
 	
 	
@@ -163,6 +167,18 @@ public class AbstractPageStepDefinition {
 			e.printStackTrace();
 		}
 		
+		
+	}
+	
+	public static void takeScreenShot(WebDriver dr, String fileName){
+		File screenshot = ((TakesScreenshot)dr).getScreenshotAs(OutputType.FILE);
+		
+		try {
+			FileUtils.copyFile(screenshot, new File("\\\\192.168.20.7\\clients\\Automation\\CFH\\" + fileName + "_" + System.currentTimeMillis() +".jpeg"));
+		} catch (IOException e) {
+			
+			System.out.println("Failure to take screenshot "+e.getMessage());
+		}
 		
 	}
 

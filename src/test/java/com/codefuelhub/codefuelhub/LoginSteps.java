@@ -5,9 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -18,8 +15,7 @@ import cucumber.api.java.en.When;
 
 	public class LoginSteps extends AbstractPageStepDefinition {
 		
-		WebDriver dr ;		
-		
+		WebDriver dr ;
 		
 		@Before("@Login")
 		public void initiateBrowser(){
@@ -73,6 +69,8 @@ import cucumber.api.java.en.When;
 			
 			dr.switchTo().frame("myFrame");
 			dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			
+			try {
 			if (username != "skip"){
 				if(username.contains("Codefuel"))
 					dr.findElement(By.id("Email")).sendKeys(username);
@@ -81,6 +79,12 @@ import cucumber.api.java.en.When;
 			}
 			dr.findElement(By.id("Password")).sendKeys(password);
 			dr.findElement(By.id("login")).click();
+			
+			} catch(Exception e){
+				System.out.println("Couldn't fill login: "+ e.getMessage());
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
+				takeScreenShot(dr, "login_fail");
+			}
 		}
 				
 		@When("^click Login$")
@@ -93,9 +97,15 @@ import cucumber.api.java.en.When;
 			
 			AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 			a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000);
+			boolean successLogin = dr.getCurrentUrl().contains("dashboard") || dr.getCurrentUrl().contains("newUser");
 			
-			//WebElement logout = (new WebDriverWait(dr, 20)).until(ExpectedConditions.elementToBeClickable(By.id("logout")));
-			Assert.assertTrue(dr.getCurrentUrl().contains("dashboard") || dr.getCurrentUrl().contains("newUser"));
+			Assert.assertTrue(successLogin);
+			if(!successLogin)
+			{
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
+				takeScreenShot(dr, "login_fail");
+			}
+			
 		}
 		
 		@Then("^validate login Fail$")
@@ -111,6 +121,17 @@ import cucumber.api.java.en.When;
 			String pageSource = dr.getPageSource();
 			found = pageSource .contains(message);
 			Assert.assertTrue(found);
+			
+			if(found){
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message...");
+				takeScreenShot(dr, "login_message");
+				
+				
+			} else{
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message_fail...");
+				takeScreenShot(dr, "login_message_fail");
+			}
+				
 		}
 		
 		@And("^User log out$")

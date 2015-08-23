@@ -7,11 +7,7 @@ import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.FindsById;
-import org.openqa.selenium.support.ui.Select;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 
@@ -31,8 +27,12 @@ import cucumber.api.java.en.Then;
 			  if(name.equals("") && dropDown.findElement(By.tagName("button")).getText().equals("Interstitial ")){
 				  System.out.println("Default placement is correct!");
 			  }
-			  else
+			  else{
 				  Assert.assertTrue("Default placement isn't correct", false);
+				  
+				  System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\def_place_fail...");
+				  takeScreenShot(dr, "def_place_fail");
+			  }
 		  }
 		 
 		 @And("^Add new placement with \"(.*?)\"$")
@@ -74,6 +74,14 @@ import cucumber.api.java.en.Then;
 				 }
 			 }
 			 Assert.assertTrue("Placment created", found);
+			 if(found){
+				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place...");
+				 takeScreenShot(dr, "add_place");
+			 } else{
+				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place_fail...");
+				 takeScreenShot(dr, "add_place_fail");
+			 }
+				 
 		 }
 
 		 @Then("^edit place to \"(.*?)\"$")
@@ -113,8 +121,11 @@ import cucumber.api.java.en.Then;
 			 if(! activeElem.getAttribute("class").contains("inactive")){
 				 Assert.assertTrue("Placment is active", true);
 			 }
-			 else
-				 Assert.assertFalse("Placment isn't active",false);
+			 else{
+				 Assert.assertTrue("Placment isn't active",false);
+				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_active_fail...");
+				 takeScreenShot(dr, "place_active_fail");
+			 }
 			 
 		 }
 
@@ -131,8 +142,11 @@ import cucumber.api.java.en.Then;
 				 
 				 Assert.assertTrue("Placment isn't active",true);
 			 }
-			 else
-				 Assert.assertFalse("Placment is active", false);
+			 else{
+				 Assert.assertTrue("Placment is active", false);
+				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_deactive_fail...");
+				 takeScreenShot(dr, "place_deactive_fail");
+			 }
 		 }
 		
 	

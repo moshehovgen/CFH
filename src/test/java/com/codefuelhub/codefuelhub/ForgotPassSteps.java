@@ -52,9 +52,8 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	
 	@And("^enter mail in forgot ([^\"]*)")
 	public void enterMailForForgot(String mailAddress) throws Throwable {
-		RegistrationSteps register = new RegistrationSteps();
 		
-		Thread.sleep(2000);
+		waitForVisibleElement(dr, By.id("Email"), 2000);
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
 	}
 	
@@ -62,6 +61,9 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	public void clickSendPass() throws Throwable {
 		dr.findElement(By.className("CP_btn")).click();
 		Thread.sleep(3000);
+		
+		takeScreenShot(dr, "reset_pass");
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass...");
 		
 	}
 	
@@ -74,6 +76,9 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	    
 		Thread.sleep(1000);
 	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mail);
+	    
+	    takeScreenShot(dr, "click_mail");
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_mail...");
 	    Thread.sleep(1000);
 	}
 
@@ -95,6 +100,9 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(retypePass);
 		
 		dr.findElement(By.id("reset-password")).click();
+		
+		takeScreenShot(dr, "reset_pass_page");
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass_page...");
 	}
 
 	

@@ -1,21 +1,12 @@
 package com.codefuelhub.codefuelhub;
 
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.sql.Time;
 import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -102,6 +93,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("Password")).sendKeys(password);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
 		
+		
 		WebElement pubMenu = dr.findElement(By.id("dd"));
 		
 		pubMenu.click();
@@ -119,11 +111,18 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public void clickSubmit() throws Throwable {
 		clickOnAccept();
 		
-			waitForElement(By.id("submit"));
-			dr.findElement(By.id("submit")).click();
-			Thread.sleep(4000);
-			dr.findElement(By.id("submit")).click(); //tell them to change the name
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fill...");
+		takeScreenShot(dr, "registration_fill");
 		
+		waitForElement(By.id("submit"));
+		dr.findElement(By.id("submit")).click();
+		
+		waitForElement(By.id("confirmation_mail_ok"));
+		
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\confirmation_win_show...");
+		takeScreenShot(dr, "confirmation_win_show");
+		
+		dr.findElement(By.id("confirmation_mail_ok")).click(); 		
 		
 	}
 	
@@ -133,6 +132,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	    mailObj.setDriver(dr);
 	    mailObj.navigateToMail();
 	    mailObj.createMailAddress(mailAddress);
+	    
+	    System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_mail...");
+		takeScreenShot(dr, "create_mail");
 	    
 	}
 	
@@ -164,25 +166,10 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			}
 			else
 			 System.out.println("Element isn't located");
-			
-//			Actions action = new Actions(dr);
-//		  
-//		    Dimension d = elem.getSize();
-//		    
-//		    int x = d.getWidth()/8;
-//		    int y = d.getHeight()/4;
-//		    
-//		    action.moveToElement(elem,x,y).click().perform();
 		    
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-
-//		if(dr.findElement(By.id("ConditionsChecker")).getAttribute("checked").equals("true")){
-//	    	return true;
-//	    }
-//	    else
-//	    	return false;
 	}
 	
 	
@@ -191,6 +178,10 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public void verifyMailRecieved(String mail) throws Throwable {
 		Thread.sleep(1000);
 	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mail);
+	    
+	    System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\mail_recieved...");
+		takeScreenShot(dr, "mail_recieved");
+	    
 	    Thread.sleep(1000);
 	}
 
@@ -198,6 +189,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	public void clickRegisterInMail(String link) throws Throwable {
 		mailObj.clickOnLinkInMail(link);
 		Thread.sleep(1000);
+		
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_link_mail...");
+		takeScreenShot(dr, "click_on_link_mail");
 	}
 
 	@Then("^verify registration complete ([^\"]*)$")
@@ -211,7 +205,6 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		login.validateLogin();
 		
 		login.dr.quit();
-
 		
 	}
 	
@@ -226,7 +219,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		dr.switchTo().activeElement();
 		String pageSource = dr.getPageSource();
 		found = pageSource.contains(message);
-		Assert.assertTrue(found);
+		Assert.assertTrue(found? "The message is correct":"The message isn't correct", found);
 	}
 
 	@Then("^validate registration complete in before ([^\"]*)$")
@@ -238,9 +231,6 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		login.goToHubPage();
 		login.clickLogin();
 		login.validateLogin();
-		
-		//login.dr.quit();
-
 		
 	}
 

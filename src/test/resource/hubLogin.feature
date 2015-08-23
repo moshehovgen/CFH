@@ -18,10 +18,10 @@ Feature: Codefuel Login
     Then validate warning message <message>
 
     Examples: 
-      | username               | password  | message                            |
+      | username               | password  | message                             |
       | badUserName@perion.com | 123456    | The email or password is incorrect. |
-      | ronen.yurik@perion.com |           | Please enter your password         |
-      | skip                   | 1q2w3e4r$ | Please enter an email              |
+      | ronen.yurik@perion.com |           | Please enter your password          |
+      | skip                   | 1q2w3e4r$ | Please enter an email               |
       | ronen.yurik@perion.com | 123456    | The email or password is incorrect. |
       | badUserName@perion.com | 1q2w3e4r$ | The email or password is incorrect. |
-      | skip                   |           | Please enter your password         |
+      | skip                   |           | Please enter your password          |

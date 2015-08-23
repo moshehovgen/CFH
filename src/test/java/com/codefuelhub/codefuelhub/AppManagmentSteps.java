@@ -69,49 +69,30 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
 	public void loginToPortal(String username, String password) throws Throwable {
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
-		dr.findElement(By.id("loginBtn")).click();
+		try {
+			dr.findElement(By.id("loginBtn")).click();
 		
-		a.waitForVisibleElement(dr, By.id("myModal"), 60);
-		switchFrame("myFrame");
-		//dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			a.waitForVisibleElement(dr, By.id("myModal"), 60);
+			switchFrame("myFrame");
 		
-		//dr.findElement(By.id("Email")).sendKeys(username);
-		dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
+			dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
 		
-		dr.findElement(By.id("Password")).clear();
-		dr.findElement(By.id("Password")).sendKeys(password);
+			dr.findElement(By.id("Password")).sendKeys(password);
 		
-		dr.findElement(By.id("login")).click();
+			dr.findElement(By.id("login")).click();
+		
+		} catch(Exception e){
+			System.out.println("Couldn't fill login: "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
+			takeScreenShot(dr, "login_fail");
+		}
 		
 		
 		if(a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
 			System.out.println("page loaded");
 		}
-		else{
-		}
-		
-		
 	}
 	
-//	 public static boolean waitUntilElementClassAttrChange(By by, String expectedClassName, long timeOutInMilSec) {
-//         boolean isChanged = false;
-//
-//         long timeOut = timeOutInMilSec + System.currentTimeMillis();
-//
-//         while (!isChanged && timeOut > System.currentTimeMillis()) {
-//               try {
-//                     WebElement elem = dr.findElement(by);
-//                     String className = elem.getAttribute("class");
-//                     if (className.equals(expectedClassName)) {
-//                           isChanged = true;
-//                     }
-//               } catch (Exception e) {
-//               }
-//         }
-//         return isChanged;
-//   }
-
-
 	@When("^User select App tab and click on Add app button$")
 	public void selectAppAndClickAdd() throws Throwable {
 		
@@ -125,9 +106,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		AbstractPageStepDefinition pageStepDefinition =new AbstractPageStepDefinition();
 		By by = By.id("apps_dd_btn");
 		boolean isVisible = pageStepDefinition.waitForVisibleElement(dr,by,10);
-		if(isVisible){
+		if(isVisible) {
 			appMenu.findElement(by).click();
-		}else{
+		} else {
 			System.out.println("element(apps_dd_btn) not visible");
 		}
 		//appMenu.findElement(By.id("apps_dd_btn")).click();
@@ -164,25 +145,20 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		
 		dr.findElement(By.id("name")).sendKeys(appName);
-		
-		
-			if (platform == 1){
-				WebElement e = dr.findElement(By.id("addAndroidBtn"));
-						e.click();
-			}
-			if (platform == 2){
-				dr.findElement(By.id("addiOSBtn")).click();
-			}
 				
-		
+		if (platform == 1){
+			WebElement e = dr.findElement(By.id("addAndroidBtn"));
+			e.click();
+		}
+		if (platform == 2){
+			dr.findElement(By.id("addiOSBtn")).click();
+		}
 		
 		dr.findElement(By.id("bundle")).sendKeys(packageID);
 		
-//		if (!category.isEmpty()){
-//			
-//			Select dropdown = new Select (dr.findElement(By.id("appsCategory")));
-//			dropdown.selectByVisibleText(category);
-//		}
+		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_new_app...");
+		takeScreenShot(dr, "add_new_app");
+
 	}
 
 	@When("^Click Add button$")
@@ -205,6 +181,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		if(a.waitForVisibleElement(dr, By.id("new_placement_btn"), 10000)) {
 			boolean isElementExist = doesAppInList(appName);
 			Assert.assertTrue("New App creation " + isElementExist, isElementExist);
+			
+			if(!isElementExist){
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_fail...");
+				takeScreenShot(dr, "create_app_fail");
+			}
 		}
 		
 		
@@ -237,10 +218,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 				System.out.println("All app properties are correct!");
 			}
 			else
-				System.out.println("Not all properties were added correctly! "+ false);
+				Assert.assertTrue("Not all properties were added correctly! ", false);
 		}
 		else
-			System.out.println("Not all properties were added correctly! "+ false);
+			Assert.assertTrue("Not all properties were added correctly! ", false);
 		
 		
 		
@@ -248,8 +229,17 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Then("^validate error message ([^\"]*)$")
 	public void validate_error_message_errorMessage(String message) throws Throwable {
+		boolean messageCorrect;
 		dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		Assert.assertTrue(dr.getPageSource().contains(message));;
+		
+		messageCorrect = dr.getPageSource().contains(message);
+		Assert.assertTrue(messageCorrect);
+		
+		if(!messageCorrect){
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
+			takeScreenShot(dr, "create_app_message_fail");
+		}
+		
 	}
 
 	@Then("^Validate back to app list$")
@@ -290,15 +280,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@And("^validate name and category changed to ([^\"]*) ([^\"]*)$")
 	public void validateAppEdit(String appName, String category) throws Throwable {
 	   String actualAppName;
-	   String actualCategory;
 	   
 	   actualAppName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
-	   //actualCategory = dr.findElement(By.id("header_content_id")).getText();
 	   
 	   if(actualAppName == appName /*&& actualCategory == "Category: " + category*/){
 		   System.out.println("App was edited successfully!");
 	   } else
-		   System.out.println("App was edited information is incorrect!"); 
+		   Assert.assertTrue("App was edited information is incorrect!", false); 
 	   
 	   
 	}
@@ -311,19 +299,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@And("^check app list$")
 	public boolean doesAppInList(String appName){
-		boolean found = false;
 		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
-		String name;
-		
-//		for (int i = 0; i < items.size() && !found; i++) {
-//			
-//			WebElement appElem = items.get(i);
-//			
-//			name = appElem.findElement(By.tagName("a")).getAttribute("tooltip");
-//			if(name!= null && name.equals(appName)){
-//				found = true;				
-//			}
-//		}
+	
 		
 		if(items.size() == numOfApps +1)
 		{
@@ -332,7 +309,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		}else
 			return false;
 		
-		//return found;
 	}
 	
 	@Then("^validate App active$")
@@ -342,8 +318,12 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		 if(! activeElem.getAttribute("class").contains("inactive")){
 			 Assert.assertTrue("App is active", true);
 		 }
-		 else
-			 Assert.assertFalse("App isn't active",false);
+		 else {
+			 Assert.assertTrue("App isn't active",false);
+			 
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active_fail...");
+			takeScreenShot(dr, "app_active_fail");
+		 }
 	}
 
 	@Then("^deactive app$")
@@ -360,8 +340,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		if(activeElem.getAttribute("class").contains("inactive") &&
 				(!doesAppInList(dr.findElement(By.id("app_header_wrapper_subtitle")).getText()))) 
 			Assert.assertTrue("App isn't active",true);
-		else
-			 Assert.assertFalse("App is active", false);
+		else {
+			 Assert.assertTrue("App is active", false);
+			 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_deactive_fail...");
+			takeScreenShot(dr, "app_deactive_fail");
+		}
 	}
 	
 	
