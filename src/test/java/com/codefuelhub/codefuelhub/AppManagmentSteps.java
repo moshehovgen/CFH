@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.Wait;
 import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
 import cucumber.api.java.After;
@@ -134,6 +135,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@When("^Enter App ([^\"]*) upload ([^\"]*) select ([^\"]*) Enter packageID ([^\"]*) choose category ([^\"]*)$")
 	public void createApp(String name, String icon, int platform, String packageID, String category) throws Throwable {
+		WebDriverWait wait = new WebDriverWait(dr, 2000);
 		
 		//set unique name
 		if (!name.isEmpty()) {
@@ -145,7 +147,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		
 		dr.findElement(By.id("name")).sendKeys(appName);
-				
+		
+		wait.until(ExpectedConditions.elementSelectionStateToBe(By.id("addAndroidBtn"), false));//lementToBeClickable(By.id("addAndroidBtn")));
+		
 		if (platform == 1){
 			WebElement e = dr.findElement(By.id("addAndroidBtn"));
 			e.click();
