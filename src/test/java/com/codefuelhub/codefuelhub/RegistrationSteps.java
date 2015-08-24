@@ -117,6 +117,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		waitForElement(By.id("submit"));
 		dr.findElement(By.id("submit")).click();
 		
+		dr.switchTo().defaultContent();
+		dr.switchTo().frame("myRegisterFrame");
+		
 		waitForElement(By.id("confirmation_mail_ok"));
 		
 		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\confirmation_win_show...");
