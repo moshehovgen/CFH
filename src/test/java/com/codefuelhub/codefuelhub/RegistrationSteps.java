@@ -110,8 +110,15 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			if(menuElem.get(i).getText().equals(pubType)){
 				menuElem.get(i).click();
 				
-				Thread.sleep(3000);
+				//Thread.sleep(3000);
 			}
+		}
+		boolean pubChanged = false;
+		while(!pubChanged){
+			if(pubMenu.findElement(By.tagName("span")).getText().contains("Mobile")){
+				pubChanged = true;
+			}
+				
 		}
 	}
 	
