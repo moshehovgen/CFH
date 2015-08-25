@@ -93,18 +93,20 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("Password")).sendKeys(password);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
 		
+		//dr.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
 		
 		WebElement pubMenu = dr.findElement(By.id("dd"));
 		
 		pubMenu.click();
-		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
-
-		for (int i = 0; i < menuElem.size(); i++) {
-			if(menuElem.get(i).getText().equals(pubType)){
-				menuElem.get(i).click();
-				Thread.sleep(2000);
-			}
-		}
+		
+		dr.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
+//		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
+//
+//		for (int i = 0; i < menuElem.size(); i++) {
+//			if(menuElem.get(i).getText().equals(pubType)){
+//				menuElem.get(i).click();
+//			}
+//		}
 	}
 	
 	@And("^click submit$")
@@ -158,6 +160,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	}
 	
 	private void clickOnAccept(){
+		
 		try{
 			waitForElement(By.id("innerConditions"));
 			WebElement elem = dr.findElement(By.id("innerConditions"));

@@ -114,8 +114,6 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		}
 		//appMenu.findElement(By.id("apps_dd_btn")).click();
 		
-		
-		
 		dr.findElement(By.id("addAppBtn")).click();
 		
 		
