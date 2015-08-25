@@ -103,16 +103,16 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		pubMenu.click();
 		
-		//dr.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
-		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
-
-		for (int i = 0; i < menuElem.size(); i++) {
-			if(menuElem.get(i).getText().equals(pubType)){
-				menuElem.get(i).click();
-				
-				//Thread.sleep(3000);
-			}
-		}
+		pubMenu.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
+//		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
+//
+//		for (int i = 0; i < menuElem.size(); i++) {
+//			if(menuElem.get(i).getText().equals(pubType)){
+//				menuElem.get(i).click();
+//				
+//				//Thread.sleep(3000);
+//			}
+//		}
 		boolean pubChanged = false;
 		while(!pubChanged){
 			if(pubMenu.findElement(By.tagName("span")).getText().contains("Mobile")){
