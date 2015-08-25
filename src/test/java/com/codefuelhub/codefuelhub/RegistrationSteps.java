@@ -99,20 +99,29 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		//dr.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
 		
+		
+		
 		WebElement pubMenu = dr.findElement(By.id("dd"));
 		
+		System.out.println("before click on dd");
 		pubMenu.click();
 		
-		pubMenu.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
-//		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
-//
-//		for (int i = 0; i < menuElem.size(); i++) {
-//			if(menuElem.get(i).getText().equals(pubType)){
-//				menuElem.get(i).click();
-//				
-//				//Thread.sleep(3000);
-//			}
-//		}
+		System.out.println("after click on dd");
+		
+		//pubMenu.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
+		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
+
+		for (int i = 0; i < menuElem.size(); i++) {
+			if(menuElem.get(i).getText().equals(pubType)){
+				System.out.println("before click on mobile");
+				
+				menuElem.get(i).click();
+				
+				System.out.println("after click on mobile");
+				
+				//Thread.sleep(3000);
+			}
+		}
 		boolean pubChanged = false;
 		while(!pubChanged){
 			if(pubMenu.findElement(By.tagName("span")).getText().contains("Mobile")){
