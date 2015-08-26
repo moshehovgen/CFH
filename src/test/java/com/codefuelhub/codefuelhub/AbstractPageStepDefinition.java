@@ -40,17 +40,17 @@ public class AbstractPageStepDefinition {
 	
 	public void init() {
 		  
-		ExternalContext application = FacesContext.getCurrentInstance().getExternalContext();
-		InputStream inputStream = application.getResourceAsStream("/META-INF/MANIFEST.MF");
-		Manifest manifest = null;
-		try {
-			manifest = new Manifest(inputStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		 
-		Attributes attributes = manifest.getMainAttributes();
-		String version = attributes.getValue("Implementation-Version");
+//		ExternalContext application = FacesContext.getCurrentInstance().getExternalContext();
+//		InputStream inputStream = application.getResourceAsStream("/META-INF/MANIFEST.MF");
+//		Manifest manifest = null;
+//		try {
+//			manifest = new Manifest(inputStream);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		 
+//		Attributes attributes = manifest.getMainAttributes();
+//		String version = attributes.getValue("Implementation-Version");
 		
 		
 		
