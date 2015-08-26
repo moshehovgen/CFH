@@ -126,13 +126,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		numOfApps = items.size();
 	}
 
-	@When("^Enter App \"(.*?)\" upload \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\" choose category \"(.*?)\"$")
-	public void addAppBackground(String name, String icon, int platform, String packageID, String category) throws Throwable {
-	    createApp(name, icon, platform, packageID, category);
+	@When("^Enter App \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\"$")
+	public void addAppBackground(String name, int platform, String packageID) throws Throwable {
+	    createApp(name, platform, packageID);
 	}
 	
-	@When("^Enter App ([^\"]*) upload ([^\"]*) select ([^\"]*) Enter packageID ([^\"]*) choose category ([^\"]*)$")
-	public void createApp(String name, String icon, int platform, String packageID, String category) throws Throwable {
+	@When("^Enter App ([^\"]*) select ([^\"]*) Enter packageID ([^\"]*)$")
+	public void createApp(String name, int platform, String packageID) throws Throwable {
 		WebDriverWait wait = new WebDriverWait(dr, 2000);
 		
 		//set unique name
@@ -146,7 +146,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.findElement(By.id("name")).sendKeys(appName);
 		
-		wait.until(ExpectedConditions.elementSelectionStateToBe(By.id("addAndroidBtn"), false));//lementToBeClickable(By.id("addAndroidBtn")));
+		wait.until(ExpectedConditions.elementSelectionStateToBe(By.id("addAndroidBtn"), false));
 		
 		if (platform == 1){
 			WebElement e = dr.findElement(By.id("addAndroidBtn"));
@@ -199,24 +199,26 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		a.deleteAppsFromDB();
 	}
 	
-	@Then("^validate properties are correct; ([^\"]*), ([^\"]*), ([^\"]*), ([^\"]*)$")
-	public void validateAppProperties(String name, int platform, String packageID, String category) throws Throwable {
+	@Then("^validate properties are correct; ([^\"]*), ([^\"]*), ([^\"]*)$")
+	public void validateAppProperties(String name, int platform, String packageID) throws Throwable {
 		String appName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
 		String appPlatform = dr.findElement(By.id("header_content_platform")).getText();
 		String appBundle = dr.findElement(By.id("header_content_id")).getText();
 		String tempPlat = "";
-		//String appCategory = dr.findElement(By.id("header_content_category")).getText();
-		
+		String tempPackage = "";
+
 		//check app name is correct
 		if(appName.equalsIgnoreCase(this.appName) && 
 				appBundle.equals("Bundle ID: "+packageID) ){
 			if(platform ==1){
+				tempPackage = "Bundle ID: ";				
 				tempPlat = "iOS";
 			}
-			else
+			else{
+				tempPackage = "Package ID: ";
 				tempPlat = "Android";
-			if(appPlatform.equals("Patform: "+tempPlat)){
-				
+			}
+			if(appPlatform.equals("Platform: "+tempPlat) && appBundle.equals(tempPackage +packageID)){
 				System.out.println("All app properties are correct!");
 			}
 			else
@@ -269,23 +271,22 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	    
 	}
 
-	@And("^change app name ([^\"]*) and category ([^\"]*)$")
-	public void changeAppNameAndCategory(String appName, String category) throws Throwable {
+	@And("^change app name ([^\"]*) $")
+	public void changeAppNameAndCategory(String appName) throws Throwable {
 		WebElement name = dr.findElement(By.id("name"));
-	//	WebElement categoryElem = dr.findElement(By.id("select"));
 		
 		name.clear();
 		name.sendKeys(appName);
 		
 	}
 
-	@And("^validate name and category changed to ([^\"]*) ([^\"]*)$")
-	public void validateAppEdit(String appName, String category) throws Throwable {
+	@And("^validate name changed to ([^\"]*)$")
+	public void validateAppEdit(String appName) throws Throwable {
 	   String actualAppName;
 	   
 	   actualAppName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
 	   
-	   if(actualAppName == appName /*&& actualCategory == "Category: " + category*/){
+	   if(actualAppName.equalsIgnoreCase(appName)){
 		   System.out.println("App was edited successfully!");
 	   } else
 		   Assert.assertTrue("App was edited information is incorrect!", false); 

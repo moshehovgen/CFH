@@ -272,7 +272,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		dr.findElement(By.className("first-app-btn")).click();
 		app.setDriver(dr);
-		app.createApp("auto", "", 1, "auto.first.app","");
+		app.createApp("auto", 1, "auto.first.app");
 		app.clickAdd();
 		
 	}

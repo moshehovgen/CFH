@@ -51,7 +51,7 @@ public class AbstractPageStepDefinition {
 		
 		
 		
-		PS_FILE_NAME = PS_FILE_NAME + version + "\\";
+		//PS_FILE_NAME = PS_FILE_NAME + version + "\\";
 		
 		  switch(TEST_ENV) {
 		  case "QA":

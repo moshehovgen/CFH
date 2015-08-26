@@ -4,92 +4,87 @@ Feature: Codefuel Add Application
   Scenario Outline: Create new android/IOS App (test case: 107378 107362)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID>
     And Click Add button
     Then validate App created
-    And validate properties are correct; <name>, <platform>, <packageID>, <category>
+    And validate properties are correct; <name>, <platform>, <packageID>
 
     Examples: 
-      | username               | password  | name | icon  | platform | packageID      | category   |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     |
+      | username                | password  | name | platform | packageID      |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 2        | com.yahoo.app  |
 
   @Application @Regression
   Scenario Outline: Create app with diff parameters (107363 107364 107365 107366 107368)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Enter App <name> select <platform> Enter packageID <packageID>
     And Click Add button
     Then validate App created
 
     Examples: 
-      | username               | password  | name                  | icon  | platform | packageID                     | category                |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T363-auto             | iconX | 1        | auto.google.com               | Automotive              |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T363-#@&*auto         | iconX | 2        | auto.yahoo.com                | Sports                  |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T364-auto#@&*Longgggg | iconX | 1        | auto1122.yahoo33.com          | Education               |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T364-autoLonggggg#@&* | iconX | 2        | A1122B33C4451D                | Hobbies & Interests     |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T366-auto             | iconX | 1        | #Auto@yahoo&*SpecialChars     | Law, Gov't & Politics   |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T365-auto             | iconX | 2        | SpecialChars#@&*              | Science                 |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T369-auto             | iconX | 2        | 1122334451LongBundleIDlllllll | Style & Fashion         |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T368-auto             | iconX | 1        | 1122334451LongPackageIDllllll | Religion & Spirituality |
+      | username                | password  | name                  | platform | packageID                     |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T363-auto             | 1        | auto.google.com               |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T363-#@&*auto         | 2        | auto.yahoo.com                |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T364-auto#@&*Longgggg | 1        | auto1122.yahoo33.com          |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T364-autoLonggggg#@&* | 2        | A1122B33C4451D                |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T366-auto             | 1        | #Auto@yahoo&*SpecialChars     |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T365-auto             | 2        | SpecialChars#@&*              |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T369-auto             | 2        | 1122334451LongBundleIDlllllll |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T368-auto             | 1        | 1122334451LongPackageIDllllll |
 
   @Application @Regression
   Scenario Outline: validate error message (test case:  107369 - 107374)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Enter App <name> select <platform> Enter packageID <packageID>
     And Click Add button
     Then validate error message <errorMessage>
 
     Examples: 
-      | username               | password  | name      | icon  | platform | packageID                | category               | errorMessage                            |
-      | nofardi1@mailinator.com | 1q2w3e4r$ |           | iconX | 1        | Auto@yahoo&*SpecialChars | Non-Standard Content   | This field is required              |
-      | nofardi1@mailinator.com | 1q2w3e4r$ |           | iconX | 2        | Auto@yahoo&*SpecialChars | Illegal Content        | This field is required              |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T372-auto | iconX | 1        |                          | Pets                   | This field is required |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | T371-auto | iconX | 1        |                          | Technology & Computing | This field is required |
-    #  | nofardi1@mailinator.com | 1q2w3e4r$ | T374-auto | iconX | 2        | auto.bundleID.com        |                        | Please choose a Category                |
-     # | nofardi1@mailinator.com | 1q2w3e4r$ | T373-auto | iconX | 1        | auto.packageID.com       |                        | Please choose a Category                |
+      | username                | password  | name      | platform | packageID                | errorMessage           |
+      | nofardi1@mailinator.com | 1q2w3e4r$ |           | 1        | Auto@yahoo&*SpecialChars | This field is required |
+      | nofardi1@mailinator.com | 1q2w3e4r$ |           | 2        | Auto@yahoo&*SpecialChars | This field is required |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T372-auto | 1        |                          | This field is required |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | T371-auto | 1        |                          | This field is required |
 
   @Application @Regression
   Scenario Outline: Click cancel button (test case: 107375)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Enter App <name> select <platform> Enter packageID <packageID>
     And Click cancel button
     Then Validate back to app list
 
     Examples: 
-      | username               | password  | name | icon  | platform | packageID       | category   |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app1 | Automotive |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app2  | Sports     |
+      | username                | password  | name | platform | packageID       |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app1 |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 2        | com.yahoo.app2  |
 
   @Application @Regression @Sanity
   Scenario Outline: Create App and then edit information (Test case: 107499)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Enter App <name> select <platform> Enter packageID <packageID>
     And Click Add button
     Then validate App created
     And edit app
-    And change app name <newname> and category <newCategory>
+    And change app name <newname>
     And click save edit
-    And validate name and category changed to <newname> <newCategory>
+    And validate name changed to <newname>
 
     Examples: 
-      | username               | password  | name | icon  | platform | packageID      | category   | newname            | newCategory   |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | NewAuto            | Food & Drinks |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 2        | com.yahoo.app  | Sports     | Pretty application | Uncategorized |
-      
-   @Application @Regression
-   Scenario: Deactive app (Test case: 107407)
-   Given User logged into the portal enter <username> and <password>
+      | username                | password  | name | platform | packageID      | newname            |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | NewAuto            |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 2        | com.yahoo.app  | Pretty application |
+
+  @Application @Regression
+  Scenario: Deactive app (Test case: 107407)
+    Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID> choose category <category>
+    And Enter App <name> select <platform> Enter packageID <packageID>
     And Click Add button
     Then validate App created
     And validate App active
     And deactive app
     And validate app deactive
-
-      
-      
