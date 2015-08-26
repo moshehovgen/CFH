@@ -80,6 +80,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	}
 	
 	private void registerForm(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable{
+		WebDriverWait wait = new WebDriverWait(dr, 1000);
 		
 		dr.switchTo().frame("myRegisterFrame");
 		waitForElement(By.id("register-form"));
@@ -88,18 +89,10 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		pubElem.sendKeys(pubName);
 		dr.findElement(By.id("FirstName")).sendKeys(fName);
-		
-		
-		if (waitForElement(By.id("LastName"))) {
-			dr.findElement(By.id("LastName")).sendKeys(lName);
-		}
+		dr.findElement(By.id("LastName")).sendKeys(lName);
 		dr.findElement(By.id("Email")).sendKeys(mailAddress);
 		dr.findElement(By.id("Password")).sendKeys(password);
 		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
-		
-		//dr.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
-		
-		
 		
 		WebElement pubMenu = dr.findElement(By.id("dd"));
 		
@@ -108,21 +101,18 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		System.out.println("after click on dd");
 		
-		//pubMenu.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
-		
-		
 		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
 		System.out.println(menuElem.size());
 		
 		for (int i = 0; i < menuElem.size(); i++) {
+			wait.until(ExpectedConditions.elementToBeClickable(menuElem.get(i)));
+			
 			if(menuElem.get(i).getText().equals(pubType)){
 				System.out.println("before click on mobile");
-				
 				menuElem.get(i).click();
 				
 				System.out.println("after click on mobile");
 				
-				//Thread.sleep(3000);
 			}
 		}
 		boolean pubChanged = false;
