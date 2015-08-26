@@ -2,8 +2,11 @@ package com.codefuelhub.codefuelhub;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
+import java.util.jar.Manifest;
+import java.util.jar.Attributes;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -20,6 +23,9 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
 
 public class AbstractPageStepDefinition {
 	public static final String TEST_ENV = System.getenv("TEST_ENV");
@@ -27,12 +33,29 @@ public class AbstractPageStepDefinition {
 	public static final String PROD_URL = System.getenv("PROD_URL");
 	public static String MAIL_ADD = "";
 	public static String BASE_URL = null;
-	public static final String PS_FILE_NAME = "\\192.168.20.7\\clients\\Automation\\CFH\\";
+	public static String PS_FILE_NAME = "\\192.168.20.7\\clients\\Automation\\CFH\\";
+	public static String version;
 	WebDriver dr;
 	
 	
 	public void init() {
 		  
+		ExternalContext application = FacesContext.getCurrentInstance().getExternalContext();
+		InputStream inputStream = application.getResourceAsStream("/META-INF/MANIFEST.MF");
+		Manifest manifest = null;
+		try {
+			manifest = new Manifest(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 
+		Attributes attributes = manifest.getMainAttributes();
+		String version = attributes.getValue("Implementation-Version");
+		
+		
+		
+		PS_FILE_NAME = PS_FILE_NAME + version + "\\";
+		
 		  switch(TEST_ENV) {
 		  case "QA":
 		   BASE_URL=QA_URL;
@@ -96,6 +119,7 @@ public class AbstractPageStepDefinition {
 				//String chromeLocation = "/drivers/chrome/chromedriver.exe";
 				System.setProperty("webdriver.chrome.driver", chromeLocation);
 				System.out.println("init CH webdriver");
+				System.out.println(version);
 				return new ChromeDriver();
 				
 			case "ie":
