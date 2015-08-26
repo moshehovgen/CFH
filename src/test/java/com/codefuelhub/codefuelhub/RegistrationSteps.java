@@ -109,8 +109,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		System.out.println("after click on dd");
 		
 		//pubMenu.findElement(By.xpath("//*[@id=\"dd\"]/ul/li/a")).click();
+		
+		
 		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
-
+		System.out.println(menuElem.size());
+		
 		for (int i = 0; i < menuElem.size(); i++) {
 			if(menuElem.get(i).getText().equals(pubType)){
 				System.out.println("before click on mobile");
