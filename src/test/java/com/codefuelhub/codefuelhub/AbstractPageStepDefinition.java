@@ -23,9 +23,6 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-
 
 public class AbstractPageStepDefinition {
 	public static final String TEST_ENV = System.getenv("TEST_ENV");
