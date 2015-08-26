@@ -4,7 +4,7 @@ Feature: Codefuel Add Application
   Scenario Outline: Create new android/IOS App (test case: 107378 107362)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
-    And Enter App <name> upload <icon> select <platform> Enter packageID <packageID>
+    And Enter App <name> select <platform> Enter packageID <packageID>
     And Click Add button
     Then validate App created
     And validate properties are correct; <name>, <platform>, <packageID>

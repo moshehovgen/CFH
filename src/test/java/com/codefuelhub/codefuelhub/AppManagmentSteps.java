@@ -208,15 +208,14 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		String tempPackage = "";
 
 		//check app name is correct
-		if(appName.equalsIgnoreCase(this.appName) && 
-				appBundle.equals("Bundle ID: "+packageID) ){
+		if(appName.equalsIgnoreCase(this.appName) ){
 			if(platform ==1){
-				tempPackage = "Bundle ID: ";				
-				tempPlat = "iOS";
+				tempPackage = "Package ID: ";				
+				tempPlat = "Android";
 			}
 			else{
-				tempPackage = "Package ID: ";
-				tempPlat = "Android";
+				tempPackage = "Bundle ID: ";
+				tempPlat = "iOS";
 			}
 			if(appPlatform.equals("Platform: "+tempPlat) && appBundle.equals(tempPackage +packageID)){
 				System.out.println("All app properties are correct!");
@@ -271,7 +270,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	    
 	}
 
-	@And("^change app name ([^\"]*) $")
+	@And("^change app name ([^\"]*)$")
 	public void changeAppNameAndCategory(String appName) throws Throwable {
 		WebElement name = dr.findElement(By.id("name"));
 		
