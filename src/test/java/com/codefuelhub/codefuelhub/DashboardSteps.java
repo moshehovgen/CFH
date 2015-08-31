@@ -2,6 +2,7 @@ package com.codefuelhub.codefuelhub;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -9,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import com.applitools.eyes.*;
@@ -16,6 +18,7 @@ import com.applitools.eyes.*;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
 public class DashboardSteps extends AbstractPageStepDefinition{
@@ -25,18 +28,15 @@ public class DashboardSteps extends AbstractPageStepDefinition{
 	
 	@Before("@Dashboard")
 	public void initiateBrowser(){
-		LoginSteps login = new LoginSteps();
 		setApplit();
 		
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 		
-		dr = eyes.open(dr, "www.hub.qacodefuel.com", "Dashboard", new RectangleSize(1024, 768));
+		//dr = eyes.open(dr, "www.hub.qacodefuel.com", "Dashboard", new RectangleSize(1024, 768));
 		
 		dr.get(BASE_URL);
-		login.setDriver(dr);
-		
 	}
 		
 	@After("@Dashboard")
@@ -90,9 +90,15 @@ public class DashboardSteps extends AbstractPageStepDefinition{
 		} finally {
 			eyes.abortIfNotClosed();
             driver.quit();
-			
 		}
+	}
+	
+	@Given("^User logged into the portal enter dashboard \"(.*?)\" and \"(.*?)\"$")
+	public void userLogin(String user, String password) throws Throwable {
+		AppManagmentSteps app = new AppManagmentSteps();
 		
+		app.setDriver(dr);
+		app.loginToPortal(MAIL_ADD, password);
 	}
 	
 	public static void setApplit(){
@@ -102,16 +108,69 @@ public class DashboardSteps extends AbstractPageStepDefinition{
 	
 	@When("^choose Period ([^\"]*), Country ([^\"]*), and app ([^\"]*)$")
 	public void chooseFilters(String period, String country, String app) throws Throwable {
-		dr.findElement(By.cssSelector("#period_dd_btn > div > button")).click();
-		Thread.sleep(1000);
+		dr.findElement(By.id("period_dd_btn")).click();
+		choosePeriod(period);
 		
 		dr.findElement(By.id("country_dd_btn")).click();
-		Thread.sleep(1000);
+		chooseCountry(country);
+		
 		
 		dr.findElement(By.id("app_dd_btn")).click();
-		Thread.sleep(1000);
+		chooseApp(app);
 	}
-
+	
+	private void choosePeriod(String period){
+		
+		if(period.equals("Today")){
+			dr.findElement(By.id("period_dd_option0")).click();
+		} else if(period.equals("Yesterday"))
+			dr.findElement(By.id("period_dd_option1")).click();
+		else if(period.equals("Last 7 days"))
+			dr.findElement(By.id("period_dd_option2")).click();
+		else if(period.equals("Last 30 days"))
+			dr.findElement(By.id("period_dd_option3")).click();
+	}
+	
+	private void chooseCountry(String country){
+		List<WebElement> countries;
+		WebElement ddElem = dr.findElement(By.id("country_dd"));
+		
+		ddElem.findElement(By.id("country_dd_uncheckAll")).click();
+		ddElem.findElement(By.id("country_dd_search")).sendKeys(country);
+		
+		if(country.equals("Check All")){
+			dr.findElement(By.id("country_dd_checkAll")).click();
+		} else{
+			countries = ddElem.findElements(By.tagName("a"));
+			for (int i = 0; i < countries.size(); i++) {
+				if(countries.get(i).getText().equals(country)){
+					countries.get(i).click();
+					break;
+				}
+			}
+		}
+		
+	}
+	
+	private void chooseApp(String app){
+		List<WebElement> apps;
+		WebElement ddElem = dr.findElement(By.id("app_dd"));
+		
+		ddElem.findElement(By.id("app_dd_search")).sendKeys(app);
+		
+		if(app.equals("Top 5 Apps")){
+			dr.findElement(By.id("app_dd_uncheckAll")).click();
+		} else{
+			apps = ddElem.findElements(By.tagName("a"));
+			for (int i = 0; i < apps.size(); i++) {
+				if(apps.get(i).getText().equals(app)){
+					apps.get(i).click();
+					break;
+				}
+			}
+		}
+	}
+	
 	@And("^click Go$")
 	public void clickGo() throws Throwable {
 	   dr.findElement(By.id("go_filter_btn")).click();

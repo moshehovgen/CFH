@@ -34,7 +34,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	public static WebDriver dr;  
 	
-	@Before("@Application, @Placement, @Dashboard")
+	@Before("@Application, @Placement")
 	public void initiateBrowser(){
 		init();
 		dr = initWebDriver();
@@ -43,7 +43,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 	}
 		
-	@After("@Application, @Placement , @Dashboard")
+	@After("@Application, @Placement")
 	public void testShutDown(){
 		if (dr != null) {
 			dr.quit();
