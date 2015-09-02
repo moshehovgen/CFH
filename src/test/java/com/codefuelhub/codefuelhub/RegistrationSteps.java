@@ -189,7 +189,10 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			
 			if(elem != null)
 			{
+				System.out.println("before click");
 				elem.click();
+				System.out.println("after click");
+				
 				System.out.println("Element located");
 			}
 			else
