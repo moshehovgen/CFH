@@ -174,12 +174,13 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	private void clickOnAccept(){
 		WebDriverWait wait = new WebDriverWait(dr, 30000);
+		WebElement elem = dr.findElement(By.id("innerConditions"));
 		try{
 			dr.switchTo().defaultContent();
 			dr.switchTo().frame("myRegisterFrame");
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("innerConditions")));
 			waitForElement(By.id("innerConditions"));
-			WebElement elem = dr.findElement(By.id("innerConditions"));
+			elem = dr.findElement(By.id("innerConditions"));
 			
 			if(elem != null)
 			{
@@ -190,7 +191,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			 System.out.println("Element isn't located");
 		    
 		} catch(Exception e){
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + elem.toString());
 		}
 	}
 	
