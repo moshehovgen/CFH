@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -191,7 +192,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			if(elem != null)
 			{
 				System.out.println("before click");
-				elem.click();
+				//elem.click();
+				Actions action = new Actions(dr);
+				action.click(elem).build().perform();
 				System.out.println("after click");
 				
 				System.out.println("Element located");
