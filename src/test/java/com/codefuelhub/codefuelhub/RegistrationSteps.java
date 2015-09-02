@@ -115,7 +115,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				System.out.println("after click on mobile");
 				
 			}
-		
+		try{
 			String overflow = dropDown.getAttribute("overflow");
 			if(overflow.equals("hidden")){
 				System.out.println("dropDown elem not hidden");
@@ -125,6 +125,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			if(value.equals(pubType)){
 				System.out.println("not selected");
 			}
+		}catch(Exception e){
+			System.out.println(e.getMessage()+"############hovagen");
+		}
 			
 		}
 		boolean pubChanged = false;
