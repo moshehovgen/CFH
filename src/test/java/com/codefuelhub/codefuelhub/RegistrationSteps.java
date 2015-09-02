@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -116,24 +119,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				
 			}
 		try{
-			System.out.println("start overflow");
-			String overflow = dropDown.getAttribute("overflow");
-			System.out.println("overflow value - "+overflow);
-			System.out.println("end overflow");
-			if("hidden".equals(overflow)){
-				System.out.println("dropDown elem not hidden");
-			}else{
-				System.out.println("dropDown elem hidden");
-			}
-			
-			System.out.println("start dd");
+		
 			WebElement dd = dr.findElement(By.id("dd"));
-			System.out.println("end dd");
-			String value = dd.findElement(By.tagName("span")).getText();
-			System.out.println("end span");
-			if(value.equals(pubType)){
-				System.out.println("not selected");
-			}
+			JavascriptExecutor js = (JavascriptExecutor)dr;
+			js.executeScript("arguments[0].className = \"wrapper-dropdown-5\"", dd);
+			Thread.sleep(1000);
 		}catch(Exception e){
 			System.out.println(e.getMessage()+"############hovagen");
 		}
