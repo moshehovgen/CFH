@@ -75,9 +75,10 @@ public class AbstractPageStepDefinition {
 			  WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		   
 			  if (result == null) {
+				  System.out.println("waitForVisibleElement false");
 				  return false;	    
 			  }
-		   
+		   System.out.println("waitForVisibleElement true");
 			  return true;
 		   
 		  } finally {

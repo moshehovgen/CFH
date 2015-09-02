@@ -174,18 +174,19 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	private void clickOnAccept(){
 		WebDriverWait wait = new WebDriverWait(dr, 30000);
-		WebElement elem = dr.findElement(By.id("innerConditions"));
+		//WebElement elem = dr.findElement(By.id("innerConditions"));
+		WebElement elem =null;
 		try{
 			dr.switchTo().defaultContent();
 			dr.switchTo().frame("myRegisterFrame");
 			System.out.println("before wait");
 			
-			wait.until(ExpectedConditions.elementToBeClickable(By.id("innerConditions")));
+			elem = wait.until(ExpectedConditions.elementToBeClickable(By.id("innerConditions")));
 			
 			System.out.println("after wait");
 			
-			waitForElement(By.id("innerConditions"));
-			elem = dr.findElement(By.id("innerConditions"));
+			//waitForElement(By.id("innerConditions"));
+			//elem = dr.findElement(By.id("innerConditions"));
 			
 			if(elem != null)
 			{
