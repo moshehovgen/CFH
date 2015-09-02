@@ -9,8 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.thoughtworks.selenium.webdriven.commands.WaitForCondition;
-
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -177,6 +175,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	private void clickOnAccept(){
 		WebDriverWait wait = new WebDriverWait(dr, 30000);
 		try{
+			dr.switchTo().defaultContent();
+			dr.switchTo().frame("myRegisterFrame");
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("innerConditions")));
 			waitForElement(By.id("innerConditions"));
 			WebElement elem = dr.findElement(By.id("innerConditions"));
