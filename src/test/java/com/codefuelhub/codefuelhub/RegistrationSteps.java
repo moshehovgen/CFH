@@ -200,7 +200,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			 System.out.println("Element isn't located");
 		    
 		} catch(Exception e){
-			System.out.println("moshe, ata lo kipod "+e.getMessage() +" "+ elem.toString());
+			System.out.println("moshe, ata lo kipod "+e.getMessage() +" "+ elem.toString() + " end of exception");
 		}
 	}
 	
