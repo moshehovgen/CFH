@@ -100,7 +100,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		
 		System.out.println("after click on dd");
 		
-		List<WebElement> menuElem = (pubMenu.findElement(By.className("dropdown"))).findElements(By.tagName("a"));
+		WebElement dropDown = pubMenu.findElement(By.className("dropdown"));
+		
+		List<WebElement> menuElem = dropDown.findElements(By.tagName("a"));
 		System.out.println(menuElem.size());
 		
 		for (int i = 0; i < menuElem.size(); i++) {
@@ -113,6 +115,17 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				System.out.println("after click on mobile");
 				
 			}
+		
+			String overflow = dropDown.getAttribute("overflow");
+			if(overflow.equals("hidden")){
+				System.out.println("dropDown elem not hidden");
+			}
+			
+			String value = dr.findElement(By.id("dd")).findElement(By.tagName("span")).getText();
+			if(value.equals(pubType)){
+				System.out.println("not selected");
+			}
+			
 		}
 		boolean pubChanged = false;
 		while(!pubChanged){
