@@ -118,8 +118,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		try{
 			System.out.println("start overflow");
 			String overflow = dropDown.getAttribute("overflow");
+			System.out.println("overflow value - "+overflow);
 			System.out.println("end overflow");
-			if(overflow.equals("hidden")){
+			if("hidden".equals(overflow)){
 				System.out.println("dropDown elem not hidden");
 			}else{
 				System.out.println("dropDown elem hidden");
