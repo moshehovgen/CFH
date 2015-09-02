@@ -178,7 +178,12 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		try{
 			dr.switchTo().defaultContent();
 			dr.switchTo().frame("myRegisterFrame");
+			System.out.println("before wait");
+			
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("innerConditions")));
+			
+			System.out.println("after wait");
+			
 			waitForElement(By.id("innerConditions"));
 			elem = dr.findElement(By.id("innerConditions"));
 			
