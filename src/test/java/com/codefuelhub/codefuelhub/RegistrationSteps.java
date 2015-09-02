@@ -116,12 +116,20 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				
 			}
 		try{
+			System.out.println("start overflow");
 			String overflow = dropDown.getAttribute("overflow");
+			System.out.println("end overflow");
 			if(overflow.equals("hidden")){
 				System.out.println("dropDown elem not hidden");
+			}else{
+				System.out.println("dropDown elem hidden");
 			}
 			
-			String value = dr.findElement(By.id("dd")).findElement(By.tagName("span")).getText();
+			System.out.println("start dd");
+			WebElement dd = dr.findElement(By.id("dd"));
+			System.out.println("end dd");
+			String value = dd.findElement(By.tagName("span")).getText();
+			System.out.println("end span");
 			if(value.equals(pubType)){
 				System.out.println("not selected");
 			}
