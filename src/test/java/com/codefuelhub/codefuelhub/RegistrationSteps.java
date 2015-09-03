@@ -292,6 +292,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		app.setDriver(dr);
 		app.createApp("auto", 1, "auto.first.app");
 		app.clickAdd();
+		app.numOfApps = 0;
+		app.validate_App_created();
 		
 	}
 
