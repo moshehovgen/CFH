@@ -79,7 +79,7 @@ Feature: Codefuel Add Application
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 2        | com.yahoo.app  | Pretty application |
 
   @Application @Regression
-  Scenario: Deactive app (Test case: 107407)
+  Scenario Outline: Deactive app (Test case: 107407)
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
     And Enter App <name> select <platform> Enter packageID <packageID>
@@ -88,3 +88,7 @@ Feature: Codefuel Add Application
     And validate App active
     And deactive app
     And validate app deactive
+    
+    Examples: 
+      | username                | password  | name | platform | packageID      |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | 

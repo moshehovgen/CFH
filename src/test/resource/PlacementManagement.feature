@@ -3,11 +3,11 @@ Feature: Codefuel Manage Placements
   Background: Login to portal and add an app
     Given User logged into the portal enter "nofardi1@mailinator.com" and "1q2w3e4r$"
     When User select App tab and click on Add app button
-    And Enter App "Auto" upload "iconX" select "1" Enter packageID "com.google.app" choose category "Automotive"
+    And Enter App "Auto" select "1" Enter packageID "com.google.app"
     And Click Add button
     Then validate App created
-   # And delete apps
 
+  # And delete apps
   @Placement @Regression
   Scenario: Create a new app and verify default placement (test case: 107401)
     And verify default placement exists
@@ -19,11 +19,11 @@ Feature: Codefuel Manage Placements
     And validate placement created with <placename>
 
     Examples: 
-      | username               | password  | name | icon  | platform | packageID      | category   | placename                   |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place                       |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place name                  |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | place!@$%                   |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | iconX | 1        | com.google.app | Automotive | placenameplacenameplacename |
+      | username                | password  | name | platform | packageID      | placename                   |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | place                       |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | place name                  |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | place!@$%                   |
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | placenameplacenameplacename |
 
   @Placement @Regression @Sanity
   Scenario: Edit existing placement (Test case: 107404)
