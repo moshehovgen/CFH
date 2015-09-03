@@ -88,7 +88,7 @@ Feature: Codefuel Add Application
     And validate App active
     And deactive app
     And validate app deactive
-    
+
     Examples: 
       | username                | password  | name | platform | packageID      |
-      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app | 
+      | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app |
