@@ -24,6 +24,9 @@ public class AbstractPageStepDefinition {
 	public static final String TEST_ENV = System.getenv("TEST_ENV");
 	public static final String QA_URL = System.getenv("QA_URL");
 	public static final String PROD_URL = System.getenv("PROD_URL");
+	public static final String USE_SELENIUM_GRID = "true";
+	public static final String GRID_URL = "http://10.150.4.74:4444/wd/hub";
+	
 	public static String BASE_URL = null;
 	WebDriver dr;
 
@@ -113,7 +116,7 @@ public class AbstractPageStepDefinition {
 				break;
 			}
 
-			gridURL = System.getenv("GRID_URL");
+			gridURL = GRID_URL;
 			System.out.println("gridURL - "+gridURL);
 			URL gridURLObj = new URL(gridURL);
 			driver = new RemoteWebDriver(gridURLObj, desiredCapabilities);
@@ -164,7 +167,7 @@ public class AbstractPageStepDefinition {
 		WebDriver driver = null;
 		String browserType = System.getenv("BROWSER_TYPE");
 		System.out.println("browserType - "+browserType);
-		boolean useSeleniumGrid = Boolean.parseBoolean(System.getenv("USE_SELENIUM_GRID"));
+		boolean useSeleniumGrid =true;// Boolean.parseBoolean(System.getenv("USE_SELENIUM_GRID"));
 		System.out.println("useSeleniumGrid? - "+useSeleniumGrid);
 		
 		if(useSeleniumGrid){
