@@ -228,12 +228,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 				System.out.println("All app properties are correct!");
 			}
 			else
-				Assert.assertTrue("Not all properties were added correctly! ", false);
+				Assert.assertTrue("Not all properties were added correctly! Actual platform: " + appPlatform +
+						". Expected platform: "+ "Platform: "+tempPlat +". Actual package: " + appBundle + ". Expected package: "
+						+ tempPackage +packageID, false);
 		}
 		else
-			Assert.assertTrue("Not all properties were added correctly! ", false);
-		
-		
+			Assert.assertTrue("Not all properties were added correctly! Actual application name: " + appName + 
+					". Expected application name: "	+ this.appName, false);
 		
 	}
 	
@@ -346,13 +347,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr.findElement(By.id("apps_list_active")).click();
 		
 		//check if button was given the class of deactive and also verify app isn't in the active list
-		if(activeElem.getAttribute("class").contains("inactive") &&
+		if(activeElem.getAttribute("class").contains("inactive") ||
 				(!doesAppInList(dr.findElement(By.id("app_header_wrapper_subtitle")).getText()))) 
 			Assert.assertTrue("App isn't active",true);
 		else {
 			 Assert.assertTrue("App is active", false);
 			 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_deactive_fail...");
-			takeScreenShot(dr, "app_deactive_fail");
+			 takeScreenShot(dr, "app_deactive_fail");
 		}
 	}
 	
