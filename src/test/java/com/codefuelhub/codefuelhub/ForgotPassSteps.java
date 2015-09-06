@@ -2,6 +2,7 @@ package com.codefuelhub.codefuelhub;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -59,12 +60,17 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	
 	@And("^click on send$")
 	public void clickSendPass() throws Throwable {
-		dr.findElement(By.className("CP_btn")).click();
-		Thread.sleep(3000);
-		
-		takeScreenShot(dr, "reset_pass");
-		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass...");
-		
+		try{
+			//waitForVisibleElement(dr, By.id("btnSubmit"), 1000);
+			WebElement sendElem = dr.findElement(By.className("CP_btn"));
+			sendElem.click();
+			
+			waitForVisibleElement(dr, By.id("okBtn"), 1000);
+			dr.findElement(By.id("okBtn")).click();
+		}catch(Exception e){
+			takeScreenShot(dr, "reset_pass_fail");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass...");
+		}
 	}
 	
 	@When("^Verify mail for password sent to ([^\"]*)$")
