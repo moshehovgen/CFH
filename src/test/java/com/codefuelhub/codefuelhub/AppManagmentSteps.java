@@ -98,7 +98,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	public void selectAppAndClickAdd() throws Throwable {
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		WebElement appMenu = dr.findElement(By.id("mainMenuManageAppId"));
+		WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
 		appMenu.click();
 		
 //		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
