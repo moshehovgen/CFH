@@ -64,9 +64,11 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			WebElement sendElem = dr.findElement(By.className("CP_btn"));
 			sendElem.click();
 			
-			waitForVisibleElement(dr, By.id("okBtn"), 1000);
+			//waitForVisibleElement(dr, By.id("okBtn"), 1000);
 			
 			WebElement okElem =dr.findElement(By.id("okBtn"));
+			System.out.println(okElem==null?"ok elem null":"ok elem not null");
+			
 			okElem.click();
 			
 		}catch(Exception e){
