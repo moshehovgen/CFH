@@ -97,7 +97,9 @@ import cucumber.api.java.en.When;
 			
 			AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 			a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000);
-			boolean successLogin = dr.getCurrentUrl().contains("dashboard") || dr.getCurrentUrl().contains("newUser");
+			boolean successLogin = dr.getCurrentUrl().contains("dashboard") || dr.getCurrentUrl().contains("newUser") || dr.getCurrentUrl().contains("activeUser");
+			
+			System.out.println(dr.getCurrentUrl());
 			
 			Assert.assertTrue(successLogin);
 			if(!successLogin)

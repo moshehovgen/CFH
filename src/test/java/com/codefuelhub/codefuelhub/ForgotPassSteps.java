@@ -61,12 +61,14 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	@And("^click on send$")
 	public void clickSendPass() throws Throwable {
 		try{
-			//waitForVisibleElement(dr, By.id("btnSubmit"), 1000);
 			WebElement sendElem = dr.findElement(By.className("CP_btn"));
 			sendElem.click();
 			
 			waitForVisibleElement(dr, By.id("okBtn"), 1000);
-			dr.findElement(By.id("okBtn")).click();
+			
+			WebElement okElem =dr.findElement(By.id("okBtn"));
+			okElem.click();
+			
 		}catch(Exception e){
 			takeScreenShot(dr, "reset_pass_fail");
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass...");
