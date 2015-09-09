@@ -120,10 +120,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		System.out.println(appElem==null?"null":"not null");
 		
-		Actions act = new Actions(dr);
-		act.click(appElem).build().perform();
+		//Actions act = new Actions(dr);
+		//act.click(appElem).build().perform();
 		
-		//appElem.click();
+		appElem.click();
 		
 		System.out.println("after click on apps dd");
 		
