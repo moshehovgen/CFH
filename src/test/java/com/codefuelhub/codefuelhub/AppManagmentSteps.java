@@ -99,8 +99,12 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
+		System.out.println(appMenu==null?"null":"not null");
+		
+		System.out.println("before click on app collapse");
 		appMenu.click();
 		
+		System.out.println("after click on app collapse");
 //		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		AppListBaseURL = dr.getCurrentUrl();
 		
@@ -109,17 +113,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		//WebElement elem = dr.findElement(By.id("manage_collapsed"));
 		//elem.click();
 		
+		WebElement appElem = dr.findElement(By.id("apps_dd_btn"));
 		
+		System.out.println(appElem==null?"null":"not null");
 		
-		By by = By.id("apps_dd_btn");
-		WebElement appElem = dr.findElement(by);
-		//boolean isVisible = pageStepDefinition.waitForVisibleElement(dr,by,10);
-		//if(isVisible) {
 		appElem.click();
-		//} else {
-			//System.out.println("element(apps_dd_btn) not visible");
-		//}
-		//appMenu.findElement(By.id("apps_dd_btn")).click();
+		
+		System.out.println("after click on apps dd");
 		
 		dr.findElement(By.id("addAppBtn")).click();
 		
