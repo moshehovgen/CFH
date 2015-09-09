@@ -97,6 +97,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@When("^User select App tab and click on Add app button$")
 	public void selectAppAndClickAdd() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(dr, 2000);
 		
 		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
@@ -114,7 +115,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		//WebElement elem = dr.findElement(By.id("manage_collapsed"));
 		//elem.click();
 		
-		WebElement appElem = dr.findElement(By.id("apps_dd_btn"));
+		
+		WebElement appElem = wait.until(ExpectedConditions.elementToBeClickable(dr.findElement(By.id("apps_dd_btn"))));
 		
 		System.out.println(appElem==null?"null":"not null");
 		
