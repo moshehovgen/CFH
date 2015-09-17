@@ -97,6 +97,7 @@ public class AbstractPageStepDefinition {
 						+ "/drivers/chrome/chromedriver.exe";
 				System.setProperty("webdriver." + browserType + ".driver", chromeLocation);
 				desiredCapabilities = DesiredCapabilities.chrome();
+				System.out.println("after init chrome");
 				break;
 			case "ie":
 				addKeyForIE();
