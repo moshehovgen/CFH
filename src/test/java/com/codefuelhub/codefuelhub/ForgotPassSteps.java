@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import com.applitools.eyes.Eyes;
 import com.applitools.eyes.RectangleSize;
+import com.applitools.eyes.ProxySettings;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

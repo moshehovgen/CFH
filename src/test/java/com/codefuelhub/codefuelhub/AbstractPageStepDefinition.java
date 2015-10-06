@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -19,10 +22,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.applitools.eyes.Eyes;
+import com.applitools.eyes.TestResults;
+import com.applitools.eyes.ProxySettings;
 
 public class AbstractPageStepDefinition {
 	public static final String TEST_ENV = System.getenv("TEST_ENV");
@@ -99,7 +106,7 @@ public class AbstractPageStepDefinition {
                     if (className.equals(expectedClassName)) {
                           isChanged = true;
                     }
-              } catch (Exception e) {
+              } catch (Exception e) { 
               }
         }
         return isChanged;
@@ -110,6 +117,13 @@ public class AbstractPageStepDefinition {
 			
 			case "firefox":
 				System.out.println("init FF webdriver");
+//				DesiredCapabilities capabilitiesFF = DesiredCapabilities.firefox();
+//				try {
+//					return new RemoteWebDriver(new URL("http://10.150.4.74:4444/wd/hub"), capabilitiesFF);
+//				} catch (MalformedURLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				return new FirefoxDriver();
 				
 			case "chrome":
@@ -204,5 +218,30 @@ public class AbstractPageStepDefinition {
 		
 	}
 
+	public static Eyes initApplitools(Eyes eyes){
+		eyes = new Eyes();
+		eyes.setApiKey("5VH7Q5JjtIw9ygX9RkSKLJe3o9flIyG98ZnTZxY1gBpE110");
+		
+		return eyes;
+	}
+	
+	public void verifyAplitools(String win, Eyes eyes) throws Throwable {
+	    eyes.checkWindow(win +"_window");
+	    
+	    TestResults result = eyes.close(false);
+        boolean passed = result.isPassed();
+	    
+        System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\" + win +"...");
+		takeScreenShot(dr, win);
+        
+        System.out.println("");
+	    if(passed){
+	    	Assert.assertTrue("The comparison went well!", true);
+	    }
+	    else
+	    	Assert.assertTrue("The comparison did not go well, check out changes in the following URL " + result.getUrl(), false);
+		
+		
+	}
 	
 }
