@@ -28,7 +28,9 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 		
 		WebElement inboxElem = dr.findElement(By.xpath("//*[@id=\"inboxfield\"]"));
 		inboxElem.sendKeys(mailAddress);
-		dr.findElement(By.xpath("/html/body/div[2]/div/div[1]/div[2]/div/div[2]/div/div/btn")).click();
+		WebElement btn = dr.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[2]/div/div/btn"));
+		
+		btn.click();
 		
 	}
 	public void clickOnMailRecieved(String xpath, String mail){
