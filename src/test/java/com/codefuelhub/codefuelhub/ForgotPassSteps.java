@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.applitools.eyes.Eyes;
+import com.applitools.eyes.RectangleSize;
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -15,13 +18,18 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 
 	WebDriver dr;
 	MailinatorImplement mailObj = new MailinatorImplement();
+	Eyes eyes;
 	long Time = System.currentTimeMillis();
 	
 	@Before("@Password")
 	public void initiateBrowser(){
+		eyes = initApplitools(eyes);
+		
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
+		
+		dr = eyes.open(dr, "www.hub.qacodefuel.com", "reset_password", new RectangleSize(1024, 768));
 	}
 	
 	@After("@Password")
@@ -139,6 +147,10 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 		login.validateLogin();
 	}
 	
+	@And("^verify reset password window$")
+	public void verifyPasswordAplitools() throws Throwable {
+	    verifyAplitools("reset_password", eyes);
+	}
 
 	
 	

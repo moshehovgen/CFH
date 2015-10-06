@@ -6,6 +6,10 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import com.applitools.eyes.Eyes;
+import com.applitools.eyes.RectangleSize;
+import com.applitools.eyes.TestResults;
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -14,14 +18,17 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 	public class LoginSteps extends AbstractPageStepDefinition {
-		
+		static Eyes eyes;
 		WebDriver dr ;
 		
 		@Before("@Login")
 		public void initiateBrowser(){
+			eyes = initApplitools(eyes);
+			
 			init();
 			dr = initWebDriver();
 			dr.manage().window().maximize();
+			dr = eyes.open(dr, "www.hub.qacodefuel.com", "Login", new RectangleSize(1024, 768));
 		}
 			
 		@After("@Login")
@@ -139,6 +146,11 @@ import cucumber.api.java.en.When;
 		@And("^User log out$")
 		public void userLogout() throws Throwable {
 		    dr.findElement(By.id("logout")).click();
+		}
+		
+		@And("^verify login window$")
+		public void verifyLoginAplitools() throws Throwable {
+		    verifyAplitools("login", eyes);
 		}
 		
 	}

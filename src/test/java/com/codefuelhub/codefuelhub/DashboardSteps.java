@@ -21,21 +21,21 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
-public class DashboardSteps extends AbstractPageStepDefinition{
+public class DashboardSteps extends AbstractPageStepDefinition {
 	static Eyes eyes;
 	public static WebDriver dr;  
 	
 	
 	@Before("@Dashboard")
 	public void initiateBrowser(){
-		setApplit();
+		eyes = initApplitools(eyes);
+		//setApplit();
 		
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 		
-		//dr = eyes.open(dr, "www.hub.qacodefuel.com", "Dashboard", new RectangleSize(1024, 768));
-		
+		dr = eyes.open(dr, "www.hub.qacodefuel.com", "Dashboard", new RectangleSize(1024, 768));
 		dr.get(BASE_URL);
 	}
 		

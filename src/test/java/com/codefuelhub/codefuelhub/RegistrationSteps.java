@@ -11,7 +11,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+import com.applitools.eyes.Eyes;
+import com.applitools.eyes.RectangleSize;
+import com.applitools.eyes.TestResults;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -26,15 +28,20 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	MailinatorImplement mailObj = new MailinatorImplement();
 	String mailAddress = "";
 	long Time = System.currentTimeMillis();
+	static Eyes eyes;
 	String Turl = System.getenv("QA_URL");
 	
 	//used the before implemented in app manage
 	
 	@Before("@Registration, @BeforeAll")
 	public void initiateBrowser(){
+		eyes = initApplitools(eyes);
+		
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
+		
+		dr = eyes.open(dr, "www.hub.qacodefuel.com", "Registration", new RectangleSize(1024, 768));
 	}
 	
 	@After("@Registration, @BeforeAll")
@@ -295,6 +302,11 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		app.numOfApps = 0;
 		app.validate_App_created();
 		
+	}
+	
+	@And("^verify registration window$")
+	public void verifyRegistrationAplitools() throws Throwable {
+	    verifyAplitools("registration", eyes);
 	}
 
 
