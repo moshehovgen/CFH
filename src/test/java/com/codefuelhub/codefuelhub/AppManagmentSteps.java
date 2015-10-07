@@ -280,7 +280,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@And("^edit app$")
 	public void editApp() throws Throwable {
-		waitForVisibleElement(dr, By.id("app_edit"), 1000);
+		WebDriverWait wait = new WebDriverWait(dr, 2000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("app_edit")));
 		
 	    WebElement editElem = dr.findElement(By.id("app_edit"));
 	    editElem.click();
