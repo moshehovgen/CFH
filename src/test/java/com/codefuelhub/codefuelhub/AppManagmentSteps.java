@@ -280,7 +280,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@And("^edit app$")
 	public void editApp() throws Throwable {
-	    dr.findElement(By.id("app_edit")).click();
+		waitForVisibleElement(dr, By.id("app_edit"), 1000);
+		
+	    WebElement editElem = dr.findElement(By.id("app_edit"));
+	    editElem.click();
 	    
 	}
 
@@ -329,6 +332,8 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	
 	@Then("^validate App active$")
 	public void validate_App_active() throws Throwable {
+		waitForVisibleElement(dr, By.id("app_activate"), 1000);
+		
 		WebElement activeElem = dr.findElement(By.id("app_activate"));
 		 
 		 if(! activeElem.getAttribute("class").contains("inactive")){
