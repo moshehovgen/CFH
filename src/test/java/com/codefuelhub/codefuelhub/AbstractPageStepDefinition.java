@@ -225,7 +225,7 @@ public class AbstractPageStepDefinition {
 		return eyes;
 	}
 	
-	public void verifyAplitools(String win, Eyes eyes) throws Throwable {
+	public void verifyAplitools(String win, Eyes eyes, WebDriver dr) throws Throwable {
 	    eyes.checkWindow(win +"_window");
 	    
 	    TestResults result = eyes.close(false);
