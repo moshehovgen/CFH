@@ -64,6 +64,10 @@ import cucumber.api.java.en.When;
 		public void setDriver(WebDriver driver){
 			dr = driver;
 		}
+		public WebDriver getDriver(){
+			return dr;
+		}
+		
 		public boolean waitForElement(By locator){
 			
 			AbstractPageStepDefinition abs = new AbstractPageStepDefinition();
@@ -80,7 +84,7 @@ import cucumber.api.java.en.When;
 			
 			try {
 			if (username != "skip"){
-				if(username.contains("Codefuel"))
+				if(username.contains("Codefuel") || username.contains("Super"))
 					dr.findElement(By.id("Email")).sendKeys(username);
 				else
 					dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
