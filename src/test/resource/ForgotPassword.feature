@@ -4,6 +4,7 @@ Feature: Forgot password feature
   Scenario Outline: Reset password flow - positive flow (test case: 107223)
     Given navigate to login page
     When click on forgot password
+    And verify reset password window
     And enter mail in forgot <mail>
     And click on send
     Then Verify mail for password sent to <mail>

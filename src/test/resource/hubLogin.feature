@@ -3,6 +3,7 @@ Feature: Codefuel Login
   @Login @Regression @Sanity
   Scenario Outline: Login to Portal (test case: 107213)
     Given I browse to login page
+    And verify login window
     When I enter <username> and <password> first time
     Then validate login pass
     And User log out
