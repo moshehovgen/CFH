@@ -155,7 +155,7 @@ import cucumber.api.java.en.When;
 		
 		@And("^verify login window$")
 		public void verifyLoginAplitools() throws Throwable {
-		    verifyAplitools("login", eyes);
+		    verifyAplitools("login", eyes, dr);
 		}
 		
 	}

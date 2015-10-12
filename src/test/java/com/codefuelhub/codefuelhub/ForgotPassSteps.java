@@ -150,7 +150,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	
 	@And("^verify reset password window$")
 	public void verifyPasswordAplitools() throws Throwable {
-	    verifyAplitools("reset_password", eyes);
+	    verifyAplitools("reset_password", eyes, dr);
 	}
 
 	
