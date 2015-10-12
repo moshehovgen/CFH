@@ -307,7 +307,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@And("^verify registration window$")
 	public void verifyRegistrationAplitools() throws Throwable {
-	    verifyAplitools("registration", eyes);
+	    verifyAplitools("registration", eyes, dr);
 	}
 
 
