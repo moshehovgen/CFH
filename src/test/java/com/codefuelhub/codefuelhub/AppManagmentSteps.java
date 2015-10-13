@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.applitools.eyes.Eyes;
+import com.applitools.eyes.RectangleSize;
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.Wait;
@@ -31,17 +33,20 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	String appName = null;
 	String AppListBaseURL = null;
 	int numOfApps;
-	
+	Eyes eyes;
 	
 	public static WebDriver dr;  
 	
 	@Before("@Application, @Placement")
 	public void initiateBrowser(){
+		eyes = initApplitools(eyes);
+		
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 		dr.get(BASE_URL);
 		
+		dr = setWinApplit(dr, "appPlace", eyes);
 	}
 		
 	@After("@Application, @Placement")
@@ -65,7 +70,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	@Given("^User logged into the portal enter \"(.*?)\" and \"(.*?)\"$")
 	public void loginBackground(String name, String password) throws Throwable {
 		//loginToPortal(name, password);
-		loginToPortal(MAIL_ADD, password);
+		if(name.contains("Codefuel") || name.contains("Super")){
+			loginToPortal(name, password);
+		}else
+			loginToPortal(MAIL_ADD, password);
 	}
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
@@ -76,8 +84,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 			a.waitForVisibleElement(dr, By.id("myModal"), 60);
 			switchFrame("myFrame");
-		
-			dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
+			
+			if(username.contains("Codefuel") || username.contains("codefuel") || username.contains("Super")){
+				dr.findElement(By.id("Email")).sendKeys(username);
+			}else
+				dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
 		
 			dr.findElement(By.id("Password")).sendKeys(password);
 		
@@ -369,7 +380,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		}
 	}
 	
-	
+	@Then("^verify app and placements UI$")
+	public void verifyAppUI() throws Throwable {
+		verifyAplitools("appPlace", eyes, dr);
+	}
 	
 	public void switchFrame(String frameId) {
 		   dr.switchTo().defaultContent();

@@ -28,6 +28,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.applitools.eyes.Eyes;
+import com.applitools.eyes.MatchLevel;
+import com.applitools.eyes.RectangleSize;
 import com.applitools.eyes.TestResults;
 import com.applitools.eyes.ProxySettings;
 
@@ -223,6 +225,13 @@ public class AbstractPageStepDefinition {
 		eyes.setApiKey("5VH7Q5JjtIw9ygX9RkSKLJe3o9flIyG98ZnTZxY1gBpE110");
 		
 		return eyes;
+	}
+	
+	public WebDriver setWinApplit(WebDriver dr, String win, Eyes eyes){
+		eyes.setMatchLevel(MatchLevel.CONTENT);
+		dr = eyes.open(dr, "www.hub.qacodefuel.com", win, new RectangleSize(1024, 768));
+		
+		return dr;
 	}
 	
 	public void verifyAplitools(String win, Eyes eyes, WebDriver dr) throws Throwable {

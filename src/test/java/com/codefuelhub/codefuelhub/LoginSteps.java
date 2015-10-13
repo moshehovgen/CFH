@@ -29,7 +29,8 @@ import cucumber.api.java.en.When;
 			init();
 			dr = initWebDriver();
 			dr.manage().window().maximize();
-			dr = eyes.open(dr, "www.hub.qacodefuel.com", "Login", new RectangleSize(1024, 768));
+			dr = setWinApplit(dr, "login", eyes);			
+			
 		}
 			
 		@After("@Login")

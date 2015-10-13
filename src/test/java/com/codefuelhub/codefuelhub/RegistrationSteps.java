@@ -42,7 +42,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		dr = initWebDriver();
 		dr.manage().window().maximize();
 		
-		dr = eyes.open(dr, "www.hub.qacodefuel.com", "Registration", new RectangleSize(1024, 768));
+		dr = setWinApplit(dr, "Registration", eyes);	
 	}
 	
 	@After("@Registration, @BeforeAll")

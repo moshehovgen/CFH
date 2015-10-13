@@ -16,8 +16,8 @@ import cucumber.api.java.en.Then;
 		WebDriver dr = AppManagmentSteps.getDriver();		
 		
 		
-		 @And("^verify default placement exists$")
-		 public void defaultPlaceExists() throws Throwable {
+		@And("^verify default placement exists$")
+		public void defaultPlaceExists() throws Throwable {
 			  dr.findElement(By.id("new_placement_btn")).click();
 			  String name = dr.findElement(By.id("placement_name_id")).getText();
 			  // Select dropDown = new Select(dr.findElement(By.id("placement_type"))); 

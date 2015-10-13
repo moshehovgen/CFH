@@ -12,6 +12,7 @@ Feature: Codefuel Manage Placements
   Scenario: Create a new app and verify default placement (test case: 107401)
     And verify default placement exists
 
+
   @Placement @Regression @Sanity
   Scenario Outline: Add new placement (regular, special char, long string, and with space) (Test cases: 107402, 107493, 107494)
     And Add new placement with <placename>
