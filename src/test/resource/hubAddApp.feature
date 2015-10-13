@@ -14,7 +14,7 @@ Feature: Codefuel Add Application
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 1        | com.google.app |
       | nofardi1@mailinator.com | 1q2w3e4r$ | Auto | 2        | com.yahoo.app  |
 
-  @Application
+  @Application @Regression
   Scenario Outline: Login to portal with super user and verify app and placements UI
     Given User logged into the portal enter <username> and <password>
     When User select App tab and click on Add app button
