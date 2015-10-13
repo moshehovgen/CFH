@@ -77,9 +77,12 @@ public class FakeSteps extends AbstractPageStepDefinition{
 
 	@When("^super user: \"([^\"]*)\" logged as \"([^\"]*)\"$")
 	public void verifyLoginAs(String superUser, String regUser) throws Throwable {
-		if(waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
-			System.out.println("page loaded");
-		}else
+		if(waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loading", 60000)){
+				System.out.println("page loading");
+				if(waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
+					System.out.println("page loaded");
+			}
+		} else
 			Assert.assertTrue("Page wasn't loaded, timeout", false);
 		
 	    String loginAs = dr.findElement(By.xpath("//*[@id=\"wrapper\"]/nav/div[2]/div[2]/span")).getText();
