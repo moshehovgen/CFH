@@ -56,6 +56,11 @@ public class FakeSteps extends AbstractPageStepDefinition{
 
 	@When("^choose acount name: \"([^\"]*)\"$")
 	public void chooseAccountFake(String accountName) throws Throwable {
+		if(waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
+			System.out.println("page loaded");
+		}else
+			Assert.assertTrue("Page wasn't loaded, timeout", false);
+		
 		waitForVisibleElement(dr, By.id("account_dd_btn"), 1000);
 	    dr.findElement(By.id("account_dd_btn")).click();
 	    dr.findElement(By.id("account_dd_search")).sendKeys(accountName);
@@ -64,10 +69,6 @@ public class FakeSteps extends AbstractPageStepDefinition{
 
 	@When("^choose user name: \"([^\"]*)\"$")
 	public void chooseUserFake(String userName) throws Throwable {
-		if(waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
-			System.out.println("page loaded");
-		}else
-			Assert.assertTrue("Page wasn't loaded, timeout", false);
 		
 		dr.findElement(By.id("user_name_dd_btn")).click();
 	    dr.findElement(By.id("user_name_dd_search")).sendKeys(userName);
