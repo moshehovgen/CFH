@@ -1,12 +1,14 @@
 package com.codefuelhub.codefuelhub;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.applitools.eyes.RectangleSize;
 
@@ -94,11 +96,34 @@ public class FakeSteps extends AbstractPageStepDefinition{
 	@Then("^user select app tab$")
 	public void user_select_app_tab() throws Throwable {
 		
+//		WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
+//		appMenu.click();
+//		
+//		WebElement appElem = dr.findElement(By.id("apps_dd_btn"));
+//		appElem.click();
+		
+		WebDriverWait wait = new WebDriverWait(dr, 2000);
+		
+		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
+		System.out.println(appMenu==null?"null":"not null");
+		
+		System.out.println("before click on app collapse");
 		appMenu.click();
 		
-		WebElement appElem = dr.findElement(By.id("apps_dd_btn"));
+		System.out.println("after click on app collapse");
+		
+		AbstractPageStepDefinition pageStepDefinition =new AbstractPageStepDefinition();
+		
+		WebElement appElem = wait.until(ExpectedConditions.elementToBeClickable(dr.findElement(By.id("apps_dd_btn"))));
+		
+		System.out.println(appElem==null?"null":"not null");
+		
 		appElem.click();
+		
+		System.out.println("after click on apps dd");
+		
+		
 	}
 
 	@Then("^verify applications are located$")
