@@ -229,7 +229,7 @@ public class AbstractPageStepDefinition {
 	
 	public WebDriver setWinApplit(WebDriver dr, String win, Eyes eyes){
 		eyes.setMatchLevel(MatchLevel.CONTENT);
-		dr = eyes.open(dr, "www.hub.qacodefuel.com", win, new RectangleSize(1024, 600));
+		dr = eyes.open(dr, "www.hub.qacodefuel.com", win, null);
 		
 		return dr;
 	}
