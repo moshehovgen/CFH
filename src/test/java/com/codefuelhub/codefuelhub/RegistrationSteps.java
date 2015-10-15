@@ -22,9 +22,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.junit.Cucumber;
+import cucumber.api.Scenario;
 
 public class RegistrationSteps extends AbstractPageStepDefinition {
-	
+	private Scenario scenario;
 	WebDriver dr;
 	MailinatorImplement mailObj = new MailinatorImplement();
 	String mailAddress = "";
@@ -35,7 +37,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	//used the before implemented in app manage
 	
 	@Before("@Registration, @BeforeAll")
-	public void initiateBrowser(){
+	public void initiateBrowser(Scenario scenario){
+		this.scenario = scenario;
 		eyes = initApplitools(eyes);
 		
 		init();
@@ -62,6 +65,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		if(waitForElement(By.id("registerBtn"))){
 			dr.findElement(By.id("registerBtn")).click();
 			waitForElement(By.id("myModal"));
+			scenario.write("Registration ******************************Nofar");
 		}
 		else
 			System.out.println("Register element wasn't found!"+ false);
