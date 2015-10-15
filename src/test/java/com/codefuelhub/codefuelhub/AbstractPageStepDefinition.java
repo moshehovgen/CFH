@@ -25,7 +25,7 @@ public class AbstractPageStepDefinition {
 	public static final String QA_URL = System.getenv("QA_URL");
 	public static final String PROD_URL = System.getenv("PROD_URL");
 	public static final String USE_SELENIUM_GRID = "true";
-	public static final String GRID_URL = "http://192.168.235.79:4444/wd/hub";
+	public static final String GRID_URL = "http://172.16.32.9:4444/wd/hub";
 	
 	public static String BASE_URL = null;
 	WebDriver dr;
