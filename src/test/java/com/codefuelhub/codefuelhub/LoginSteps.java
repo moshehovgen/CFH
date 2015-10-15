@@ -11,6 +11,7 @@ import com.applitools.eyes.RectangleSize;
 import com.applitools.eyes.TestResults;
 import com.applitools.eyes.ProxySettings;
 
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -19,11 +20,13 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 	public class LoginSteps extends AbstractPageStepDefinition {
+		private Scenario scenario;
 		static Eyes eyes;
 		WebDriver dr ;
 		
 		@Before("@Login")
-		public void initiateBrowser(){
+		public void initiateBrowser(Scenario scenario){
+			this.scenario = scenario;
 			eyes = initApplitools(eyes);
 			
 			init();
@@ -59,6 +62,7 @@ import cucumber.api.java.en.When;
 			} catch (Exception e) {
 				takeScreenShot(dr, "click_login_frontPage");
 				System.out.println("Failed to click on ligon button on front page: " + e.getMessage());
+				scenario.write("Failed to click on ligon button on front page: " + e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_login_frontPage... ");
 			}
 		}
@@ -100,6 +104,7 @@ import cucumber.api.java.en.When;
 			
 			} catch(Exception e){
 				System.out.println("Couldn't fill login: "+ e.getMessage());
+				scenario.write("Couldn't fill login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fill_fail...");
 				takeScreenShot(dr, "login_fill_fail");
 			}
@@ -112,6 +117,7 @@ import cucumber.api.java.en.When;
 				
 			} catch (Exception e) {
 				System.out.println("Couldn't fill login: "+ e.getMessage());
+				scenario.write("Couldn't fill login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fill_fail...");
 				takeScreenShot(dr, "login_fill_fail");
 			}
@@ -135,6 +141,7 @@ import cucumber.api.java.en.When;
 				}
 			} catch (Exception e) {
 				System.out.println("Couldn't verify login: "+ e.getMessage());
+				scenario.write("Couldn't verify login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
 				takeScreenShot(dr, "login_fail");
 			}
@@ -149,6 +156,7 @@ import cucumber.api.java.en.When;
 			} catch (Exception e) {
 				
 				System.out.println("Couldn't verify failed login: "+ e.getMessage());
+				scenario.write("Couldn't verify failed login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
 				takeScreenShot(dr, "login_fail");
 			}
@@ -177,6 +185,7 @@ import cucumber.api.java.en.When;
 				dr.findElement(By.id("logout")).click();
 			} catch (Exception e) {
 				System.out.println("Couldn't perform logout: "+ e.getMessage());
+				scenario.write("Couldn't perform logout: "+ e.getMessage());
 			}
 		}
 		
