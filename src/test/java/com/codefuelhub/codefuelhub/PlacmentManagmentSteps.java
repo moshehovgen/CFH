@@ -15,118 +15,153 @@ import cucumber.api.java.en.Then;
 		
 		WebDriver dr = AppManagmentSteps.getDriver();		
 		
-		
 		@And("^verify default placement exists$")
-		public void defaultPlaceExists() throws Throwable {
-			  dr.findElement(By.id("new_placement_btn")).click();
-			  String name = dr.findElement(By.id("placement_name_id")).getText();
-			  // Select dropDown = new Select(dr.findElement(By.id("placement_type"))); 
-			  
-			  WebElement dropDown = dr.findElement(By.id("placement_type"));
-			  
-			  if(name.equals("") && dropDown.findElement(By.tagName("button")).getText().equals("Interstitial ")){
-				  System.out.println("Default placement is correct!");
-			  }
-			  else{
-				  Assert.assertTrue("Default placement isn't correct", false);
+		public void defaultPlaceExists() {
+			try {
+				  dr.findElement(By.id("new_placement_btn")).click();
+				  String name = dr.findElement(By.id("placement_name_id")).getText();
+				  // Select dropDown = new Select(dr.findElement(By.id("placement_type"))); 
 				  
-				  System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\def_place_fail...");
-				  takeScreenShot(dr, "def_place_fail");
-			  }
+				  WebElement dropDown = dr.findElement(By.id("placement_type"));
+				  
+				  if(name.equals("") && dropDown.findElement(By.tagName("button")).getText().equals("Interstitial ")){
+					  System.out.println("Default placement is correct!");
+				  }
+				  else{
+					  Assert.assertTrue("Default placement isn't correct", false);
+					  System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\def_place_fail...");
+					  takeScreenShot(dr, "def_place_fail");
+				  }
+			} catch (Exception e) {
+				takeScreenShot(dr, "default_place");
+				System.out.println("Failed to check if default placement exists: " + e.getMessage());
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\default_place... ");
+			}
 		  }
 		 
 		 @And("^Add new placement with \"(.*?)\"$")
-		 public void add_new_placement_with(String placeName) throws Throwable {
+		 public void add_new_placement_with(String placeName) {
 			 addNewPlacement(placeName);
 
 		 }
 		 
 		 @And("^Add new placement with ([^\"]*)$")
-		 public void addNewPlacement(String name) throws Throwable {
-			 dr.findElement(By.id("new_placement_btn")).click();
+		 public void addNewPlacement(String name) {
 			 
-			 dr.findElement(By.xpath("//*[@id=\"placement_name_id\"]")).sendKeys(name);
+			 try {
+				 dr.findElement(By.id("new_placement_btn")).click();
+				 dr.findElement(By.xpath("//*[@id=\"placement_name_id\"]")).sendKeys(name);
+			 } catch (Exception e) {
+				takeScreenShot(dr, "add_place");
+				System.out.println("Failed to add new placement: " + e.getMessage());
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place... ");
+			}
 		 }
 		 
 		 @And("^click save placement$")
-		 public void savePlaceClick() throws Throwable {
-			 dr.findElement(By.id("placement_edit_id")).click();
+		 public void savePlaceClick() {
+			 try {
+				 dr.findElement(By.id("placement_edit_id")).click();
+			 } catch (Exception e) {
+				 System.out.println("Failed to click on edit placement: " + e.getMessage());
+			 }
 		 }
 
 		 @And("^validate placement created with \"(.*?)\"$")
-		 public void validateChangedPlaceCreated(String name) throws Throwable {
+		 public void validateChangedPlaceCreated(String name) {
 		     validatePlaceCreated(name);
 		 }
 		 
 		 @And("^validate placement created with ([^\"]*)$")
-		 public void validatePlaceCreated(String name) throws Throwable {
+		 public void validatePlaceCreated(String name) {
 			 boolean found = false;
-			 WebElement baseTable = dr.findElement(By.id("placement"));
-			 List<WebElement> tableRows = baseTable.findElements(By.tagName("tr"));
 			 
-			 for(int i= 0 ; i< tableRows.size() && !found; i++){
-				 List<WebElement> column = tableRows.get(i).findElements(By.tagName("td"));
-				//*[@id="placementH5XGST"]/table/tbody/tr[1]/td[1]/div
-				 for (int j = 0; j < column.size() && !found; j++) {
-					if(column.get(j).getText().equals(name) || (name.contains(column.get(j).getText()) && !name.isEmpty())){
-						found = true;
-					}
+			 try {
+				 WebElement baseTable = dr.findElement(By.id("placement"));
+				 List<WebElement> tableRows = baseTable.findElements(By.tagName("tr"));
+				 
+				 for(int i= 0 ; i< tableRows.size() && !found; i++){
+					 List<WebElement> column = tableRows.get(i).findElements(By.tagName("td"));
+					 for (int j = 0; j < column.size() && !found; j++) {
+						if(column.get(j).getText().equals(name) || (name.contains(column.get(j).getText()) && !name.isEmpty())){
+							found = true;
+						}
+					 }
 				 }
-			 }
-			 Assert.assertTrue("Placment created", found);
-			 if(found){
-				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place...");
-				 takeScreenShot(dr, "add_place");
-			 } else{
-				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place_fail...");
-				 takeScreenShot(dr, "add_place_fail");
-			 }
+				 Assert.assertTrue("Placment created", found);
+				 if(found){
+					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place...");
+					 takeScreenShot(dr, "add_place");
+				 } else{
+					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place_fail...");
+					 takeScreenShot(dr, "add_place_fail");
+				 }
+			 } catch (Exception e) {
+					System.out.println("Failed to check placement created: "+ e.getMessage());
+			}
 				 
 		 }
 
 		 @Then("^edit place to \"(.*?)\"$")
-		 public void editPlacement(String newName) throws Throwable {
-			 Thread.sleep(1000);
-			 
-			 dr.findElement(By.id("placement_edit_btn_icon")).click();
-			 
-			 WebElement placeName = dr.findElement(By.xpath("//*[@id=\"placement\"]/tr[2]/td/form/table/tbody/tr[1]/td[1]/div/input"));
-			//*[@id="placementWREEH0"]/table/tbody/tr[1]/td[1]/input  - dev changed the xpath
-			placeName.clear();
-			placeName.sendKeys(newName);
+		 public void editPlacement(String newName)  {
+			 try {
+				 dr.findElement(By.id("placement_edit_btn_icon")).click();
+				 
+				 WebElement placeName = dr.findElement(By.xpath("//*[@id=\"placement\"]/tr[2]/td/form/table/tbody/tr[1]/td[1]/div/input"));
+				//*[@id="placementWREEH0"]/table/tbody/tr[1]/td[1]/input  - dev changed the xpath
+				placeName.clear();
+				placeName.sendKeys(newName);
 			
-			Thread.sleep(1000);
+			 } catch (Exception e) {
+				takeScreenShot(dr, "edit_place");
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_place... ");
+				System.out.println("Failed to edit placement:" + e.getMessage());
+			}
+			
 		 }
 		 
 		 @Then("^click save placement edit$")
-		 public void click_save_placement_edit() throws Throwable {
-		     dr.findElement(By.id("placement_save_btn_icon")).click();
-		     Thread.sleep(1000);
+		 public void click_save_placement_edit()  {
+			 try {
+			     dr.findElement(By.id("placement_save_btn_icon")).click();
+			     Thread.sleep(1000);
+		     
+			} catch (Exception e) {
+				takeScreenShot(dr, "click_save_edit");
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_save_edit... ");
+				System.out.println("Failed to save edit placement:" + e.getMessage());
+			}
 		 }
 
 		 @And("^delete existing placement([^\"]*)$")
-		 public void deletePlacement(String newName) throws Throwable {
+		 public void deletePlacement(String newName) {
 			 
 		 }
 
 		 @And("^verify placement with new name ([^\"]*) deleted$")
-		 public void verifyDeleted(String newName) throws Throwable {
+		 public void verifyDeleted(String newName)  {
 			 
 		 }
 		 
 		 @Then("^verify active placement$")
-		 public void verifyActive() throws Throwable {
-			 WebElement activeElem = dr.findElement(By.id("placement_activate_btn_icon"));
+		 public void verifyActive() {
+			 try {
+				 WebElement activeElem = dr.findElement(By.id("placement_activate_btn_icon"));
+				 
+				 if(! activeElem.getAttribute("class").contains("inactive")){
+					 Assert.assertTrue("Placment is active", true);
+				 }
+				 else{
+					 Assert.assertTrue("Placment isn't active",false);
+					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_active_fail...");
+					 takeScreenShot(dr, "place_active_fail");
+				 }
 			 
-			 if(! activeElem.getAttribute("class").contains("inactive")){
-				 Assert.assertTrue("Placment is active", true);
-			 }
-			 else{
-				 Assert.assertTrue("Placment isn't active",false);
-				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_active_fail...");
-				 takeScreenShot(dr, "place_active_fail");
-			 }
-			 
+			 } catch (Exception e) {
+				takeScreenShot(dr, "active_placement");
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\active_placement... ");
+				System.out.println("Failed to verify if placement is active:" + e.getMessage());
+			}
 		 }
 
 		 @Then("^click deactive placement$")
@@ -135,19 +170,23 @@ import cucumber.api.java.en.Then;
 		 }
 
 		 @Then("^verify deactive placement$")
-		 public void verifyDeactive() throws Throwable {
-			 WebElement activeElem = dr.findElement(By.id("placement_activate_btn_icon"));
-			 
-			 if(activeElem.getAttribute("class").contains("inactive")){
+		 public void verifyDeactive() {
+			 try{
+				 WebElement activeElem = dr.findElement(By.id("placement_activate_btn_icon"));
 				 
-				 Assert.assertTrue("Placment isn't active",true);
-			 }
-			 else{
-				 Assert.assertTrue("Placment is active", false);
-				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_deactive_fail...");
-				 takeScreenShot(dr, "place_deactive_fail");
-			 }
+				 if(activeElem.getAttribute("class").contains("inactive")){
+					 
+					 Assert.assertTrue("Placment isn't active",true);
+				 }
+				 else{
+					 Assert.assertTrue("Placment is active", false);
+					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_deactive_fail...");
+					 takeScreenShot(dr, "place_deactive_fail");
+				 }
+			 } catch (Exception e) {
+				takeScreenShot(dr, "deactive_placement");
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\deactive_placement... ");
+				System.out.println("Failed to verify if placement is deactive:" + e.getMessage());
+			}
 		 }
-		
-	
 	}

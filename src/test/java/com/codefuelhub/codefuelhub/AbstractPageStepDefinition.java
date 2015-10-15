@@ -58,10 +58,6 @@ public class AbstractPageStepDefinition {
 //		Attributes attributes = manifest.getMainAttributes();
 //		String version = attributes.getValue("Implementation-Version");
 		
-		
-		
-		//PS_FILE_NAME = PS_FILE_NAME + version + "\\";
-		
 		  switch(TEST_ENV) {
 		  case "QA":
 		   BASE_URL=QA_URL;
@@ -75,7 +71,7 @@ public class AbstractPageStepDefinition {
 	
 	
 
-	public boolean waitForVisibleElement(WebDriver driver, By locator, int timeout) {		  
+	public boolean waitForVisibleElement (WebDriver driver, By locator, int timeout) {		  
 		  try {
 		   // disable implicit wait
 			  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
@@ -87,7 +83,7 @@ public class AbstractPageStepDefinition {
 				  System.out.println("waitForVisibleElement false");
 				  return false;	    
 			  }
-		   System.out.println("waitForVisibleElement true");
+			  System.out.println("waitForVisibleElement true");
 			  return true;
 		   
 		  } finally {
@@ -161,12 +157,18 @@ public class AbstractPageStepDefinition {
 		return new FirefoxDriver();
 	}
 	
-	public void deleteAppsFromDB() throws ClassNotFoundException{
+	public void deleteAppsFromDB(){
 		DBconnect db = new DBconnect();
+		try {
+			
 		
-		db.establishConnection();
-		db.executeCmd("DELETE FROM `PublisherPortalDB`.`Apps` "+ 
+			db.establishConnection();
+			db.executeCmd("DELETE FROM `PublisherPortalDB`.`Apps` "+ 
 						"where publisher_id = 'f5099e07-0b4f-45d3-b384-7127db0ed93a';");
+		
+		} catch (Exception e) {
+			System.out.println("Failed to delete apps from DB: "+e.getMessage());
+		}
 		
 	}
 	
@@ -208,7 +210,7 @@ public class AbstractPageStepDefinition {
 		
 	}
 	
-	public static void takeScreenShot(WebDriver dr, String fileName){
+	public static void takeScreenShot(WebDriver dr, String fileName) {
 		File screenshot = ((TakesScreenshot)dr).getScreenshotAs(OutputType.FILE);
 		
 		try {
@@ -227,29 +229,31 @@ public class AbstractPageStepDefinition {
 		return eyes;
 	}
 	
-	public WebDriver setWinApplit(WebDriver dr, String win, Eyes eyes){
+	public WebDriver setWinApplit(WebDriver dr, String win, Eyes eyes) {
 		eyes.setMatchLevel(MatchLevel.CONTENT);
 		dr = eyes.open(dr, "www.hub.qacodefuel.com", win, null);
 		
 		return dr;
 	}
 	
-	public void verifyAplitools(String win, Eyes eyes, WebDriver dr) throws Throwable {
-	    eyes.checkWindow(win +"_window");
-	    
-	    TestResults result = eyes.close(false);
-        boolean passed = result.isPassed();
-	    
-        System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\" + win +"...");
-		takeScreenShot(dr, win);
-        
-        System.out.println("");
-	    if(passed){
-	    	Assert.assertTrue("The comparison went well!", true);
-	    }
-	    else
-	    	Assert.assertTrue("The comparison did not go well, check out changes in the following URL " + result.getUrl(), false);
-		
+	public void verifyAplitools(String win, Eyes eyes, WebDriver dr) {
+	   
+		try {
+			eyes.checkWindow(win +"_window");
+		    
+		    TestResults result = eyes.close(false);
+	        boolean passed = result.isPassed();
+	        
+		    if(passed){
+		    	Assert.assertTrue("The comparison went well!", true);
+		    } else
+		    	Assert.assertTrue("The comparison did not go well, check out changes in the following URL " + result.getUrl(), false);
+		    
+		} catch (Exception e) {
+			System.out.println("Failed to perform applitools comparison on "+ win+": "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\" + win +"...");
+			takeScreenShot(dr, win);
+		}
 		
 	}
 	

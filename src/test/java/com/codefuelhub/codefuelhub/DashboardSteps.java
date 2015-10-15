@@ -50,9 +50,6 @@ public class DashboardSteps extends AbstractPageStepDefinition {
 		dr = null; 
 	}
 	
-	
-	
-	
 	public static void main(String [] args){
 		String chromeLocation = "C:\\AutomationProjects\\CodefuelHub\\drivers\\chrome\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", chromeLocation);

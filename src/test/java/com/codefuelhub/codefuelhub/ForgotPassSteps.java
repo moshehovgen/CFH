@@ -89,8 +89,8 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			
 		} catch(Exception e){
 			takeScreenShot(dr, "reset_pass_fail");
-			System.out.println("Click on reset didn't work");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass... "+ e.getMessage());
+			System.out.println("Click on reset didn't work: "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass... ");
 		}
 	}
 	

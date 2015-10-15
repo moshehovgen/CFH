@@ -76,111 +76,104 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	@When("^I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")
 	public void enterDetailsToRegister(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable {
+		
 		setEmail(mail, false);
-		
 		registerForm(pubName, fName, lName, mail, password, pubType);
-		
 	}
 	
 	@When("^begin I enter publisher name ([^\"]*), first name ([^\"]*), last name ([^\"]*), mail ([^\"]*), password ([^\"]*), publisher type ([^\"]*)$")
 	public void enterDetailsToRegisterBegin(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable {
-		setEmail(mail, true);
 		
+		setEmail(mail, true);
 		registerForm(pubName, fName, lName, mail, password, pubType);
 	}
 	
-	private void registerForm(String pubName, String fName, String lName, String mail, String password, String pubType) throws Throwable{
+	private void registerForm(String pubName, String fName, String lName, String mail, String password, String pubType) {
 		WebDriverWait wait = new WebDriverWait(dr, 1000);
 		
-		dr.switchTo().frame("myRegisterFrame");
-		waitForElement(By.id("register-form"));
-		
-		WebElement pubElem = dr.findElement(By.id("Publisher"));
-		
-		pubElem.sendKeys(pubName);
-		dr.findElement(By.id("FirstName")).sendKeys(fName);
-		dr.findElement(By.id("LastName")).sendKeys(lName);
-		dr.findElement(By.id("Email")).sendKeys(mailAddress);
-		dr.findElement(By.id("Password")).sendKeys(password);
-		dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
-		
-		WebElement pubMenu = dr.findElement(By.id("dd"));
-		
-		System.out.println("before click on dd");
-		pubMenu.click();
-		
-		System.out.println("after click on dd");
-		
-		WebElement dropDown = pubMenu.findElement(By.className("dropdown"));
-		
-		List<WebElement> menuElem = dropDown.findElements(By.tagName("a"));
-		System.out.println(menuElem.size());
-		
-		for (int i = 0; i < menuElem.size(); i++) {
-			wait.until(ExpectedConditions.elementToBeClickable(menuElem.get(i)));
+		try {
+			dr.switchTo().frame("myRegisterFrame");
+			waitForElement(By.id("register-form"));
 			
-			if(menuElem.get(i).getText().equals(pubType)){
-				System.out.println("before click on mobile");
-				menuElem.get(i).click();
+			dr.findElement(By.id("Publisher")).sendKeys(pubName);
+			dr.findElement(By.id("FirstName")).sendKeys(fName);
+			dr.findElement(By.id("LastName")).sendKeys(lName);
+			dr.findElement(By.id("Email")).sendKeys(mailAddress);
+			dr.findElement(By.id("Password")).sendKeys(password);
+			dr.findElement(By.id("ConfirmPassword")).sendKeys(password);
+			
+			WebElement pubMenu = dr.findElement(By.id("dd"));
+			pubMenu.click();
+			
+			WebElement dropDown = pubMenu.findElement(By.className("dropdown"));
+			List<WebElement> menuElem = dropDown.findElements(By.tagName("a"));
+			
+			for (int i = 0; i < menuElem.size(); i++) {
+				wait.until(ExpectedConditions.elementToBeClickable(menuElem.get(i)));
 				
-				System.out.println("after click on mobile");
+				if(menuElem.get(i).getText().equals(pubType)){
+					menuElem.get(i).click();
+					
+				}
+				try {
+					WebElement dd = dr.findElement(By.id("dd"));
+					JavascriptExecutor js = (JavascriptExecutor)dr;
+					js.executeScript("arguments[0].className = \"wrapper-dropdown-5\"", dd);
+					Thread.sleep(1000);
+					
+				}catch(Exception e){
+					System.out.println("Failed to choose publisher type from drop down: " +e.getMessage());
+					System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\dd_fail... "+ e.getMessage());
+					takeScreenShot(dr, "dd_fail");
+				}
+			
+			}
+			//make mobile was chosen from dd
+			boolean pubChanged = false;
+			while(!pubChanged){
+				if(pubMenu.findElement(By.tagName("span")).getText().contains("Mobile")){
+					pubChanged = true;
+				}
 				
 			}
-		try{
-		
-			WebElement dd = dr.findElement(By.id("dd"));
-			JavascriptExecutor js = (JavascriptExecutor)dr;
-			js.executeScript("arguments[0].className = \"wrapper-dropdown-5\"", dd);
-			Thread.sleep(1000);
-		}catch(Exception e){
-			System.out.println(e.getMessage()+"############hovagen");
-		}
-			
-		}
-		boolean pubChanged = false;
-		while(!pubChanged){
-			if(pubMenu.findElement(By.tagName("span")).getText().contains("Mobile")){
-				pubChanged = true;
-			}
-				
+		} catch (Exception e) {
+			takeScreenShot(dr, "registration_fill_fail");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fill_fail... "+ e.getMessage());
+			System.out.println("Failed to fill in registration form: " + e.getMessage());
 		}
 	}
 	
 	@And("^click submit$")
-	public void clickSubmit() throws Throwable {
+	public void clickSubmit() {
 		clickOnAccept();
 		
-		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fill...");
-		takeScreenShot(dr, "registration_fill");
-		
-		waitForElement(By.id("submit"));
-		dr.findElement(By.id("submit")).click();
-		
-		dr.switchTo().defaultContent();
-		dr.switchTo().frame("myRegisterFrame");
-		
-		waitForElement(By.id("confirmation_mail_ok"));
-		
-		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\confirmation_win_show...");
-		takeScreenShot(dr, "confirmation_win_show");
-		
-		dr.findElement(By.id("confirmation_mail_ok")).click(); 		
-		
+		try {
+			dr.findElement(By.id("submit")).click();
+			
+			dr.switchTo().defaultContent();
+			dr.switchTo().frame("myRegisterFrame");
+			
+			waitForElement(By.id("confirmation_mail_ok"));
+			dr.findElement(By.id("confirmation_mail_ok")).click();
+			
+		} catch (Exception e) {
+			takeScreenShot(dr, "registration_confirm");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_confirm... "+ e.getMessage());
+			System.out.println("Failed to submit registration form: " + e.getMessage());
+		}
 	}
 	
 	@And("^create mail on mailinater for registration ([^\"]*)$")
-	public void createMailAccount(String mail) throws Throwable {
+	public void createMailAccount(String mail) {
 	    
 	    mailObj.setDriver(dr);
 	    mailObj.navigateToMail();
 	    mailObj.createMailAddress(mailAddress);
 	    
-	    System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_mail...");
-		takeScreenShot(dr, "create_mail");
-	    
+	       
 	}
 	
-	public void setEmail(String mail, boolean isBegin){
+	public void setEmail(String mail, boolean isBegin) {
 		if(!mailAddress.endsWith("com")){
 	    	mailAddress = mail + Time + "@mailinator.com";
 	    	if(isBegin)
@@ -198,71 +191,58 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	
 	private void clickOnAccept(){
 		WebDriverWait wait = new WebDriverWait(dr, 30000);
-		//WebElement elem = dr.findElement(By.id("innerConditions"));
 		WebElement elem =null;
 		try{
 			dr.switchTo().defaultContent();
 			dr.switchTo().frame("myRegisterFrame");
-			System.out.println("before wait");
-			
 			elem = wait.until(ExpectedConditions.elementToBeClickable(By.id("innerConditions")));
-			
-			System.out.println("after wait");
-			
-			//waitForElement(By.id("innerConditions"));
-			//elem = dr.findElement(By.id("innerConditions"));
 			
 			if(elem != null)
 			{
-				System.out.println("before click");
-				//elem.click();
 				Actions action = new Actions(dr);
 				action.click(elem).build().perform();
-				System.out.println("after click");
-				
-				System.out.println("Element located");
 			}
 			else
-			 System.out.println("Element isn't located");
+				System.out.println("Element isn't located");
 		    
 		} catch(Exception e){
-			System.out.println("moshe, ata lo kipod "+e.getMessage() +" "+ elem.toString() + " end of exception");
+			takeScreenShot(dr, "click_on_accept");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_accept... "+ e.getMessage());
+			System.out.println("Failed to click on accept terms: " + e.getMessage());
 		}
 	}
-	
-	
 
 	@When("^Verify mail for register sent to ([^\"]*)$")
-	public void verifyMailRecieved(String mail) throws Throwable {
-		Thread.sleep(1000);
-	    mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mail);
+	public void verifyMailRecieved(String mail) {
 	    
-	    System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\mail_recieved...");
-		takeScreenShot(dr, "mail_recieved");
+		mailObj.clickOnMailRecieved("//*[@id=\"mailcontainer\"]/li/a", mail);
 	    
-	    Thread.sleep(1000);
 	}
 
 	@Then("^click on link in mail ([^\"]*)$")
-	public void clickRegisterInMail(String link) throws Throwable {
+	public void clickRegisterInMail(String link) {
 		mailObj.clickOnLinkInMail(link);
-		Thread.sleep(1000);
 		
-		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_link_mail...");
-		takeScreenShot(dr, "click_on_link_mail");
 	}
-
+	
 	@Then("^verify registration complete ([^\"]*)$")
-	public void verify_registration_complete(String password) throws Throwable {
-		LoginSteps login = new LoginSteps();
-		
-		login.setDriver(dr);
-		
-		login.goToHubPage();
-		login.clickLogin();
-		login.validateLogin();
-		
-		login.dr.quit();
+	public void verifyRegistrationComplete(String password) {
+		try {
+			LoginSteps login = new LoginSteps();
+			
+			login.setDriver(dr);
+			
+			login.goToHubPage();
+			login.clickLogin();
+			login.validateLogin();
+			
+			login.dr.quit();
+			
+		} catch (Exception e) {
+			takeScreenShot(dr, "login_after_register");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_after_register... "+ e.getMessage());
+			System.out.println("Failed to login after registration: " + e.getMessage());
+		}
 		
 	}
 	
@@ -271,42 +251,61 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	}
 	
 	@Then("^validate the warning message ([^\"]*)$")
-	public void validateRegisterFail(String message) throws Throwable {
+	public void validateRegisterFail(String message)  {
 		boolean found = false;
 		
-		dr.switchTo().activeElement();
-		String pageSource = dr.getPageSource();
-		found = pageSource.contains(message);
-		Assert.assertTrue(found? "The message is correct":"The message isn't correct", found);
+		try {
+			dr.switchTo().activeElement();
+			String pageSource = dr.getPageSource();
+			found = pageSource.contains(message);
+			Assert.assertTrue(found? "The message is correct":"The message isn't correct", found);
+			
+		} catch (Exception e) {
+			takeScreenShot(dr, "registration_fail_message");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fail_message... "+ e.getMessage());
+			System.out.println("Failed to verify failed message of registration: " + e.getMessage());
+		}
 	}
 
 	@Then("^validate registration complete in before ([^\"]*)$")
-	public void verify_registration_complete_in_complete(String password) throws Throwable {
+	public void verifyRegistrationInFirstUser(String password) {
 		LoginSteps login = new LoginSteps();
+		try{
+			login.setDriver(dr);
+			
+			login.goToHubPage();
+			login.clickLogin();
+			login.validateLogin();
 		
-		login.setDriver(dr);
-		
-		login.goToHubPage();
-		login.clickLogin();
-		login.validateLogin();
+		} catch (Exception e) {
+				takeScreenShot(dr, "login_after_register");
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_after_register... "+ e.getMessage());
+				System.out.println("Failed to login after registration: " + e.getMessage());
+			}
 		
 	}
 
 	@Then("^add first app$")
-	public void add_first_app() throws Throwable {
+	public void add_first_app() {
 		AppManagmentSteps app = new AppManagmentSteps();
 		
-		dr.findElement(By.className("first-app-btn")).click();
-		app.setDriver(dr);
-		app.createApp("auto", 1, "auto.first.app");
-		app.clickAdd();
-		app.numOfApps = 0;
-		app.validate_App_created();
-		
+		try{
+			dr.findElement(By.className("first-app-btn")).click();
+			app.setDriver(dr);
+			app.createApp("auto", 1, "auto.first.app");
+			app.clickAdd();
+			app.numOfApps = 0;
+			app.validate_App_created();
+			
+		} catch (Exception e) {
+			takeScreenShot(dr, "add_first_app");
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_first_app... "+ e.getMessage());
+			System.out.println("Failed to add first application: " + e.getMessage());
+		}
 	}
 	
 	@And("^verify registration window$")
-	public void verifyRegistrationAplitools() throws Throwable {
+	public void verifyRegistrationAplitools() {
 	    verifyAplitools("registration", eyes, dr);
 	}
 

@@ -67,9 +67,9 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		dr = driver;
 	} 
 	
+	//for tests that deliver strings and not <>
 	@Given("^User logged into the portal enter \"(.*?)\" and \"(.*?)\"$")
-	public void loginBackground(String name, String password) throws Throwable {
-		//loginToPortal(name, password);
+	public void loginBackground(String name, String password)  {
 		if(name.contains("Codefuel") || name.contains("Super")){
 			loginToPortal(name, password);
 		}else
@@ -77,7 +77,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 	
 	@Given("^User logged into the portal enter ([^\"]*) and ([^\"]*)$")
-	public void loginToPortal(String username, String password) throws Throwable {
+	public void loginToPortal(String username, String password)  {
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		try {
 			dr.findElement(By.id("loginBtn")).click();
@@ -87,11 +87,10 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			
 			if(username.contains("Codefuel") || username.contains("codefuel") || username.contains("Super")){
 				dr.findElement(By.id("Email")).sendKeys(username);
-			}else
+			} else
 				dr.findElement(By.id("Email")).sendKeys(MAIL_ADD);
 		
 			dr.findElement(By.id("Password")).sendKeys(password);
-		
 			dr.findElement(By.id("login")).click();
 		
 		} catch(Exception e){
@@ -99,64 +98,53 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
 			takeScreenShot(dr, "login_fail");
 		}
-		
-		
 		if(a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
 			System.out.println("page loaded");
 		}
 	}
 	
 	@When("^User select App tab and click on Add app button$")
-	public void selectAppAndClickAdd() throws Throwable {
+	public void selectAppAndClickAdd() {
 		WebDriverWait wait = new WebDriverWait(dr, 2000);
+		try {
+			dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
+			appMenu.click();
+			
+			AppListBaseURL = dr.getCurrentUrl();
+			
+			WebElement appElem = wait.until(ExpectedConditions.elementToBeClickable(dr.findElement(By.id("apps_dd_btn"))));
+			appElem.click();
 		
-		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		WebElement appMenu = dr.findElement(By.id("manage_collapsed"));
-		System.out.println(appMenu==null?"null":"not null");
-		
-		System.out.println("before click on app collapse");
-		appMenu.click();
-		
-		System.out.println("after click on app collapse");
-//		dr.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		AppListBaseURL = dr.getCurrentUrl();
-		
-		AbstractPageStepDefinition pageStepDefinition =new AbstractPageStepDefinition();
-		
-		//WebElement elem = dr.findElement(By.id("manage_collapsed"));
-		//elem.click();
-		
-		
-		WebElement appElem = wait.until(ExpectedConditions.elementToBeClickable(dr.findElement(By.id("apps_dd_btn"))));
-		
-		System.out.println(appElem==null?"null":"not null");
-		
-		//Actions act = new Actions(dr);
-		//act.click(appElem).build().perform();
-		
-		appElem.click();
-		
-		System.out.println("after click on apps dd");
-		
-		dr.findElement(By.id("addAppBtn")).click();
-		
-		
-		
-		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
-		while (items.size() == 1){
-			items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+		} catch (Exception e) {
+			System.out.println("Failed clicking on manage apps button "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\manage_apps...");
+			takeScreenShot(dr, "manage_apps");
 		}
 		
-		numOfApps = items.size();
+		try{
+			dr.findElement(By.id("addAppBtn")).click();
+			List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+			while (items.size() == 1){
+				items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
+			}
+			
+			numOfApps = items.size();
+			
+		} catch (Exception e) {
+			System.out.println("Failed getting apps list "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_list...");
+			takeScreenShot(dr, "app_list");
+		}
 	}
 
 	@When("^Enter App \"(.*?)\" select \"(.*?)\" Enter packageID \"(.*?)\"$")
-	public void addAppBackground(String name, int platform, String packageID) throws Throwable {
+	public void addAppBackground(String name, int platform, String packageID) {
 	    createApp(name, platform, packageID);
 	}
 	
 	@When("^Enter App ([^\"]*) select ([^\"]*) Enter packageID ([^\"]*)$")
-	public void createApp(String name, int platform, String packageID) throws Throwable {
+	public void createApp(String name, int platform, String packageID) {
 		WebDriverWait wait = new WebDriverWait(dr, 2000);
 		
 		//set unique name
@@ -166,42 +154,53 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		else{
 			appName = "";
 		}
-		dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		
-		dr.findElement(By.id("name")).sendKeys(appName);
+		try {
+			dr.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+			
+			dr.findElement(By.id("name")).sendKeys(appName);
+			wait.until(ExpectedConditions.elementSelectionStateToBe(By.id("addAndroidBtn"), false));
+			if (platform == 1){
+				WebElement e = dr.findElement(By.id("addAndroidBtn"));
+				e.click();
+			}
+			if (platform == 2){
+				dr.findElement(By.id("addiOSBtn")).click();
+			}
+			
+			dr.findElement(By.id("bundle")).sendKeys(packageID);
 		
-		wait.until(ExpectedConditions.elementSelectionStateToBe(By.id("addAndroidBtn"), false));
-		
-		if (platform == 1){
-			WebElement e = dr.findElement(By.id("addAndroidBtn"));
-			e.click();
+		} catch (Exception e) {
+			System.out.println("Failed to add new app: " + e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_new_app...");
+			takeScreenShot(dr, "add_new_app");
 		}
-		if (platform == 2){
-			dr.findElement(By.id("addiOSBtn")).click();
-		}
-		
-		dr.findElement(By.id("bundle")).sendKeys(packageID);
-		
-		System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_new_app...");
-		takeScreenShot(dr, "add_new_app");
-
 	}
 
 	@When("^Click Add button$")
-	public void clickAdd() throws Throwable {
-		
-		dr.findElement(By.id("appsSave")).click();
-		Thread.sleep(1000);
-		
+	public void clickAdd()  {
+		try {
+			dr.findElement(By.id("appsSave")).click();
+		} catch (Exception e) {
+			System.out.println("Failed to click on add new app: " + e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_app_click...");
+			takeScreenShot(dr, "add_app_click");
+		}
 	}
 	
 	@When("^Click cancel button$")
-	public void clickCancel() throws Throwable {
-		dr.findElement(By.id("appsCancel")).click();	
+	public void clickCancel() {
+		try {
+			dr.findElement(By.id("appsCancel")).click();
+		} catch (Exception e) {
+			System.out.println("Failed to click on cancel new app: " + e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\cancel_app_click...");
+			takeScreenShot(dr, "cancel_app_click");
+		}
 	}
 
 	@Then("^validate App created$")
-	public void validate_App_created() throws Throwable {
+	public void validate_App_created() {
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 				
 		if(a.waitForVisibleElement(dr, By.id("new_placement_btn"), 10000)) {
@@ -218,52 +217,69 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 	
 	@And("^delete apps$")
-	public void appDelete() throws Throwable {
+	public void appDelete() {
 		AbstractPageStepDefinition a = new AbstractPageStepDefinition();
 		a.deleteAppsFromDB();
 	}
 	
 	@Then("^validate properties are correct; ([^\"]*), ([^\"]*), ([^\"]*)$")
-	public void validateAppProperties(String name, int platform, String packageID) throws Throwable {
-		String appName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
-		String appPlatform = dr.findElement(By.id("header_content_platform")).getText();
-		String appBundle = dr.findElement(By.id("header_content_id")).getText();
-		String tempPlat = "";
-		String tempPackage = "";
-
-		//check app name is correct
-		if(appName.equalsIgnoreCase(this.appName) ){
-			if(platform ==1){
-				tempPackage = "Package ID: ";				
-				tempPlat = "Android";
-			}
-			else{
-				tempPackage = "Bundle ID: ";
-				tempPlat = "iOS";
-			}
-			if(appPlatform.equals("Platform: "+tempPlat) && appBundle.equals(tempPackage +packageID)){
-				System.out.println("All app properties are correct!");
+	public void validateAppProperties(String name, int platform, String packageID)  {
+		String appName;
+		String appPlatform;
+		String appBundle;
+		String tempPlat;
+		String tempPackage;
+		
+		try {
+			appName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
+			appPlatform = dr.findElement(By.id("header_content_platform")).getText();
+			appBundle = dr.findElement(By.id("header_content_id")).getText();
+			tempPlat = "";
+			tempPackage = "";
+		
+			//check app name is correct
+			if(appName.equalsIgnoreCase(this.appName) ){
+				if(platform ==1){
+					tempPackage = "Package ID: ";				
+					tempPlat = "Android";
+				}
+				else{
+					tempPackage = "Bundle ID: ";
+					tempPlat = "iOS";
+				}
+				if(appPlatform.equals("Platform: "+tempPlat) && appBundle.equals(tempPackage +packageID)){
+					System.out.println("All app properties are correct!");
+				}
+				else
+					Assert.assertTrue("Not all properties were added correctly! Actual platform: " + appPlatform +
+							". Expected platform: "+ "Platform: "+tempPlat +". Actual package: " + appBundle + ". Expected package: "
+							+ tempPackage +packageID, false);
 			}
 			else
-				Assert.assertTrue("Not all properties were added correctly! Actual platform: " + appPlatform +
-						". Expected platform: "+ "Platform: "+tempPlat +". Actual package: " + appBundle + ". Expected package: "
-						+ tempPackage +packageID, false);
-		}
-		else
-			Assert.assertTrue("Not all properties were added correctly! Actual application name: " + appName + 
-					". Expected application name: "	+ this.appName, false);
-		
+				Assert.assertTrue("Not all properties were added correctly! Actual application name: " + appName + 
+						". Expected application name: "	+ this.appName, false);
+			
+		} catch (Exception e) {
+				System.out.println("Failed to get app properties: " + e.getMessage());
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_properties...");
+				takeScreenShot(dr, "app_properties");
+			}
 	}
 	
 	@Then("^validate error message ([^\"]*)$")
-	public void validate_error_message_errorMessage(String message) throws Throwable {
+	public void validateErrorMessage(String message)  {
 		boolean messageCorrect;
 		dr.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		
-		messageCorrect = dr.getPageSource().contains(message);
-		Assert.assertTrue(messageCorrect);
-		
-		if(!messageCorrect){
+		try {
+			messageCorrect = dr.getPageSource().contains(message);
+			Assert.assertTrue(messageCorrect);
+			
+			if(!messageCorrect){
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
+				takeScreenShot(dr, "create_app_message_fail");
+			}
+		} catch (Exception e) {
+			System.out.println("Failed to get error message: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
 			takeScreenShot(dr, "create_app_message_fail");
 		}
@@ -271,7 +287,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 
 	@Then("^Validate back to app list$")
-	public void Validate_back_to_app_list() throws Throwable {
+	public void Validate_back_to_app_list() {
 		
 		String CurrURL = dr.getCurrentUrl();
 		System.out.println("AppListBaseURL = " + AppListBaseURL);
@@ -290,46 +306,60 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 	
 	@And("^edit app$")
-	public void editApp() throws Throwable {
+	public void editApp()  {
 		WebDriverWait wait = new WebDriverWait(dr, 2000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("app_edit")));
-		
-	    WebElement editElem = dr.findElement(By.id("app_edit"));
-	    editElem.click();
-	    
+		try {
+		    WebElement editElem = dr.findElement(By.id("app_edit"));
+		    editElem.click();
+		} catch (Exception e) {
+			System.out.println("Failed to click on edit app: " + e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_app_click...");
+			takeScreenShot(dr, "edit_app_click");
+		}
 	}
 
 	@And("^change app name ([^\"]*)$")
-	public void changeAppNameAndCategory(String appName) throws Throwable {
-		WebElement name = dr.findElement(By.id("name"));
+	public void changeAppName(String appName) {
 		
-		name.clear();
-		name.sendKeys(appName);
-		
+		try {
+			WebElement name = dr.findElement(By.id("name"));
+			name.clear();
+			name.sendKeys(appName);
+			
+		} catch (Exception e) {
+			System.out.println("Failed to change app name: " + e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_app_name...");
+			takeScreenShot(dr, "edit_app_name");
+		}
 	}
 
 	@And("^validate name changed to ([^\"]*)$")
-	public void validateAppEdit(String appName) throws Throwable {
+	public void validateAppEdit(String appName) {
 	   String actualAppName;
-	   
-	   actualAppName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
-	   
-	   if(actualAppName.equalsIgnoreCase(appName)){
-		   System.out.println("App was edited successfully!");
-	   } else
-		   Assert.assertTrue("App was edited information is incorrect!", false); 
-	   
+	   try {
+		   actualAppName = dr.findElement(By.id("app_header_wrapper_subtitle")).getText();
+		   if(actualAppName.equalsIgnoreCase(appName)){
+			   System.out.println("App was edited successfully!");
+		   } else
+			   Assert.assertTrue("App was edited information is incorrect!", false); 
+		} catch (Exception e) {
+			System.out.println("Failed to verify app name: " + e.getMessage());
+		}
 	   
 	}
 	
 	@And("^click save edit$")
-	public void saveEditApp() throws Throwable {
-	    dr.findElement(By.id("app_save")).click();
-	    
+	public void saveEditApp() {
+		try {
+			dr.findElement(By.id("app_save")).click();
+		} catch (Exception e) {
+			System.out.println("Failed to click save on app change: " + e.getMessage());
+		}
 	}
 	
 	@And("^check app list$")
-	public boolean doesAppInList(String appName){
+	public boolean doesAppInList(String appName) {
 		List<WebElement> items = dr.findElement(By.id("li_wrapper")).findElements(By.tagName("li"));
 	
 		
@@ -343,45 +373,58 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	}
 	
 	@Then("^validate App active$")
-	public void validate_App_active() throws Throwable {
+	public void validate_App_active() {
 		waitForVisibleElement(dr, By.id("app_activate"), 1000);
-		
-		WebElement activeElem = dr.findElement(By.id("app_activate"));
-		 
-		 if(! activeElem.getAttribute("class").contains("inactive")){
-			 Assert.assertTrue("App is active", true);
-		 }
-		 else {
-			 Assert.assertTrue("App isn't active",false);
+		try {
+			WebElement activeElem = dr.findElement(By.id("app_activate"));
 			 
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active_fail...");
-			takeScreenShot(dr, "app_active_fail");
-		 }
+			if(!activeElem.getAttribute("class").contains("inactive")){
+				Assert.assertTrue("App is active", true);
+			}
+			else {
+				Assert.assertTrue("App isn't active",false);
+				 
+				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active_fail...");
+				takeScreenShot(dr, "app_active_fail");
+			}
+		} catch (Exception e) {
+			System.out.println("Failed to check active status of app: " + e.getMessage());
+		}
 	}
 
 	@Then("^deactive app$")
-	public void deactive_app() throws Throwable {
-		dr.findElement(By.id("app_activate")).click();
+	public void deactive_app()  {
+		try {
+			dr.findElement(By.id("app_activate")).click();
+		} catch (Exception e) {
+			System.out.println("Failed to click on de/active button: "+ e.getMessage());
+		}
 	}
 
 	@Then("^validate app deactive$")
-	public void validate_app_deactive() throws Throwable {
-		WebElement activeElem = dr.findElement(By.id("app_activate"));
-		dr.findElement(By.id("apps_list_active")).click();
-		
-		//check if button was given the class of deactive and also verify app isn't in the active list
-		if(activeElem.getAttribute("class").contains("inactive") ||
-				(!doesAppInList(dr.findElement(By.id("app_header_wrapper_subtitle")).getText()))) 
-			Assert.assertTrue("App isn't active",true);
-		else {
-			 Assert.assertTrue("App is active", false);
-			 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_deactive_fail...");
-			 takeScreenShot(dr, "app_deactive_fail");
+	public void validate_app_deactive() {
+		try {
+			WebElement activeElem = dr.findElement(By.id("app_activate"));
+			dr.findElement(By.id("apps_list_active")).click();
+			
+			//check if button was given the class of deactive and also verify app isn't in the active list
+			if(activeElem.getAttribute("class").contains("inactive") ||
+					(!doesAppInList(dr.findElement(By.id("app_header_wrapper_subtitle")).getText()))) 
+				Assert.assertTrue("App isn't active",true);
+			else {
+				 Assert.assertTrue("App is active", false);
+				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_deactive_fail...");
+				 takeScreenShot(dr, "app_deactive_fail");
+			}
+		} catch (Exception e) {
+			System.out.println("Failed to verify app status: " + e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active...");
+			takeScreenShot(dr, "app_active");
 		}
 	}
 	
 	@Then("^verify app and placements UI$")
-	public void verifyAppUI() throws Throwable {
+	public void verifyAppUI() {
 		verifyAplitools("appPlace", eyes, dr);
 	}
 	
