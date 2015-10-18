@@ -3,7 +3,6 @@ Feature: Registration page tests
   @BeforeAll @Regression
   Scenario Outline: Add a new user: register, login and add one app
     Given Browse to registration page
-    And verify registration window
     When begin I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail <mail>, password <password>, publisher type <pubType>
     And click submit
     And create mail on mailinater for registration <mail>
@@ -34,6 +33,7 @@ Feature: Registration page tests
   @Registration @Regression
   Scenario Outline: Create new acount positve test - (Test cases: 107254)
     And Browse to registration page
+    And verify registration window
     When I enter publisher name <Publisher>, first name <fName>, last name <lName>, mail <mail>, password <password>, publisher type <pubType>
     And validate the warning message <message>
 

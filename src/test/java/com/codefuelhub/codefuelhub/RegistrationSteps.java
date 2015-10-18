@@ -130,8 +130,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 					
 				}catch(Exception e){
 					System.out.println("Failed to choose publisher type from drop down: " +e.getMessage());
-					System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\dd_fail... "+ e.getMessage());
-					scenario.write("Find screen shot at: " + PS_FILE_NAME + "\\dd_fail... "+ e.getMessage());
+					System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\dd_fail... ");
+					scenario.write("Failed to choose publisher type from drop down: " +e.getMessage());
 					takeScreenShot(dr, "dd_fail");
 				}
 			
@@ -146,7 +146,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			}
 		} catch (Exception e) {
 			takeScreenShot(dr, "registration_fill_fail");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fill_fail... "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fill_fail... ");
 			scenario.write("Failed to fill in registration form: " + e.getMessage());
 			System.out.println("Failed to fill in registration form: " + e.getMessage());
 		}
@@ -167,7 +167,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			
 		} catch (Exception e) {
 			takeScreenShot(dr, "registration_confirm");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_confirm... "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_confirm... ");
 			scenario.write("Find screen shot at: " + PS_FILE_NAME + "\\registration_confirm... "+ e.getMessage());
 			System.out.println("Failed to submit registration form: " + e.getMessage());
 		}
@@ -217,7 +217,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 		    
 		} catch(Exception e){
 			takeScreenShot(dr, "click_on_accept");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_accept... "+ e.getMessage());
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_accept... ");
 			scenario.write("Find screen shot at: " + PS_FILE_NAME + "\\click_on_accept... "+ e.getMessage());
 			System.out.println("Failed to click on accept terms: " + e.getMessage());
 		}
