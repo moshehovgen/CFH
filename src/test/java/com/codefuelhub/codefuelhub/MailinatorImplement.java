@@ -4,8 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class MailinatorImplement extends AbstractPageStepDefinition{
+import cucumber.api.Scenario;
 
+public class MailinatorImplement extends AbstractPageStepDefinition{
 	WebDriver dr ;	
 	
 	public void initiateBrowser(){

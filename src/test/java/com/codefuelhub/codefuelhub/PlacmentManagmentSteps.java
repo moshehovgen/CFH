@@ -8,11 +8,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import cucumber.api.Scenario;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 
 	public class PlacmentManagmentSteps extends AbstractPageStepDefinition {
-		
+		private Scenario scenario;
 		WebDriver dr = AppManagmentSteps.getDriver();		
 		
 		@And("^verify default placement exists$")
@@ -35,6 +36,7 @@ import cucumber.api.java.en.Then;
 			} catch (Exception e) {
 				takeScreenShot(dr, "default_place");
 				System.out.println("Failed to check if default placement exists: " + e.getMessage());
+				scenario.write("Failed to check if default placement exists: " + e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\default_place... ");
 			}
 		  }

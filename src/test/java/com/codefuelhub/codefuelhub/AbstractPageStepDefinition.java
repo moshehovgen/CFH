@@ -213,12 +213,12 @@ public class AbstractPageStepDefinition {
 	public static void takeScreenShot(WebDriver dr, String fileName) {
 		File screenshot = ((TakesScreenshot)dr).getScreenshotAs(OutputType.FILE);
 		
-		try {
-			FileUtils.copyFile(screenshot, new File("\\\\192.168.20.7\\clients\\Automation\\CFH\\" + fileName + "_" + System.currentTimeMillis() +".jpeg"));
-		} catch (IOException e) {
-			
-			System.out.println("Failure to take screenshot "+e.getMessage());
-		}
+//		try {
+//			FileUtils.copyFile(screenshot, new File("\\\\192.168.20.7\\clients\\Automation\\CFH\\" + fileName + "_" + System.currentTimeMillis() +".jpeg"));
+//		} catch (IOException e) {
+//			
+//			System.out.println("Failure to take screenshot "+e.getMessage());
+//		}
 		
 	}
 
