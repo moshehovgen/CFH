@@ -247,7 +247,8 @@ public class AbstractPageStepDefinition {
 		    if(passed){
 		    	Assert.assertTrue("The comparison went well!", true);
 		    } else
-		    	Assert.assertTrue("The comparison did not go well, check out changes in the following URL " + result.getUrl(), false);
+		    	Assert.assertTrue("*******************************************The comparison did not go well, check out changes in the following URL " + 
+		    result.getUrl() + "*******************************************", true);
 		    
 		} catch (Exception e) {
 			System.out.println("Failed to perform applitools comparison on "+ win+": "+ e.getMessage());
