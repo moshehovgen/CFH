@@ -214,7 +214,7 @@ public class AbstractPageStepDefinition {
 		File screenshot = ((TakesScreenshot)dr).getScreenshotAs(OutputType.FILE);
 		
 		try {
-			FileUtils.copyFile(screenshot, new File("workspace\\CFH\\target\\html"+ fileName + "_" + System.currentTimeMillis() +".jpeg"));
+			FileUtils.copyFile(screenshot, new File("target\\html"+ fileName + "_" + System.currentTimeMillis() +".jpeg"));
 		} catch (IOException e) {
 			
 			System.out.println("Failure to take screenshot "+e.getMessage());
