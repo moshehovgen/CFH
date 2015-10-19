@@ -109,7 +109,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 
 		} catch (Exception e) {
 			System.out.println("Failed clicking on mail: " +e.getMessage());
-			scenario.write("Failed clicking on mail: " +e.getMessage());
+			//scenario.write("Failed clicking on mail: " +e.getMessage());
 			scenario.write(takeScreenShot(dr, "fail_click_mail"));
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\fail_click_mail...");
 		}

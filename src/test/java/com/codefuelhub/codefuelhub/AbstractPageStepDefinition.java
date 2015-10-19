@@ -219,7 +219,7 @@ public class AbstractPageStepDefinition {
 			FileUtils.copyFile(screenshot, new File("target\\screen_shots\\"+ fullName));
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + fullName);
 			
-			return PS_FILE_NAME + fullName;
+			return "<a href="+PS_FILE_NAME + fullName + PS_FILE_NAME + fullName+"</a>";
 		} catch (IOException e) {
 			
 			System.out.println("Failure taking a screenshot "+e.getMessage());
