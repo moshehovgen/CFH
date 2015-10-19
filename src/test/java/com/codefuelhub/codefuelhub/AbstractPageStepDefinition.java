@@ -39,7 +39,7 @@ public class AbstractPageStepDefinition {
 	public static final String PROD_URL = System.getenv("PROD_URL");
 	public static String MAIL_ADD = "";
 	public static String BASE_URL = null;
-	public static String PS_FILE_NAME = "\\192.168.20.7\\clients\\Automation\\CFH\\";
+	public static String PS_FILE_NAME = "target\\CFH\\screen_shots\\";
 	public static String version;
 	WebDriver dr;
 	
@@ -210,15 +210,21 @@ public class AbstractPageStepDefinition {
 		
 	}
 	
-	public static void takeScreenShot(WebDriver dr, String fileName) {
+	public static String takeScreenShot(WebDriver dr, String fileName) {
 		File screenshot = ((TakesScreenshot)dr).getScreenshotAs(OutputType.FILE);
+		String fullName = fileName + "_" + System.currentTimeMillis() +".jpeg";
 		
 		try {
-			FileUtils.copyFile(screenshot, new File("target\\html"+ fileName + "_" + System.currentTimeMillis() +".jpeg"));
+			
+			FileUtils.copyFile(screenshot, new File("target\\screen_shots\\"+ fullName));
+			System.out.println("Find screen shot at: " + PS_FILE_NAME + fullName);
+			
+			return PS_FILE_NAME + fullName;
 		} catch (IOException e) {
 			
-			System.out.println("Failure to take screenshot "+e.getMessage());
+			System.out.println("Failure taking a screenshot "+e.getMessage());
 		}
+		return "FAIL";
 		
 	}
 

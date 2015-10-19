@@ -90,7 +90,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			okElem.click();
 			
 		} catch(Exception e){
-			takeScreenShot(dr, "reset_pass_fail");
+			scenario.write(takeScreenShot(dr, "reset_pass_fail"));
 			System.out.println("Click on reset didn't work: "+ e.getMessage());
 			scenario.write("Click on reset didn't work: "+ e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass... ");
@@ -110,7 +110,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed clicking on mail: " +e.getMessage());
 			scenario.write("Failed clicking on mail: " +e.getMessage());
-			takeScreenShot(dr, "fail_click_mail");
+			scenario.write(takeScreenShot(dr, "fail_click_mail"));
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\fail_click_mail...");
 		}
 	}
@@ -145,7 +145,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			
 		} catch (Exception e) {
 			System.out.println("Failed to fill in new password: " + e.getMessage());
-			takeScreenShot(dr, "failed_reset_pass_page");
+			scenario.write(takeScreenShot(dr, "failed_reset_pass_page"));
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\failed_reset_pass_page...");
 			scenario.write("Failed to fill in new password: " + e.getMessage());
 		}
@@ -173,7 +173,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			
 		} catch (Throwable e) {
 			System.out.println("Failed to login with new password: " + e.getMessage());
-			takeScreenShot(dr, "failed_login");
+			scenario.write(takeScreenShot(dr, "failed_login"));
 			scenario.write("Failed to login with new password: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\failed_login...");
 		}

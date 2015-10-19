@@ -60,7 +60,7 @@ import cucumber.api.java.en.When;
 					System.out.println("Login element wasn't found!"+ false);
 				
 			} catch (Exception e) {
-				takeScreenShot(dr, "click_login_frontPage");
+				scenario.write(takeScreenShot(dr, "click_login_frontPage"));
 				System.out.println("Failed to click on ligon button on front page: " + e.getMessage());
 				scenario.write("Failed to click on ligon button on front page: " + e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_login_frontPage... ");
@@ -106,7 +106,7 @@ import cucumber.api.java.en.When;
 				System.out.println("Couldn't fill login: "+ e.getMessage());
 				scenario.write("Couldn't fill login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fill_fail...");
-				takeScreenShot(dr, "login_fill_fail");
+				scenario.write(takeScreenShot(dr, "login_fill_fail"));
 			}
 		}
 				
@@ -119,7 +119,7 @@ import cucumber.api.java.en.When;
 				System.out.println("Couldn't fill login: "+ e.getMessage());
 				scenario.write("Couldn't fill login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fill_fail...");
-				takeScreenShot(dr, "login_fill_fail");
+				scenario.write(takeScreenShot(dr, "login_fill_fail"));
 			}
 		}
 
@@ -137,13 +137,13 @@ import cucumber.api.java.en.When;
 				Assert.assertTrue(successLogin);
 				if(!successLogin) {
 					System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-					takeScreenShot(dr, "login_fail");
+					scenario.write(takeScreenShot(dr, "login_fail"));
 				}
 			} catch (Exception e) {
 				System.out.println("Couldn't verify login: "+ e.getMessage());
 				scenario.write("Couldn't verify login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-				takeScreenShot(dr, "login_fail");
+				scenario.write(takeScreenShot(dr, "login_fail"));
 			}
 			
 			
@@ -158,7 +158,7 @@ import cucumber.api.java.en.When;
 				System.out.println("Couldn't verify failed login: "+ e.getMessage());
 				scenario.write("Couldn't verify failed login: "+ e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-				takeScreenShot(dr, "login_fail");
+				scenario.write(takeScreenShot(dr, "login_fail"));
 			}
 		}
 
@@ -172,10 +172,10 @@ import cucumber.api.java.en.When;
 			
 			if(found){
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message...");
-				takeScreenShot(dr, "login_message");
+				scenario.write(takeScreenShot(dr, "login_message"));
 			} else{
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message_fail...");
-				takeScreenShot(dr, "login_message_fail");
+				scenario.write(takeScreenShot(dr, "login_message_fail"));
 			}
 		}
 		
