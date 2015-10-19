@@ -153,14 +153,12 @@ import cucumber.api.java.en.When;
 		public void validateLoginFailMessage(String message) {
 			boolean found = false;
 			String pageSource = dr.getPageSource();
-			found = pageSource .contains(message);
+			found = pageSource.contains(message);
 			Assert.assertTrue(found);
 			
 			if(found){
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message...");
 				Assert.assertTrue("Warning message is good " +takeScreenShot(dr, "login_message"), true);
 			} else{
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message_fail...");
 				Assert.assertTrue("Warning message isn't good " + takeScreenShot(dr, "login_message_fail"), false);
 			}
 		}
