@@ -20,6 +20,7 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.Wait;
 import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -34,11 +35,13 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	String AppListBaseURL = null;
 	int numOfApps;
 	Eyes eyes;
+	Scenario scenario;
 	
 	public static WebDriver dr;  
 	
 	@Before("@Application, @Placement")
-	public void initiateBrowser(){
+	public void initiateBrowser(Scenario scenario){
+		this.scenario = scenario;
 		eyes = initApplitools(eyes);
 		
 		init();
@@ -96,7 +99,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch(Exception e){
 			System.out.println("Couldn't fill login: "+ e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-			takeScreenShot(dr, "login_fail");
+			scenario.write(takeScreenShot(dr, "login_fail"));
 		}
 		if(a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
 			System.out.println("page loaded");
@@ -119,7 +122,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed clicking on manage apps button "+ e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\manage_apps...");
-			takeScreenShot(dr, "manage_apps");
+			scenario.write(takeScreenShot(dr, "manage_apps"));
 		}
 		
 		try{
@@ -134,7 +137,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed getting apps list "+ e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_list...");
-			takeScreenShot(dr, "app_list");
+			scenario.write(takeScreenShot(dr, "app_list"));
 		}
 	}
 
@@ -173,7 +176,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed to add new app: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_new_app...");
-			takeScreenShot(dr, "add_new_app");
+			scenario.write(takeScreenShot(dr, "add_new_app"));
 		}
 	}
 
@@ -184,7 +187,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed to click on add new app: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_app_click...");
-			takeScreenShot(dr, "add_app_click");
+			scenario.write(takeScreenShot(dr, "add_app_click"));
 		}
 	}
 	
@@ -195,7 +198,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed to click on cancel new app: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\cancel_app_click...");
-			takeScreenShot(dr, "cancel_app_click");
+			scenario.write(takeScreenShot(dr, "cancel_app_click"));
 		}
 	}
 
@@ -209,7 +212,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			
 			if(!isElementExist){
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_fail...");
-				takeScreenShot(dr, "create_app_fail");
+				scenario.write(takeScreenShot(dr, "create_app_fail"));
 			}
 		}
 		
@@ -262,7 +265,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 				System.out.println("Failed to get app properties: " + e.getMessage());
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_properties...");
-				takeScreenShot(dr, "app_properties");
+				scenario.write(takeScreenShot(dr, "app_properties"));
 			}
 	}
 	
@@ -276,12 +279,12 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			
 			if(!messageCorrect){
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
-				takeScreenShot(dr, "create_app_message_fail");
+				scenario.write(takeScreenShot(dr, "create_app_message_fail"));
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to get error message: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
-			takeScreenShot(dr, "create_app_message_fail");
+			scenario.write(takeScreenShot(dr, "create_app_message_fail"));
 		}
 		
 	}
@@ -315,7 +318,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed to click on edit app: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_app_click...");
-			takeScreenShot(dr, "edit_app_click");
+			scenario.write(takeScreenShot(dr, "edit_app_click"));
 		}
 	}
 
@@ -330,7 +333,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		} catch (Exception e) {
 			System.out.println("Failed to change app name: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_app_name...");
-			takeScreenShot(dr, "edit_app_name");
+			scenario.write(takeScreenShot(dr, "edit_app_name"));
 		}
 	}
 
@@ -385,7 +388,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 				Assert.assertTrue("App isn't active",false);
 				 
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active_fail...");
-				takeScreenShot(dr, "app_active_fail");
+				scenario.write(takeScreenShot(dr, "app_active_fail"));
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to check active status of app: " + e.getMessage());
@@ -414,12 +417,12 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			else {
 				 Assert.assertTrue("App is active", false);
 				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_deactive_fail...");
-				 takeScreenShot(dr, "app_deactive_fail");
+				 scenario.write(takeScreenShot(dr, "app_deactive_fail"));
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to verify app status: " + e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active...");
-			takeScreenShot(dr, "app_active");
+			scenario.write(takeScreenShot(dr, "app_active"));
 		}
 	}
 	
