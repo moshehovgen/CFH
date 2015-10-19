@@ -9,7 +9,6 @@ import com.applitools.eyes.Eyes;
 import com.applitools.eyes.RectangleSize;
 import com.applitools.eyes.ProxySettings;
 
-import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -18,15 +17,13 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class ForgotPassSteps extends AbstractPageStepDefinition {
-	private Scenario scenario;
 	WebDriver dr;
 	MailinatorImplement mailObj = new MailinatorImplement();
 	Eyes eyes;
 	long Time = System.currentTimeMillis();
 	
 	@Before("@Password")
-	public void initiateBrowser(Scenario scenario){
-		this.scenario = scenario;
+	public void initiateBrowser(){
 		eyes = initApplitools(eyes);
 		
 		init();
@@ -62,7 +59,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			dr.findElement(By.id("forgot-password")).click();
 		} catch (Exception e) {
 			System.out.println("Unable to click on forgot password button: " + e.getMessage());
-			scenario.write("Unable to click on forgot password button: " + e.getMessage());
+			Assert.assertTrue("Unable to click on forgot password button" , false);
 		}
 	}
 	
@@ -74,7 +71,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			dr.findElement(By.id("Email")).sendKeys(mailAddress);
 		} catch (Exception e) {
 			System.out.println("Unable to enter email address: " + e.getMessage());
-			scenario.write("Unable to enter email address: " + e.getMessage());
+			Assert.assertTrue("Unable to enter email address: "+ takeScreenShot(dr, "reset_pass_address"), false);
 		}
 	}
 	
@@ -91,11 +88,8 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			okElem.click();
 			
 		} catch(Exception e){
-			scenario.write(takeScreenShot(dr, "reset_pass_fail"));
-			Assert.assertTrue(takeScreenShot(dr, "reset_pass_fail"), false);
+			Assert.assertTrue("Click on reset didn't work: "+ takeScreenShot(dr, "reset_pass_fail"), false);
 			System.out.println("Click on reset didn't work: "+ e.getMessage());
-			//scenario.write("Click on reset didn't work: "+ e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass... ");
 		}
 	}
 	
@@ -111,9 +105,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 
 		} catch (Exception e) {
 			System.out.println("Failed clicking on mail: " +e.getMessage());
-			scenario.write("Failed clicking on mail: " +e.getMessage());
-			scenario.write(takeScreenShot(dr, "fail_click_mail"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\fail_click_mail...");
+			Assert.assertTrue("Failed clicking on mail: " + takeScreenShot(dr, "fail_click_mail"),false);
 		}
 	}
 
@@ -130,7 +122,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 		
 		} catch (Exception e) {
 			System.out.println("Failed to enter forgot password link: " + e.getMessage());
-			scenario.write("Failed to enter forgot password link: " + e.getMessage());
+			Assert.assertTrue("Failed to enter forgot password link: ",false);
 		}
 		
 	}
@@ -147,9 +139,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			
 		} catch (Exception e) {
 			System.out.println("Failed to fill in new password: " + e.getMessage());
-			scenario.write(takeScreenShot(dr, "failed_reset_pass_page"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\failed_reset_pass_page...");
-			scenario.write("Failed to fill in new password: " + e.getMessage());
+			Assert.assertTrue("Failed to fill in new password: " + takeScreenShot(dr, "failed_reset_pass_page"), false);
 		}
 		
 	}
@@ -175,9 +165,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			
 		} catch (Throwable e) {
 			System.out.println("Failed to login with new password: " + e.getMessage());
-			scenario.write(takeScreenShot(dr, "failed_login"));
-			scenario.write("Failed to login with new password: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\failed_login...");
+			Assert.assertTrue("Failed to login with new password: " + takeScreenShot(dr, "failed_login"), false);
 		}
 	}
 	
