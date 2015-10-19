@@ -13,7 +13,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 
 	public class PlacmentManagmentSteps extends AbstractPageStepDefinition {
-		private Scenario scenario;
 		WebDriver dr = AppManagmentSteps.getDriver();		
 		
 		@And("^verify default placement exists$")
@@ -29,15 +28,11 @@ import cucumber.api.java.en.Then;
 					  System.out.println("Default placement is correct!");
 				  }
 				  else{
-					  Assert.assertTrue("Default placement isn't correct", false);
-					  System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\def_place_fail...");
-					  scenario.write(takeScreenShot(dr, "def_place_fail"));
+					  Assert.assertTrue("Default placement isn't correct" + takeScreenShot(dr, "def_place_fail"), false);
 				  }
 			} catch (Exception e) {
-				scenario.write(takeScreenShot(dr, "default_place"));
+				Assert.assertTrue("Failed to check if default placement exists: " + takeScreenShot(dr, "default_place"),false);
 				System.out.println("Failed to check if default placement exists: " + e.getMessage());
-				scenario.write("Failed to check if default placement exists: " + e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\default_place... ");
 			}
 		  }
 		 
@@ -54,9 +49,8 @@ import cucumber.api.java.en.Then;
 				 dr.findElement(By.id("new_placement_btn")).click();
 				 dr.findElement(By.xpath("//*[@id=\"placement_name_id\"]")).sendKeys(name);
 			 } catch (Exception e) {
-				 scenario.write(takeScreenShot(dr, "add_place"));
+				Assert.assertTrue("Failed to add new placement: " + takeScreenShot(dr, "add_place"), false);
 				System.out.println("Failed to add new placement: " + e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place... ");
 			}
 		 }
 		 
@@ -92,14 +86,13 @@ import cucumber.api.java.en.Then;
 				 }
 				 Assert.assertTrue("Placment created", found);
 				 if(found){
-					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place...");
-					 scenario.write(takeScreenShot(dr, "add_place"));
+					 Assert.assertTrue(takeScreenShot(dr, "add_place"),true);
 				 } else{
-					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_place_fail...");
-					 scenario.write(takeScreenShot(dr, "add_place_fail"));
+					 Assert.assertTrue("Failed to create placement " + takeScreenShot(dr, "add_place_fail"), false);
 				 }
 			 } catch (Exception e) {
 					System.out.println("Failed to check placement created: "+ e.getMessage());
+					Assert.assertTrue("Failed to check placement created: " + takeScreenShot(dr, "add_place_fail"), false);
 			}
 				 
 		 }
@@ -115,9 +108,8 @@ import cucumber.api.java.en.Then;
 				placeName.sendKeys(newName);
 			
 			 } catch (Exception e) {
-				 scenario.write(takeScreenShot(dr, "edit_place"));
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_place... ");
-				System.out.println("Failed to edit placement:" + e.getMessage());
+				 Assert.assertTrue("Failed to edit placement:" + takeScreenShot(dr, "edit_place"),false);
+				 System.out.println("Failed to edit placement:" + e.getMessage());
 			}
 			
 		 }
@@ -129,8 +121,7 @@ import cucumber.api.java.en.Then;
 			     Thread.sleep(1000);
 		     
 			} catch (Exception e) {
-				scenario.write(takeScreenShot(dr, "click_save_edit"));
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_save_edit... ");
+				Assert.assertTrue("Failed to save edit placement:" + takeScreenShot(dr, "click_save_edit"),false);
 				System.out.println("Failed to save edit placement:" + e.getMessage());
 			}
 		 }
@@ -154,14 +145,11 @@ import cucumber.api.java.en.Then;
 					 Assert.assertTrue("Placment is active", true);
 				 }
 				 else{
-					 Assert.assertTrue("Placment isn't active",false);
-					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_active_fail...");
-					 scenario.write(takeScreenShot(dr, "place_active_fail"));
+					 Assert.assertTrue("Placment isn't active" + takeScreenShot(dr, "place_active_fail"), false);
 				 }
 			 
 			 } catch (Exception e) {
-				scenario.write(takeScreenShot(dr, "active_placement"));
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\active_placement... ");
+				 Assert.assertTrue("Failed to verify if placement is active:" +takeScreenShot(dr, "active_placement"), false);
 				System.out.println("Failed to verify if placement is active:" + e.getMessage());
 			}
 		 }
@@ -181,13 +169,10 @@ import cucumber.api.java.en.Then;
 					 Assert.assertTrue("Placment isn't active",true);
 				 }
 				 else{
-					 Assert.assertTrue("Placment is active", false);
-					 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\place_deactive_fail...");
-					 scenario.write(takeScreenShot(dr, "place_deactive_fail"));
+					 Assert.assertTrue("Placment is active" + takeScreenShot(dr, "place_deactive_fail"), false);
 				 }
 			 } catch (Exception e) {
-				 scenario.write(takeScreenShot(dr, "deactive_placement"));
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\deactive_placement... ");
+				 Assert.assertTrue("Failed to verify if placement is deactive:" + takeScreenShot(dr, "deactive_placement"), false);
 				System.out.println("Failed to verify if placement is deactive:" + e.getMessage());
 			}
 		 }

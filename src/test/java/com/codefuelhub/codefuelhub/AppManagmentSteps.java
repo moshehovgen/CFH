@@ -35,13 +35,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 	String AppListBaseURL = null;
 	int numOfApps;
 	Eyes eyes;
-	Scenario scenario;
 	
 	public static WebDriver dr;  
 	
 	@Before("@Application, @Placement")
-	public void initiateBrowser(Scenario scenario){
-		this.scenario = scenario;
+	public void initiateBrowser(){
 		eyes = initApplitools(eyes);
 		
 		init();
@@ -98,8 +96,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		} catch(Exception e){
 			System.out.println("Couldn't fill login: "+ e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-			scenario.write(takeScreenShot(dr, "login_fail"));
+			Assert.assertTrue("Couldn't fill login: "+ takeScreenShot(dr, "login_fail"), false);
 		}
 		if(a.waitUntilElementClassAttrChange(dr,By.tagName("body"), "pg-loaded", 60000)){
 			System.out.println("page loaded");
@@ -121,8 +118,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		} catch (Exception e) {
 			System.out.println("Failed clicking on manage apps button "+ e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\manage_apps...");
-			scenario.write(takeScreenShot(dr, "manage_apps"));
+			Assert.assertTrue("Failed clicking on manage apps button "+ takeScreenShot(dr, "manage_apps"), false);
 		}
 		
 		try{
@@ -136,8 +132,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			
 		} catch (Exception e) {
 			System.out.println("Failed getting apps list "+ e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_list...");
-			scenario.write(takeScreenShot(dr, "app_list"));
+			Assert.assertTrue("Failed getting apps list " + takeScreenShot(dr, "app_list"), false);
 		}
 	}
 
@@ -175,8 +170,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		
 		} catch (Exception e) {
 			System.out.println("Failed to add new app: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_new_app...");
-			scenario.write(takeScreenShot(dr, "add_new_app"));
+			Assert.assertTrue("Failed to add new app: " + takeScreenShot(dr, "add_new_app"), false);
 		}
 	}
 
@@ -186,8 +180,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			dr.findElement(By.id("appsSave")).click();
 		} catch (Exception e) {
 			System.out.println("Failed to click on add new app: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_app_click...");
-			scenario.write(takeScreenShot(dr, "add_app_click"));
+			Assert.assertTrue("Failed to click on add new app: " + takeScreenShot(dr, "add_app_click"), false);
 		}
 	}
 	
@@ -197,8 +190,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			dr.findElement(By.id("appsCancel")).click();
 		} catch (Exception e) {
 			System.out.println("Failed to click on cancel new app: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\cancel_app_click...");
-			scenario.write(takeScreenShot(dr, "cancel_app_click"));
+			Assert.assertTrue("Failed to click on cancel new app: " + takeScreenShot(dr, "cancel_app_click"), false);
 		}
 	}
 
@@ -211,8 +203,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			Assert.assertTrue("New App creation " + isElementExist, isElementExist);
 			
 			if(!isElementExist){
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_fail...");
-				scenario.write(takeScreenShot(dr, "create_app_fail"));
+				Assert.assertTrue("Failed to locate new application " + takeScreenShot(dr, "create_app_fail"), false);
 			}
 		}
 		
@@ -264,8 +255,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			
 		} catch (Exception e) {
 				System.out.println("Failed to get app properties: " + e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_properties...");
-				scenario.write(takeScreenShot(dr, "app_properties"));
+				Assert.assertTrue("Failed to get app properties: " + takeScreenShot(dr, "app_properties"), false);
 			}
 	}
 	
@@ -278,13 +268,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			Assert.assertTrue(messageCorrect);
 			
 			if(!messageCorrect){
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
-				scenario.write(takeScreenShot(dr, "create_app_message_fail"));
+				Assert.assertTrue("Error message is incorrect " + takeScreenShot(dr, "create_app_message_fail"), false);
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to get error message: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\create_app_message_fail...");
-			scenario.write(takeScreenShot(dr, "create_app_message_fail"));
+			Assert.assertTrue("Failed to get error message: " + takeScreenShot(dr, "create_app_message_fail"), false);
 		}
 		
 	}
@@ -317,8 +305,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 		    editElem.click();
 		} catch (Exception e) {
 			System.out.println("Failed to click on edit app: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_app_click...");
-			scenario.write(takeScreenShot(dr, "edit_app_click"));
+			Assert.assertTrue("Failed to click on edit app: " + takeScreenShot(dr, "edit_app_click"), false);
 		}
 	}
 
@@ -332,8 +319,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 			
 		} catch (Exception e) {
 			System.out.println("Failed to change app name: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\edit_app_name...");
-			scenario.write(takeScreenShot(dr, "edit_app_name"));
+			Assert.assertTrue("Failed to change app name: " + takeScreenShot(dr, "edit_app_name"),false);
 		}
 	}
 
@@ -385,10 +371,7 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 				Assert.assertTrue("App is active", true);
 			}
 			else {
-				Assert.assertTrue("App isn't active",false);
-				 
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active_fail...");
-				scenario.write(takeScreenShot(dr, "app_active_fail"));
+				Assert.assertTrue("App isn't active" + takeScreenShot(dr, "app_active_fail"), false);
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to check active status of app: " + e.getMessage());
@@ -415,14 +398,11 @@ public class AppManagmentSteps extends AbstractPageStepDefinition {
 					(!doesAppInList(dr.findElement(By.id("app_header_wrapper_subtitle")).getText()))) 
 				Assert.assertTrue("App isn't active",true);
 			else {
-				 Assert.assertTrue("App is active", false);
-				 System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_deactive_fail...");
-				 scenario.write(takeScreenShot(dr, "app_deactive_fail"));
+				 Assert.assertTrue("App is active"+ takeScreenShot(dr, "app_deactive_fail"), false);
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to verify app status: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\app_active...");
-			scenario.write(takeScreenShot(dr, "app_active"));
+			Assert.assertTrue("Failed to verify app status: " +takeScreenShot(dr, "app_active"), false);
 		}
 	}
 	

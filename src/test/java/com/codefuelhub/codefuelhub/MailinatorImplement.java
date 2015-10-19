@@ -1,5 +1,7 @@
 package com.codefuelhub.codefuelhub;
 
+import junit.framework.Assert;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,8 +33,7 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 			inboxElem.sendKeys(mailAddress);
 			
 		} catch (Exception e) {
-			takeScreenShot(dr, "mail_address_write");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\mail_address_write... "+ e.getMessage());
+			Assert.assertTrue("Failed to enter mail address: " + takeScreenShot(dr, "mail_address_write"), false);
 			System.out.println("Failed to enter mail address: " + e.getMessage());
 		}
 		
@@ -41,8 +42,7 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 			btn.click();
 		
 		} catch (Exception e) {
-			takeScreenShot(dr, "mail_create_click");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\mail_create_click... "+ e.getMessage());
+			Assert.assertTrue("Failed to click on create mail: " + takeScreenShot(dr, "mail_create_click"),false);
 			System.out.println("Failed to click on create mail: " + e.getMessage());
 		}
 	
@@ -53,8 +53,7 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 			dr.findElement(By.xpath(xpath)).click();
 		
 		} catch (Exception e) {
-			takeScreenShot(dr, "click_on_mail_recieved");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_mail_recieved... "+ e.getMessage());
+			Assert.assertTrue("Failed to click on mail message recieved: " + takeScreenShot(dr, "click_on_mail_recieved"),false);
 			System.out.println("Failed to click on mail message recieved: " + e.getMessage());
 		}
 		
@@ -66,8 +65,7 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 			dr.findElement(By.partialLinkText(link)).click();
 		
 		} catch (Exception e) {
-			takeScreenShot(dr, "link_on_mail");
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\link_on_mail... "+ e.getMessage());
+			Assert.assertTrue("Failed to click on link of mail recieved: " + takeScreenShot(dr, "link_on_mail"), false);
 			System.out.println("Failed to click on link of mail recieved: " + e.getMessage());
 		}
 	}

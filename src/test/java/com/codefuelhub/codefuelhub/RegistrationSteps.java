@@ -26,7 +26,6 @@ import cucumber.api.junit.Cucumber;
 import cucumber.api.Scenario;
 
 public class RegistrationSteps extends AbstractPageStepDefinition {
-	private Scenario scenario;
 	WebDriver dr;
 	MailinatorImplement mailObj = new MailinatorImplement();
 	String mailAddress = "";
@@ -37,8 +36,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 	//used the before implemented in app manage
 	
 	@Before("@Registration, @BeforeAll")
-	public void initiateBrowser(Scenario scenario){
-		this.scenario = scenario;
+	public void initiateBrowser(){
 		eyes = initApplitools(eyes);
 		
 		init();
@@ -70,7 +68,8 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				Assert.assertTrue("Register element wasn't found!", false);
 			
 		} catch (Exception e) {
-			scenario.write("Register element wasn't found: " + e.getMessage());
+			Assert.assertTrue("Register element couldn't be located: " + takeScreenShot(dr, "reg_not_found"), false);
+			System.out.println("Register element couldn't be located: " + e.getMessage());
 		}
 	}
 	
@@ -130,9 +129,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 					
 				}catch(Exception e){
 					System.out.println("Failed to choose publisher type from drop down: " +e.getMessage());
-					System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\dd_fail... ");
-					scenario.write("Failed to choose publisher type from drop down: " +e.getMessage());
-					scenario.write(takeScreenShot(dr, "dd_fail"));
+					Assert.assertTrue("Failed to choose publisher type from drop down: " + takeScreenShot(dr, "dd_fail"),false);
 				}
 			
 			}
@@ -145,9 +142,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				
 			}
 		} catch (Exception e) {
-			scenario.write(takeScreenShot(dr, "registration_fill_fail"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fill_fail... ");
-			scenario.write("Failed to fill in registration form: " + e.getMessage());
+			Assert.assertTrue("Failed to fill in registration form: " + takeScreenShot(dr, "registration_fill_fail"), false);
 			System.out.println("Failed to fill in registration form: " + e.getMessage());
 		}
 	}
@@ -166,9 +161,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			dr.findElement(By.id("confirmation_mail_ok")).click();
 			
 		} catch (Exception e) {
-			scenario.write(takeScreenShot(dr, "registration_confirm"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_confirm... ");
-			scenario.write("Find screen shot at: " + PS_FILE_NAME + "\\registration_confirm... "+ e.getMessage());
+			Assert.assertTrue("Failed to submit registration form: "+takeScreenShot(dr, "registration_confirm"), false);
 			System.out.println("Failed to submit registration form: " + e.getMessage());
 		}
 	}
@@ -216,9 +209,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 				System.out.println("Element isn't located");
 		    
 		} catch(Exception e){
-			scenario.write(takeScreenShot(dr, "click_on_accept"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_on_accept... ");
-			scenario.write("Find screen shot at: " + PS_FILE_NAME + "\\click_on_accept... "+ e.getMessage());
+			Assert.assertTrue("Failed to click on accept terms: " + takeScreenShot(dr, "click_on_accept"), false);
 			System.out.println("Failed to click on accept terms: " + e.getMessage());
 		}
 	}
@@ -250,9 +241,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			login.dr.quit();
 			
 		} catch (Exception e) {
-			scenario.write(takeScreenShot(dr, "login_after_register"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_after_register... ");
-			scenario.write("Failed to login after registration: " + e.getMessage());
+			Assert.assertTrue("Failed to login after registration: " + takeScreenShot(dr, "login_after_register"), false);
 			System.out.println("Failed to login after registration: " + e.getMessage());
 		}
 		
@@ -273,9 +262,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			Assert.assertTrue(found? "The message is correct":"The message isn't correct", found);
 			
 		} catch (Exception e) {
-			scenario.write(takeScreenShot(dr, "registration_fail_message"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\registration_fail_message... ");
-			scenario.write("Failed to verify failed message of registration: " + e.getMessage());
+			Assert.assertTrue("Failed to verify failed message of registration: " + takeScreenShot(dr, "registration_fail_message"), false);
 			System.out.println("Failed to verify failed message of registration: " + e.getMessage());
 		}
 	}
@@ -291,11 +278,9 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			login.validateLogin();
 		
 		} catch (Exception e) {
-			scenario.write(takeScreenShot(dr, "login_after_register"));
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_after_register... ");
-				scenario.write("Failed to login after registration: " + e.getMessage());
-				System.out.println("Failed to login after registration: " + e.getMessage());
-			}
+			Assert.assertTrue("Failed to login after registration: " + takeScreenShot(dr, "login_after_register"), false);
+			System.out.println("Failed to login after registration: " + e.getMessage());
+		}
 		
 	}
 
@@ -312,9 +297,7 @@ public class RegistrationSteps extends AbstractPageStepDefinition {
 			app.validate_App_created();
 			
 		} catch (Exception e) {
-			scenario.write(takeScreenShot(dr, "add_first_app"));
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\add_first_app... ");
-			scenario.write("Failed to add first application: " + e.getMessage());
+			Assert.assertTrue("Failed to add first application: " +takeScreenShot(dr, "add_first_app"), false);
 			System.out.println("Failed to add first application: " + e.getMessage());
 		}
 	}

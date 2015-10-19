@@ -20,13 +20,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 	public class LoginSteps extends AbstractPageStepDefinition {
-		private Scenario scenario;
 		static Eyes eyes;
 		WebDriver dr ;
 		
 		@Before("@Login")
-		public void initiateBrowser(Scenario scenario){
-			this.scenario = scenario;
+		public void initiateBrowser(){
 			eyes = initApplitools(eyes);
 			
 			init();
@@ -60,10 +58,8 @@ import cucumber.api.java.en.When;
 					System.out.println("Login element wasn't found!"+ false);
 				
 			} catch (Exception e) {
-				scenario.write(takeScreenShot(dr, "click_login_frontPage"));
-				System.out.println("Failed to click on ligon button on front page: " + e.getMessage());
-				scenario.write("Failed to click on ligon button on front page: " + e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\click_login_frontPage... ");
+				Assert.assertTrue("Failed to click on login button on front page: " + takeScreenShot(dr, "click_login_frontPage"), false);
+				System.out.println("Failed to click on login button on front page: " + e.getMessage());
 			}
 		}
 		
@@ -104,9 +100,7 @@ import cucumber.api.java.en.When;
 			
 			} catch(Exception e){
 				System.out.println("Couldn't fill login: "+ e.getMessage());
-				scenario.write("Couldn't fill login: "+ e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fill_fail...");
-				scenario.write(takeScreenShot(dr, "login_fill_fail"));
+				Assert.assertTrue("Couldn't fill login: "+ takeScreenShot(dr, "login_fill_fail"), false);
 			}
 		}
 				
@@ -117,9 +111,7 @@ import cucumber.api.java.en.When;
 				
 			} catch (Exception e) {
 				System.out.println("Couldn't fill login: "+ e.getMessage());
-				scenario.write("Couldn't fill login: "+ e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fill_fail...");
-				scenario.write(takeScreenShot(dr, "login_fill_fail"));
+				Assert.assertTrue("Couldn't fill login: "+ takeScreenShot(dr, "login_fill_fail"), false);
 			}
 		}
 
@@ -136,14 +128,11 @@ import cucumber.api.java.en.When;
 				
 				Assert.assertTrue(successLogin);
 				if(!successLogin) {
-					System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-					scenario.write(takeScreenShot(dr, "login_fail"));
+					Assert.assertTrue("Login wasn't successful " + takeScreenShot(dr, "login_fail"),false);
 				}
 			} catch (Exception e) {
 				System.out.println("Couldn't verify login: "+ e.getMessage());
-				scenario.write("Couldn't verify login: "+ e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-				scenario.write(takeScreenShot(dr, "login_fail"));
+				Assert.assertTrue("Couldn't verify login: "+ takeScreenShot(dr, "login_fail"), false);
 			}
 			
 			
@@ -154,11 +143,8 @@ import cucumber.api.java.en.When;
 			try {
 				Assert.assertFalse(dr.getCurrentUrl().contains("dashboard"));
 			} catch (Exception e) {
-				
 				System.out.println("Couldn't verify failed login: "+ e.getMessage());
-				scenario.write("Couldn't verify failed login: "+ e.getMessage());
-				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_fail...");
-				scenario.write(takeScreenShot(dr, "login_fail"));
+				Assert.assertTrue("Couldn't verify failed login: "+ takeScreenShot(dr, "login_fail"), false);
 			}
 		}
 
@@ -172,10 +158,10 @@ import cucumber.api.java.en.When;
 			
 			if(found){
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message...");
-				scenario.write(takeScreenShot(dr, "login_message"));
+				Assert.assertTrue("Warning message is good " +takeScreenShot(dr, "login_message"), true);
 			} else{
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\login_message_fail...");
-				scenario.write(takeScreenShot(dr, "login_message_fail"));
+				Assert.assertTrue("Warning message isn't good " + takeScreenShot(dr, "login_message_fail"), false);
 			}
 		}
 		
@@ -185,7 +171,7 @@ import cucumber.api.java.en.When;
 				dr.findElement(By.id("logout")).click();
 			} catch (Exception e) {
 				System.out.println("Couldn't perform logout: "+ e.getMessage());
-				scenario.write("Couldn't perform logout: "+ e.getMessage());
+				Assert.assertTrue("Couldn't perform logout", false);
 			}
 		}
 		

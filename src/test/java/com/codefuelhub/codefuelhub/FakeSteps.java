@@ -22,11 +22,9 @@ import cucumber.api.java.en.When;
 public class FakeSteps extends AbstractPageStepDefinition{
 	
 	WebDriver dr;
-	Scenario scenario;
 	
 	@Before("@Fake")
-	public void initiateBrowser(Scenario scenario){
-		this.scenario = scenario;
+	public void initiateBrowser(){
 		init();
 		dr = initWebDriver();
 		dr.manage().window().maximize();
@@ -70,10 +68,10 @@ public class FakeSteps extends AbstractPageStepDefinition{
 		    dr.findElement(By.id("account_dd_btn")).click();
 		    dr.findElement(By.id("account_dd_search")).sendKeys(accountName);
 		    dr.findElement(By.id("account_dd_optionAutomation test")).click();
+		    
 		} catch (Exception e) {
 			System.out.println("Failed to choose account name: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\account_name_choose...");
-			scenario.write(takeScreenShot(dr, "account_name_choose"));
+			Assert.assertTrue("Failed to choose account name: " + takeScreenShot(dr, "account_name_choose"),false);
 		}
 	}
 
@@ -86,8 +84,7 @@ public class FakeSteps extends AbstractPageStepDefinition{
 	    
 		} catch (Exception e) {
 			System.out.println("Failed to choose user name: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\user_name_choose...");
-			scenario.write(takeScreenShot(dr, "user_name_choose"));
+			Assert.assertTrue("Failed to choose user name: " + takeScreenShot(dr, "user_name_choose"),false);
 		}
 	}
 
@@ -106,8 +103,7 @@ public class FakeSteps extends AbstractPageStepDefinition{
 	    	
 		} catch (Exception e) {
 			System.out.println("Failed to read fake user title: " + e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\fake_user_title...");
-			scenario.write(takeScreenShot(dr, "fake_user_title"));
+			Assert.assertTrue("Failed to read fake user title: " + takeScreenShot(dr, "fake_user_title"),false);
 		}
 	}
 
@@ -124,8 +120,7 @@ public class FakeSteps extends AbstractPageStepDefinition{
 			appElem.click();
 		} catch (Exception e) {
 			System.out.println("Failed clicking on manage apps button "+ e.getMessage());
-			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\manage_apps...");
-			scenario.write(takeScreenShot(dr, "manage_apps"));
+			Assert.assertTrue("Failed clicking on manage apps button " + takeScreenShot(dr, "manage_apps"), false);
 		}
 	}
 
