@@ -91,8 +91,8 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			okElem.click();
 			
 		} catch(Exception e){
-			Assert.assertTrue(false);
 			scenario.write(takeScreenShot(dr, "reset_pass_fail"));
+			Assert.assertTrue(takeScreenShot(dr, "reset_pass_fail"), false);
 			System.out.println("Click on reset didn't work: "+ e.getMessage());
 			//scenario.write("Click on reset didn't work: "+ e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass... ");
