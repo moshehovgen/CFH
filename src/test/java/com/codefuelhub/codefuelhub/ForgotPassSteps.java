@@ -1,5 +1,6 @@
 package com.codefuelhub.codefuelhub;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -90,9 +91,10 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 			okElem.click();
 			
 		} catch(Exception e){
+			Assert.assertTrue(false);
 			scenario.write(takeScreenShot(dr, "reset_pass_fail"));
 			System.out.println("Click on reset didn't work: "+ e.getMessage());
-			scenario.write("Click on reset didn't work: "+ e.getMessage());
+			//scenario.write("Click on reset didn't work: "+ e.getMessage());
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\reset_pass... ");
 		}
 	}
@@ -109,7 +111,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 
 		} catch (Exception e) {
 			System.out.println("Failed clicking on mail: " +e.getMessage());
-			//scenario.write("Failed clicking on mail: " +e.getMessage());
+			scenario.write("Failed clicking on mail: " +e.getMessage());
 			scenario.write(takeScreenShot(dr, "fail_click_mail"));
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\fail_click_mail...");
 		}
