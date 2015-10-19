@@ -154,7 +154,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 
 	
 	@And("^verify the warning message in forgot ([^\"]*)$")
-	public void validateMsgPass(String msg) throws Throwable {
+	public void validateMsgPass(String msg) {
 		RegistrationSteps register = new RegistrationSteps();
 		
 		register.setDriver(dr);
@@ -180,7 +180,7 @@ public class ForgotPassSteps extends AbstractPageStepDefinition {
 	}
 	
 	@And("^verify reset password window$")
-	public void verifyPasswordAplitools() throws Throwable {
+	public void verifyPasswordAplitools() {
 	    verifyAplitools("reset_password", eyes, dr);
 	}
 

@@ -160,7 +160,7 @@ import cucumber.api.java.en.Then;
 				 }
 			 
 			 } catch (Exception e) {
-				 scenario.write(takeScreenShot(dr, "active_placement"));
+				scenario.write(takeScreenShot(dr, "active_placement"));
 				System.out.println("Find screen shot at: " + PS_FILE_NAME + "\\active_placement... ");
 				System.out.println("Failed to verify if placement is active:" + e.getMessage());
 			}
