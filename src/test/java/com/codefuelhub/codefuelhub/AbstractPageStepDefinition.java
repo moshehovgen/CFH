@@ -40,24 +40,16 @@ public class AbstractPageStepDefinition {
 	public static String MAIL_ADD = "";
 	public static String BASE_URL = null;
 	public static String PS_FILE_NAME = "target/screen_shots/";
-	public static String version;
+	public static String hubUrl = "http://172.16.32.9";
+    private static final String hubPort = "4444";
+    private static final String webHub = "wd/hub";
+
 	WebDriver dr;
+	
 	
 	
 	public void init() {
 		  
-//		ExternalContext application = FacesContext.getCurrentInstance().getExternalContext();
-//		InputStream inputStream = application.getResourceAsStream("/META-INF/MANIFEST.MF");
-//		Manifest manifest = null;
-//		try {
-//			manifest = new Manifest(inputStream);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		 
-//		Attributes attributes = manifest.getMainAttributes();
-//		String version = attributes.getValue("Implementation-Version");
-		
 		  switch(TEST_ENV) {
 		  case "QA":
 		   BASE_URL=QA_URL;
@@ -111,47 +103,56 @@ public class AbstractPageStepDefinition {
   }
 	
 	public WebDriver initWebDriver() {
-			switch (System.getenv("BROWSER_TYPE")) {
-			
-			case "firefox":
-				System.out.println("init FF webdriver");
-//				DesiredCapabilities capabilitiesFF = DesiredCapabilities.firefox();
-//				try {
-//					return new RemoteWebDriver(new URL("http://10.150.4.74:4444/wd/hub"), capabilitiesFF);
-//				} catch (MalformedURLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-				return new FirefoxDriver();
+		try {
+			DesiredCapabilities cap;
+			hubUrl = hubUrl + ":" + hubPort + "/" + webHub;
+	        URL hubURL = new URL(hubUrl);
+	        System.out.println("hubUrl " + hubUrl);
+	
+				switch (System.getenv("BROWSER_TYPE")) {
 				
-			case "chrome":
-				String chromeLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/chrome/chromedriver.exe";
-				//String chromeLocation = "/drivers/chrome/chromedriver.exe";
-				System.setProperty("webdriver.chrome.driver", chromeLocation);
-				System.out.println("init CH webdriver");
-				System.out.println(version);
-				return new ChromeDriver();
-				
-			case "ie":
-				String ieLocation = "";
-				//if(isOs64Bit())
-				//	ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_x64/IEDriverServer.exe";
-			//	else
-				addKeyForIE();
-				ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_Win32/IEDriverServer.exe";
+				case "firefox":
+					System.out.println("init FF webdriver");
+	//				DesiredCapabilities capabilitiesFF = DesiredCapabilities.firefox();
+	//				try {
+	//					return new RemoteWebDriver(new URL("http://10.150.4.74:4444/wd/hub"), capabilitiesFF);
+	//				} catch (MalformedURLException e) {
+	//					// TODO Auto-generated catch block
+	//					e.printStackTrace();
+	//				}
+					return new FirefoxDriver();
 					
-				System.setProperty("webdriver.ie.driver", ieLocation);
-				DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-				capabilities.setCapability("enablePersistentHover", false);
-				System.out.println("init IE webdriver");
-				return new InternetExplorerDriver(capabilities);
-				
-			case "safari":
-				System.out.println("init safari webdriver");
-				DesiredCapabilities dms = DesiredCapabilities.safari();
-				dms.setPlatform(Platform.WINDOWS);
-				return new SafariDriver(dms);
-		
+				case "chrome":
+					String chromeLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/chrome/chromedriver.exe";
+					//String chromeLocation = "/drivers/chrome/chromedriver.exe";
+					System.setProperty("webdriver.chrome.driver", chromeLocation);
+					System.out.println("init CH webdriver");
+					cap = DesiredCapabilities.chrome();
+					return new RemoteWebDriver(hubURL, cap);
+					
+				case "ie":
+					String ieLocation = "";
+					//if(isOs64Bit())
+					//	ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_x64/IEDriverServer.exe";
+				//	else
+					addKeyForIE();
+					ieLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/ie/IEDriverServer_Win32/IEDriverServer.exe";
+					System.setProperty("webdriver.ie.driver", ieLocation);
+					DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+					capabilities.setCapability("enablePersistentHover", false);
+					System.out.println("init IE webdriver");
+					return new InternetExplorerDriver(capabilities);
+					
+				case "safari":
+					System.out.println("init safari webdriver");
+					DesiredCapabilities dms = DesiredCapabilities.safari();
+					dms.setPlatform(Platform.WINDOWS);
+					return new SafariDriver(dms);
+			
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		// default if no valid browser value
 		return new FirefoxDriver();
@@ -219,7 +220,7 @@ public class AbstractPageStepDefinition {
 			FileUtils.copyFile(screenshot, new File(PS_FILE_NAME+ fullName));
 			System.out.println("Find screen shot at: " + PS_FILE_NAME + fullName);
 			
-			return "<a href=\""+PS_FILE_NAME + fullName +"\">" + PS_FILE_NAME + fullName+"</a>";
+			return "<a href=\""+PS_FILE_NAME + fullName +"\">" + "Click here to view screen shot" +"</a>";
 		} catch (IOException e) {
 			
 			System.out.println("Failure taking a screenshot "+e.getMessage());
