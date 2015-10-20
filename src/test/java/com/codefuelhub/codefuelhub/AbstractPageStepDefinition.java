@@ -123,6 +123,7 @@ public class AbstractPageStepDefinition {
 					return new FirefoxDriver();
 					
 				case "chrome":
+						System.out.println("init ch webdriver");
 					String chromeLocation = System.getenv("AUTOMATION_HOME") + File.separator + "/drivers/chrome/chromedriver.exe";
 					//String chromeLocation = "/drivers/chrome/chromedriver.exe";
 					System.setProperty("webdriver.chrome.driver", chromeLocation);
@@ -155,6 +156,7 @@ public class AbstractPageStepDefinition {
 			// TODO: handle exception
 		}
 		// default if no valid browser value
+	  System.out.println("running default driver[firefox]");
 		return new FirefoxDriver();
 	}
 	
