@@ -3,6 +3,7 @@ package com.codefuelhub.codefuelhub;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -50,8 +51,13 @@ public class MailinatorImplement extends AbstractPageStepDefinition{
 	}
 	public void clickOnMailRecieved(String xpath, String mail) {
 		try {
-			dr.findElement(By.xpath(xpath)).click();
-		
+			//dr.findElement(By.xpath(xpath)).click();
+			WebElement mailTable = dr.findElement(By.id("mailcontainer"));
+			WebElement firstMailElem = mailTable.findElement(By.tagName("li")).findElement(By.tagName("a"));
+			
+			String showMailCmd = firstMailElem.getAttribute("onclick");
+			((JavascriptExecutor)dr).executeScript(showMailCmd);
+			
 		} catch (Exception e) {
 			Assert.assertTrue("Failed to click on mail message recieved: " + takeScreenShot(dr, "click_on_mail_recieved"),false);
 			System.out.println("Failed to click on mail message recieved: " + e.getMessage());
