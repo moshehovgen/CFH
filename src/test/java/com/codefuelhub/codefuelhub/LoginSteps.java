@@ -126,7 +126,6 @@ import cucumber.api.java.en.When;
 				
 				System.out.println(dr.getCurrentUrl());
 				
-				Assert.assertTrue(successLogin);
 				if(!successLogin) {
 					Assert.assertTrue("Login wasn't successful " + takeScreenShot(dr, "login_fail"),false);
 				}
